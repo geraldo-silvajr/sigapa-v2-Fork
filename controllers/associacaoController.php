@@ -1,10 +1,10 @@
 <?php
 
-class cooperativaController extends controller {
+class associacaoController extends controller {
 
     public function index($cod) {
         if ($this->checkUser() >= 3 && intval($cod) > 0) {
-            $viewName = 'cooperativa';
+            $viewName = 'associacao';
             $dados = array();
             $crudModel = new crud_db();
             $dados['cidade'] = $crudModel->read("SELECT * FROM sig_cooperativa WHERE cod=:cod", array('cod' => addslashes($cod)));
@@ -26,7 +26,8 @@ class cooperativaController extends controller {
                 $cadCooperativa = $crudModel->create("UPDATE sig_cooperativa SET nome_siglas=:nome_siglas, nome_completo=:nome_completo, cnpj=:cnpj, endereco=:endereco, cep=:cep, telefone=:telefone, email=:email, url_site=:url_site WHERE cod=:cod", $cooperativa);
                 if ($cadCooperativa) {
                     $_SESSION['cooperativa_acao'] = true;
-                    header("Location: /cooperativa/index/" . $cod);
+                    $url = BASE_URL . '/associacao/index/' . $cod;
+                    header('location: ' . $url);
                 }
             } else if (isset($_SESSION['cooperativa_acao']) && !empty($_SESSION['cooperativa_acao'])) {
                 $_SESSION['cooperativa_acao'] = false;
@@ -35,10 +36,12 @@ class cooperativaController extends controller {
             if (!empty($dados['cidade'])) {
                 $this->loadTemplate($viewName, $dados);
             } else {
-                header('location: /home');
+                $url = BASE_URL . '/home';
+                header('location: ' . $url);
             }
         } else {
-            header('location: /home');
+            $url = BASE_URL . '/home';
+            header('location: ' . $url);
         }
     }
 

@@ -1,10 +1,10 @@
 <div id="section-container">
     <div class="row" >
         <div class="col-sm-12 col-md-12 col-lg-12" id="pagina-header">
-            <h2>Cooperativa</h2>
+            <h2>Associação</h2>
             <ol class="breadcrumb">
                 <li><a href="<?php echo BASE_URL ?>/home"><i class="fa fa-tachometer-alt"></i> Inicial</a></li>
-                <li class="active"><i class="fa fa-home"></i> Cooperativa</li>
+                <li class="active"><i class="fa fa-home"></i> Associação</li>
             </ol>
         </div>
     </div>
@@ -20,7 +20,7 @@
             <form autocomplete="off" method="POST">
                 <section class="panel panel-black">
                     <header class="panel-heading">
-                        <h4 class="panel-title"><i class="fa fa-home pull-left"></i>Cooperativa</h4>
+                        <h4 class="panel-title"><i class="fa fa-home pull-left"></i>Associação</h4>
                     </header>
                     <article class="panel-body">
                         <div class="row">

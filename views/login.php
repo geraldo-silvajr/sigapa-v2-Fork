@@ -5,13 +5,13 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="icon" type="image/gif" href="<?php echo BASE_URL ?>/assets/imagens/icon-cootax.png" sizes="32x32" />
-        <meta property="ogg:title" content="COOTAX - SIGCOOT - Sistema de Informação Gerencial de Cooperativa de Táxi!">
-        <meta property="ogg:description" content="COOTAX - SIGCOOT - Sistema de Informação Gerencial de Cooperativa de Táxi!">
-        <title> SIGCOOT - Sistema de Informação Gerencial de Cooperativa de Táxi </title>
+        <link rel="icon" type="image/gif" href="<?php echo BASE_URL ?>/assets/imagens/icon.png" sizes="32x32" />
+        <meta property="ogg:title" content="<?php echo NAME_PROJECT ?>">
+        <meta property="ogg:description" content="<?php echo NAME_PROJECT ?>">
+        <title> <?php echo NAME_PROJECT ?></title>
         <!-- Bootstrap -->
         <link href="<?php echo BASE_URL; ?>/assets/css/bootstrap.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="<?php echo BASE_URL; ?>/assets/css/login.min.css">
+        <link rel="stylesheet" href="<?php echo BASE_URL; ?>/assets/css/login.css">
         <!-- SGL -->        
         <link rel="stylesheet" href="<?php echo BASE_URL ?>/assets/css/fontawesome-all.min.css">
         <script>
@@ -24,7 +24,7 @@
                 }
             }
         </script>
-		<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     </head>
 
     <body onload="mostrarConteudo()"> 
@@ -36,24 +36,23 @@
                 <div class="row">
                     <!-- TELA LOGIN -->
                     <div class="col-sm-offset-1 col-sm-10 col-md-offset-3 col-md-6 col-lg-offset-4 col-lg-4" id="tela_login">
-                        <h4 class="text-center text-login text-uppercase">SIGCOOT - Sistema de Informação Gerencial de Cooperativa de Táxi</h4>
+                        <h4 class="text-center text-login text-uppercase"><?php echo NAME_PROJECT ?></h4>
                         <div class="row">
-                            <div class="col-md-offset-3 col-md-6"><img src="<?php echo BASE_URL; ?>/assets/imagens/logo_login_cootax.png" alt="Logotipo da cootax" class="img-center img-login"></div>
-
+                            <div class="col-md-offset-1 col-md-10"><img src="<?php echo BASE_URL; ?>/assets/imagens/logo_login.png" alt="Logotipo da cootax" class="img-center img-login img-responsive"> <br/></div>
                             <div class="col-md-12">
                                 <form method="POST">
                                     <div class="form-group">
                                         <label for="iSerachUsuario">Usuário:</label>
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
-                                            <input type="text" id="iSerachUsuario" name="nSerachUsuario" class="form-control" autofocus placeholder="Username / E-mail">
+                                            <input type="text" id="iSerachUsuario" name="nSerachUsuario" class="form-control" autofocus placeholder="Exemplo: joao.batista">
                                         </div>                                    
                                     </div>
                                     <div class="form-group">
                                         <label for="iSearchSenha">Senha:</label>
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
-                                            <input type="password" id="iSearchSenha" name="nSearchSenha" class="form-control" placeholder="Password">
+                                            <input type="password" id="iSearchSenha" name="nSearchSenha" class="form-control" placeholder="Exemplo: 14saa2f">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -76,8 +75,8 @@
                 </div>
                 <div class="row clear">
                     <div class="col-xs-12">
-                       <hr/>
-                        <p class="text-center text-uppercase">&copy; Copyright 2018 - Joab Torres Alencar.</p>
+                        <hr/>
+                        <p class="text-center text-uppercase">&copy; Copyright 2022 - Joab Torres Alencar.</p>
                     </div>
                 </div>
             </div>
@@ -92,7 +91,7 @@
 
                             <div class="row">
                                 <div class="col-md-5">
-                                    <p class="text-justify">Forneça o endereço de email usado em sua conta do SIGCOOT.</p>
+                                    <p class="text-justify">Forneça o endereço de email usado em sua conta do <?php echo NAME_PROJECT ?>.</p>
                                     <p class="text-justify">Será enviado um e-mail que redefine a sua senha.</p>
                                 </div>
                                 <div class="col-md-7">

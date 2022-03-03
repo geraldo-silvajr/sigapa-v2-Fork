@@ -12,17 +12,17 @@ body{
 #tela_login {
     background-color: #fff;
     border-radius: 5px;
-    margin-top: 10px;
+    margin-top: 5%;
     padding: 10px 30px;
     color: #333;
-    border: 1px solid #00a65a;
-    box-shadow: 0px 0px 2px #cecece;
-    -webkit-box-shadow: 0px 0px 3px 1px #cecece;
-    -moz-box-shadow: 0px 0px 3px 1px #cecece;
-    -o-box-shadow: 0px 0px 3px 1px #cecece;
+    border: 1px solid #2C853B;
+    box-shadow: 0px 0px 2px #2C853B;
+    -webkit-box-shadow: 0px 0px 3px 1px #2C853B;
+    -moz-box-shadow: 0px 0px 3px 1px #2C853B;
+    -o-box-shadow: 0px 0px 3px 1px #2C853B;
 }
 #tela_login h4 {
-   background-color: #00a65a;
+   background-color: #2C853B;
     color: white;
     padding: 10px;
     margin: 10px -30px;

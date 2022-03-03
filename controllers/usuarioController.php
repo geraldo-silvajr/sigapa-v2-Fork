@@ -23,7 +23,7 @@ class usuarioController extends controller {
      */
     public function index($page = 1) {
         if ($this->checkUser()) {
-            $view = "usuario_listar";
+            $view = "usuario/consultar";
             $dados = array();
             $usuarioModel = new usuario();
             //consulta todos os usuários pertencente ao respecito núcleo
@@ -69,7 +69,7 @@ class usuarioController extends controller {
             $senha = $usuarioModel->newpassword($email);
             if ($senha) {
                 // envia email ao usuário
-                $assunto = 'Sistema de Informação Gerencial de Cooperativa de Táxi';
+                $assunto = NAME_PROJECT;
                 $destinatario = $email;
                 $mensagem = '<!DOCTYPE html>
 			<html lang="pt-br">
@@ -81,7 +81,7 @@ class usuarioController extends controller {
 				<div style="width: 98%;display: block;margin: 10px auto;padding: 0;font-family: sans-serif, Arial;border : 2px solid #357ca5;">
 				<h3 style="background: #357ca5;color: white;padding: 10px;margin: 0;">Nova Senha! <br/> <small>' . $assunto . ' - Nova Senha</small></h3>
 					<p style="padding: 10px;line-height: 30px;">
-                                            Você solicitou uma nova senha de acesso ao <b>SIGCOOT</b> (' . $assunto . '), confira abaixo sua nova senha de acesso: <br/>
+                                            Você solicitou uma nova senha de acesso ao ' . $assunto . ', confira abaixo sua nova senha de acesso: <br/>
                                             <span style="font-weight:bold">Email: </span><span style="color: #357ca5;">' . $email . '</span><br/>
                                             <span style="font-weight:bold">Nova Senha: </span> <span style="color: #357ca5;">' . $senha . '</span><br/>
                                                  <a href="' . BASE_URL . '" style="text-decoration: none;">Carregar Página</a>
@@ -132,7 +132,8 @@ class usuarioController extends controller {
     public function sair() {
         if (isset($_SESSION['usuario_sig_cootax'])) {
             $_SESSION = array();
-            header('Location: /login');
+            $url = BASE_URL . '/login';
+            header('Location: ' . $url);
         }
     }
 

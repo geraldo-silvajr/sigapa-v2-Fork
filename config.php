@@ -8,9 +8,11 @@ require 'environment.php';
 $config = array();
 if (ENVIRONMENT == 'development') {
     //Raiz
-    define("BASE_URL", "http://sigcoot.cootax.com.pc");
+    define("BASE_URL", "https://localhost/sigapa-v2");
+    //nome do projeto
+    define("NAME_PROJECT", "SIGAPA - Sistema de Informação Gerencial de Associação de Pequeno Agricultores");
     //Nome do banco
-    $config['dbname'] = 'sigcoot_demo';
+    $config['dbname'] = 'sigapa';
     //host
     $config['host'] = 'localhost';
     //usuario

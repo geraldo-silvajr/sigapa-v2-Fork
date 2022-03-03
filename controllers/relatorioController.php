@@ -100,7 +100,8 @@ class relatorioController extends controller {
             }
             $this->loadTemplate($view, $dados);
         } else {
-            header("Location: /home");
+            $url = BASE_URL . '/home';
+            header("Location: " . $url);
         }
     }
 
@@ -132,7 +133,8 @@ class relatorioController extends controller {
             }
             $this->loadTemplate($view, $dados);
         } else {
-            header("Location: /home");
+            $url = BASE_URL . '/home';
+            header("Location: " . $url);
         }
     }
 
@@ -226,7 +228,8 @@ class relatorioController extends controller {
             $dados['cooperados'] = $cooperados;
             $this->loadTemplate($viewName, $dados);
         } else {
-            header("Location: /home");
+            $url = BASE_URL . '/home';
+            header("Location: " . $url);
         }
     }
 
@@ -238,7 +241,7 @@ class relatorioController extends controller {
      */
     public function lucros($page = 1) {
         if ($this->checkUser() >= 1) {
-            $view = "lucro_relatorio";
+            $view = "financeiro/lucro/relatorio";
             $dados = array();
             $crudModel = new crud_db();
             $dados['financas'] = $crudModel->read('SELECT * FROM sig_lucro WHERE cod_cooperativa=:cod', array('cod' => $this->getCodCooperativa()));
@@ -262,7 +265,7 @@ class relatorioController extends controller {
                     $campo_buscar['data_final'] = $_POST['nDatafinal'];
                 }
                 if ($_POST['nModoPDF'] == 1) {
-                    $viewPDF = "lucro_relatorio_pdf";
+                     $viewPDF = "financeiro/lucro/relatorio_pdf";
                     $dadosPDF = array();
                     $crudModel = new crud_db();
                     $dadosPDF['busca'] = isset($campo_buscar) ? $campo_buscar : null;
@@ -283,7 +286,8 @@ class relatorioController extends controller {
 
             $this->loadTemplate($view, $dados);
         } else {
-            header("Location: /home");
+            $url = BASE_URL . '/home';
+            header("Location: " . $url);
         }
     }
 
@@ -295,7 +299,7 @@ class relatorioController extends controller {
      */
     public function despesas($page = 1) {
         if ($this->checkUser() >= 1) {
-            $view = "despesa_relatorio";
+            $view = "financeiro/despesa/relatorio";
             $dados = array();
             $crudModel = new crud_db();
             $dados['financas'] = $crudModel->read('SELECT * FROM sig_despesa WHERE cod_cooperativa=:cod ', array('cod' => $this->getCodCooperativa()));
@@ -319,7 +323,7 @@ class relatorioController extends controller {
                     $campo_buscar['data_final'] = $_POST['nDatafinal'];
                 }
                 if ($_POST['nModoPDF'] == 1) {
-                    $viewPDF = "despesa_relatorio_pdf";
+                   $viewPDF = "financeiro/despesa/relatorio_pdf";
                     $dadosPDF = array();
                     $crudModel = new crud_db();
                     $dadosPDF['busca'] = isset($campo_buscar) ? $campo_buscar : null;
@@ -340,7 +344,8 @@ class relatorioController extends controller {
 
             $this->loadTemplate($view, $dados);
         } else {
-            header("Location: /home");
+            $url = BASE_URL . '/home';
+            header("Location: " . $url);
         }
     }
 
@@ -352,7 +357,7 @@ class relatorioController extends controller {
      */
     public function investimentos($page = 1) {
         if ($this->checkUser() >= 1) {
-            $view = "investimento_relatorio";
+            $view = "financeiro/investimento/relatorio";
             $dados = array();
             $crudModel = new crud_db();
             $dados['financas'] = $crudModel->read('SELECT * FROM sig_investimento WHERE cod_cooperativa=:cod ', array('cod' => $this->getCodCooperativa()));
@@ -376,7 +381,7 @@ class relatorioController extends controller {
                     $campo_buscar['data_final'] = $_POST['nDatafinal'];
                 }
                 if ($_POST['nModoPDF'] == 1) {
-                    $viewPDF = "investimento_relatorio_pdf";
+                    $viewPDF = "financeiro/investimento/relatorio_pdf";
                     $dadosPDF = array();
                     $crudModel = new crud_db();
                     $dadosPDF['busca'] = isset($campo_buscar) ? $campo_buscar : null;
@@ -397,13 +402,14 @@ class relatorioController extends controller {
 
             $this->loadTemplate($view, $dados);
         } else {
-            header("Location: /home");
+            $url = BASE_URL . '/home';
+            header("Location: " . $url);
         }
     }
 
     public function financeiro($page = 1) {
         if ($this->checkUser() >= 1) {
-            $view = "financeiro_relatorio";
+            $view = "financeiro/relatorio";
             $dados = array();
             $crudModel = new crud_db();
             //modo de exebicao
@@ -438,8 +444,8 @@ class relatorioController extends controller {
                     $campo_buscar['data_final'] = $_POST['nDatafinal'];
                     $campo_buscar['modo_exibicao'] = $dados['modo_exibicao'];
                 }
-                if ($_POST['nModoPDF'] == 1) {
-                    $viewPDF = "financeiro_relatorio_pdf";
+                if ($_POST['nModoPDF'] == 1) {                   
+                    $viewPDF = "financeiro/relatorio_pdf";
                     $dadosPDF = array();
                     $dadosPDF['busca'] = isset($campo_buscar) ? $campo_buscar : null;
                     $dadosPDF['modo_exibicao'] = $dados['modo_exibicao'];
@@ -453,7 +459,6 @@ class relatorioController extends controller {
                     $dadosPDF['lucro'] = $dados['lucro'];
                     $dadosPDF['despesa'] = $dados['despesa'];
                     $dadosPDF['investimento'] = $dados['investimento'];
-
 
                     $lucro = !empty($dadosPDF['lucro']) ? $dadosPDF['lucro']['valor'] : 0;
                     $despesa = !empty($dadosPDF['despesa']) ? $dadosPDF['despesa']['valor'] : 0;
@@ -477,9 +482,11 @@ class relatorioController extends controller {
 
             $this->loadTemplate($view, $dados);
         } else {
-            header("Location: /home");
+            $url = BASE_URL . '/home';
+            header("Location: " . $url);
         }
     }
+
     private function financaGraph($lucro, $despesa, $investimento) {
         require_once ('lib/jpgraph/src/jpgraph.php');
         require_once ('lib/jpgraph/src/jpgraph_bar.php');
@@ -527,11 +534,13 @@ class relatorioController extends controller {
         $graph->Add($bplot);
         $graph->Stroke($file);
     }
-    public function temp(){
+
+    public function temp() {
         $crudModel = new crud_db();
         $cooperados = $crudModel->read("SELECT * FROM sig_cooperado ORDER BY nome_completo ASC");
-        foreach ($cooperados as $cooperado){
-            echo $cooperado['cod_cooperado'].'<br/>';
+        foreach ($cooperados as $cooperado) {
+            echo $cooperado['cod_cooperado'] . '<br/>';
         }
     }
+
 }

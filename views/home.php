@@ -12,133 +12,133 @@
         <div class="col-sm-12 col-md-12 col-lg-12">
             <div class="alert alert-success alert-dismissible fade in" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-                Olá <strong><?php echo trim($_SESSION['usuario_sig_cootax']['nome']); ?></strong>, bem-vindo ao Sistema de Informação Gerencial de Cooperativa de Táxi - SIGCOOT.
+                Olá <strong><?php echo trim($_SESSION['usuario_sig_cootax']['nome']); ?></strong>, bem-vindo ao <?php echo NAME_PROJECT; ?>.
             </div>
         </div>
         <?php if ($this->checkUser() >= 2) { ?>
-        <div class="col-sm-6 col-md-4 col-lg-3">
-            <div class="panel panel-success">
-                <div class="panel-heading">
-                    <div class="row">
-                        <a href="<?php echo BASE_URL ?>/cadastrar/cooperado" >
-                            <div class="col-xs-12">
-                                <i class="fa fa-plus-square  fa-3x pull-left"> </i> 
-                                <div class="font-bold"> Cadastrar</div>
-                                <div>Cooperados</div>
-                            </div>
-                        </a>
+            <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="panel panel-success">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <a href="<?php echo BASE_URL ?>/cadastrar/cooperado" >
+                                <div class="col-xs-12">
+                                    <i class="fa fa-plus-square  fa-3x pull-left"> </i> 
+                                    <div class="font-bold"> Cadastrar</div>
+                                    <div>Associado</div>
+                                </div>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="col-sm-6 col-md-4 col-lg-3">
-            <div class="panel panel-info">
-                <div class="panel-heading">
-                    <div class="row">
-                        <a href="<?php echo BASE_URL ?>/cadastrar/lucro" >
-                            <div class="col-xs-12">
-                                <i class="glyphicon glyphicon-usd fa-3x pull-left"></i>
-                                <div class="font-bold">Cadastrar</div>
-                                <div>Entradas</div>
-                            </div>
-                        </a>
+            <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <a href="<?php echo BASE_URL ?>/cadastrar/lucro" >
+                                <div class="col-xs-12">
+                                    <i class="glyphicon glyphicon-usd fa-3x pull-left"></i>
+                                    <div class="font-bold">Cadastrar</div>
+                                    <div>Entradas</div>
+                                </div>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-sm-6 col-md-4 col-lg-3">
-            <div class="panel panel-danger">
-                <div class="panel-heading">
-                    <div class="row">
-                        <a href="<?php echo BASE_URL ?>/cadastrar/despesa" >
-                            <div class="col-xs-12">
-                                <i class="glyphicon glyphicon-usd  fa-3x pull-left"></i>                               
-                                <div class="font-bold">Cadastrar</div>
-                                <div>Saídas</div>
-                            </div>
-                        </a>
+            <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="panel panel-danger">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <a href="<?php echo BASE_URL ?>/cadastrar/despesa" >
+                                <div class="col-xs-12">
+                                    <i class="glyphicon glyphicon-usd  fa-3x pull-left"></i>                               
+                                    <div class="font-bold">Cadastrar</div>
+                                    <div>Saídas</div>
+                                </div>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-sm-6 col-md-4 col-lg-3">
-            <div class="panel panel-black">
-                <div class="panel-heading">
-                    <div class="row">
-                        <a href="<?php echo BASE_URL ?>/cadastrar/investimento" >
-                            <div class="col-xs-12">
-                                <i class="glyphicon glyphicon-usd fa-3x pull-left" ></i>
-                                <div class="font-bold">Cadastrar</div>
-                                <div>Investimentos</div>
-                            </div>
-                        </a>
+            <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="panel panel-black">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <a href="<?php echo BASE_URL ?>/cadastrar/investimento" >
+                                <div class="col-xs-12">
+                                    <i class="glyphicon glyphicon-usd fa-3x pull-left" ></i>
+                                    <div class="font-bold">Cadastrar</div>
+                                    <div>Investimentos</div>
+                                </div>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-sm-6 col-md-4 col-lg-3">
-            <div class="panel panel-success">
-                <div class="panel-heading">
-                    <div class="row">
-                        <a href="<?php echo BASE_URL ?>/relatorio/cooperados" >
-                            <div class="col-xs-12">
-                                <i class="fa fa-users  fa-3x pull-left"> </i> 
-                                <div class="font-bold"> Relatório</div>
-                                <div>Cooperados</div>
-                            </div>
-                        </a>
+            <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="panel panel-success">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <a href="<?php echo BASE_URL ?>/relatorio/cooperados" >
+                                <div class="col-xs-12">
+                                    <i class="fa fa-users  fa-3x pull-left"> </i> 
+                                    <div class="font-bold"> Relatório</div>
+                                    <div>Associado</div>
+                                </div>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="col-sm-6 col-md-4 col-lg-3">
-            <div class="panel panel-info">
-                <div class="panel-heading">
-                    <div class="row">
-                        <a href="<?php echo BASE_URL ?>/relatorio/lucros" >
-                            <div class="col-xs-12">
-                                <i class="fa fa-clipboard-list fa-3x pull-left"></i>
-                                <div class="font-bold">Relatório</div>
-                                <div>Entradas</div>
-                            </div>
-                        </a>
+            <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <a href="<?php echo BASE_URL ?>/relatorio/lucros" >
+                                <div class="col-xs-12">
+                                    <i class="fa fa-clipboard-list fa-3x pull-left"></i>
+                                    <div class="font-bold">Relatório</div>
+                                    <div>Entradas</div>
+                                </div>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-sm-6 col-md-4 col-lg-3">
-            <div class="panel panel-danger">
-                <div class="panel-heading">
-                    <div class="row">
-                        <a href="<?php echo BASE_URL ?>/relatorio/despesas" >
-                            <div class="col-xs-12">
-                                <i class="fa fa-clipboard-list fa-3x pull-left"></i>                               
-                                <div class="font-bold">Relatório</div>
-                                <div>Saídas</div>
-                            </div>
-                        </a>
+            <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="panel panel-danger">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <a href="<?php echo BASE_URL ?>/relatorio/despesas" >
+                                <div class="col-xs-12">
+                                    <i class="fa fa-clipboard-list fa-3x pull-left"></i>                               
+                                    <div class="font-bold">Relatório</div>
+                                    <div>Saídas</div>
+                                </div>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-sm-6 col-md-4 col-lg-3">
-            <div class="panel panel-black">
-                <div class="panel-heading">
-                    <div class="row">
-                        <a href="<?php echo BASE_URL ?>/relatorio/investimentos" >
-                            <div class="col-xs-12">
-                                <i class="fa fa-clipboard-list fa-3x pull-left" ></i>
-                                <div class="font-bold">Relatório</div>
-                                <div>Investimentos</div>
-                            </div>
-                        </a>
+            <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="panel panel-black">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <a href="<?php echo BASE_URL ?>/relatorio/investimentos" >
+                                <div class="col-xs-12">
+                                    <i class="fa fa-clipboard-list fa-3x pull-left" ></i>
+                                    <div class="font-bold">Relatório</div>
+                                    <div>Investimentos</div>
+                                </div>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <?php }else { ?>
+        <?php } else { ?>
             <div class="col-sm-6 col-md-4 col-lg-4">
                 <div class="panel panel-info">
                     <div class="panel-heading">
@@ -192,8 +192,8 @@
             <section class=" panel panel-black">
                 <header class="panel-heading">
                     <i class="fa fa-chart-pie fa-3x pull-left" ></i>
-                    <h4 class="panel-title font-bold">Cooperados </h4>
-                    <div>Cooperados Registrados</div>
+                    <h4 class="panel-title font-bold">Associados </h4>
+                    <div>Associados Registrados</div>
                 </header>
                 <article class="panel-body">
                     <canvas id="grafico_tipo_cooperado" width="100%"></canvas>
@@ -204,8 +204,8 @@
             <section class=" panel panel-black">
                 <header class="panel-heading">
                     <i class="fa fa-chart-pie fa-3x pull-left" ></i>
-                    <h4 class="panel-title font-bold">Cooperados </h4>
-                    <div>Cooperados Registrados</div>
+                    <h4 class="panel-title font-bold">Associados </h4>
+                    <div>Associados Registrados</div>
                 </header>
                 <article class="panel-body">
                     <canvas id="grafico_status_cooperado" width="100%"></canvas>

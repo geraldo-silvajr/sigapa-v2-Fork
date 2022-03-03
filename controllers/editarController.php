@@ -452,7 +452,7 @@ class EditarController extends controller {
     public function usuario($cod) {
 
         if (($this->checkUser() && $cod == $_SESSION['usuario_sig_cootax']['cod']) || ($this->checkUser() >= 3)) {
-            $view = "usuario_editar";
+            $view = "usuario/editar";
             $dados = array();
             $usuarioModel = new usuario();
             //pesquisa usuário
@@ -577,113 +577,6 @@ class EditarController extends controller {
             }
         } else {
             header('Location: /home');
-        }
-    }
-
-    /**
-     * Está função pertence a uma action do controle MVC, ela é responsável para editar e validar os campos preenchidos pelo motorista e carregar a view "cootaxiapp_motorista_cadastrar.php";
-     * @param string $cod - código do motorista registrada no banco do firebase
-     * @access public
-     * @author Joab Torres <joabtorres1508@gmail.com>
-     */
-    public function motorista($cod) {
-        if ($this->checkUser() >= 3) {
-            $view = "cootaxiapp_motorista_editar";
-            $dados = array();
-            $motorista = array();
-            $testLogico = false;
-            if (isset($_POST['nSalvar'])) {
-                $motorista['id'] = addslashes($cod);
-                //nome
-                if (!empty($_POST['nNomeCompleto'])) {
-                    $motorista['nome'] = addslashes($_POST['nNomeCompleto']);
-                } else {
-                    $dados['motorista_erro']['nome']['msg'] = 'Informe o nome completo';
-                    $dados['motorista_erro']['nome']['class'] = 'has-error';
-                }
-                //email
-                if (!empty($_POST['nEmail'])) {
-                    $motorista['email'] = strtolower(addslashes($_POST['nEmail']));
-                } else {
-                    $dados['motorista_erro']['email']['msg'] = 'Informe o email';
-                    $dados['motorista_erro']['email']['class'] = 'has-error';
-                }
-                //senha
-
-                $motorista['senha'] = addslashes($_POST['nSenha']);
-                if (!empty($_POST['nNovaSenha'])) {
-                    $motorista['nova_senha'] = addslashes($_POST['nNovaSenha']);
-                    //repetir senha
-                    if (!empty($_POST['nRepetirSenha'])) {
-                        $motorista['repetirSenha'] = addslashes($_POST['nRepetirSenha']);
-
-                        if ($motorista['nova_senha'] != $motorista['repetirSenha']) {
-                            $dados['motorista_erro']['senha']['msg'] = "Os campos 'Senha' e 'Repetir Senha' não estão iguais! ";
-                            $dados['motorista_erro']['senha']['class'] = 'has-error';
-                            $dados['motorista_erro']['repetirSenha']['msg'] = "Os campos 'Senha' e 'Repetir Senha' não estão iguais! ";
-                            $dados['motorista_erro']['repetirSenha']['class'] = 'has-error';
-                        }
-                    } else {
-                        $dados['motorista_erro']['repetirSenha']['msg'] = 'Repita a senha';
-                        $dados['motorista_erro']['repetirSenha']['class'] = 'has-error';
-                    }
-                } else {
-                    $motorista['nova_senha'] = null;
-                }
-                //repetir nz do veiculo
-                if (!empty($_POST['nNz'])) {
-                    $motorista['nz'] = strtoupper(addslashes($_POST['nNz']));
-                } else {
-                    $dados['motorista_erro']['nz']['msg'] = 'Informe a NZ do veículo';
-                    $dados['motorista_erro']['nz']['class'] = 'has-error';
-                }
-                //repetir modelo do veiculo
-                if (!empty($_POST['nModVeiculo'])) {
-                    $motorista['mod_veiculo'] = strtoupper(addslashes($_POST['nModVeiculo']));
-                } else {
-                    $dados['motorista_erro']['mod_veiculo']['msg'] = 'Informe o modelo do veículo';
-                    $dados['motorista_erro']['mod_veiculo']['class'] = 'has-error';
-                }
-                //repetir placa do veiculo
-                if (!empty($_POST['nPlacaVeiculo'])) {
-                    $motorista['placa_veiculo'] = strtoupper(addslashes($_POST['nPlacaVeiculo']));
-                } else {
-                    $dados['motorista_erro']['placa_veiculo']['msg'] = 'Informe a placa do veículo';
-                    $dados['motorista_erro']['placa_veiculo']['class'] = 'has-error';
-                }
-                //status
-                $motorista['status'] = addslashes($_POST['nStatus']);
-
-
-                $dados['motorista'] = $motorista;
-                if (isset($dados['motorista_erro']) && !empty($dados['motorista_erro'])) {
-                    $dados['erro']['msg'] = '<i class="fa fa-info-circle" aria-hidden="true"></i> Preencha todos os campos obrigatórios (*).';
-                    $dados['erro']['class'] = 'alert-danger';
-                } else {
-                    $testLogico = true;
-                    $dados["motorista"] = array();
-                    $dados['erro']['msg'] = '<i class="fa fa-check" aria-hidden="true"></i> Alteração realizada com sucesso!';
-                    $dados['erro']['class'] = 'alert-success oculta';
-                    $_POST = array();
-                    echo "<script> var motorista ={"
-                    . "id: '" . $motorista['id'] . "',"
-                    . "nome: '" . $motorista['nome'] . "',"
-                    . "email: '" . $motorista['email'] . "',"
-                    . "senha: '" . $motorista['senha'] . "',"
-                    . "nova_senha: '" . $motorista['nova_senha'] . "',"
-                    . "nz: '" . $motorista['nz'] . "',"
-                    . "mod_veiculo: '" . $motorista['mod_veiculo'] . "',"
-                    . "placa_veiculo: '" . $motorista['placa_veiculo'] . "',"
-                    . "status: '" . $motorista['status'] . "'}</script>";
-                }
-            }
-            echo "<script>var cod='$cod'</script>";
-            $this->loadTemplate($view, $dados);
-            if ($testLogico) {
-                echo "<script>validarEdicao()</script>";
-            }
-        } else {
-            header("Location: /home");
         }
     }
 

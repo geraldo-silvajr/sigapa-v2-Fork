@@ -7,48 +7,32 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="icon" type="image/gif" href="<?php echo BASE_URL ?>/assets/imagens/icon-cootax.png" sizes="32x32" />
-        <meta property="ogg:title" content="COOTAX - SIGCOOT - Sistema de Informação Gerencial de Cooperativa de Táxi">
-        <meta property="ogg:description" content="COOTAX - SIGCOOT - Sistema de Informação Gerencial de Cooperativa de Táxi!">
-        <title> SIGCOOT - Sistema de Informação Gerencial de Cooperativa de Táxi </title>
+        <link rel="icon" type="image/gif" href="<?php echo BASE_URL ?>/assets/imagens/icon.png" sizes="32x32" />
+        <meta property="ogg:title" content="<?php echo NAME_PROJECT ?>">
+        <meta property="ogg:description" content="<?php echo NAME_PROJECT ?>">
+        <title><?php echo NAME_PROJECT ?></title>
         <!-- Bootstrap -->
         <link href="<?php echo BASE_URL ?>/assets/css/bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" href="<?php echo BASE_URL ?>/assets/css/fontawesome-all.min.css">
-        <link rel="stylesheet" href="<?php echo BASE_URL ?>/assets/css/estilo.min.css">
-        <?php if (isset($_SESSION['usuario_sig_cootax']['nivel']) && $_SESSION['usuario_sig_cootax']['nivel'] >= 3): ?>
-            <script src="https://www.gstatic.com/firebasejs/5.9.3/firebase.js"></script>
-            <script>
-                // Initialize Firebase
-                var config = {
-                    apiKey: "AIzaSyDDzJxLtLVRxYbrsGlVJpj4TQ_b8gtqKcI",
-                    authDomain: "cootaxi-e46dc.firebaseapp.com",
-                    databaseURL: "https://cootaxi-e46dc.firebaseio.com",
-                    projectId: "cootaxi-e46dc",
-                    storageBucket: "cootaxi-e46dc.appspot.com",
-                    messagingSenderId: "413411429620"
-                };
-                firebase.initializeApp(config);
-            </script>
-        <?php endif; ?>
-
+        <link rel="stylesheet" href="<?php echo BASE_URL ?>/assets/css/estilo.css">
         <!-- jQuery (obrigatório para plugins JavaScript do Bootstrap) -->
         <script src="<?php echo BASE_URL ?>/assets/js/jquery-3.1.1.min.js"></script>
         <script>
-                var base_url = "<?php echo BASE_URL ?>";
-                function mostrarConteudo() {
-                    var elemento = document.getElementById("tela_load");
-                    elemento.style.display = "none";
+            var base_url = "<?php echo BASE_URL ?>";
+            function mostrarConteudo() {
+                var elemento = document.getElementById("tela_load");
+                elemento.style.display = "none";
 
-                    var elemento = document.getElementById("tela_sistema");
-                    if (elemento) {
-                        elemento.style.display = "block";
-                    }
-
-                    var elemento = document.getElementById("interface_login");
-                    if (elemento) {
-                        elemento.style.display = "block";
-                    }
+                var elemento = document.getElementById("tela_sistema");
+                if (elemento) {
+                    elemento.style.display = "block";
                 }
+
+                var elemento = document.getElementById("interface_login");
+                if (elemento) {
+                    elemento.style.display = "block";
+                }
+            }
         </script>
     </head>
 
@@ -78,7 +62,7 @@
                             <form action="<?php echo BASE_URL ?>/relatorio/buscarapida/1" class="navbar-form" method="POST" autocomplete="off" name="nSearchSGL">
                                 <div class="form-group">
                                     <label ><input type="radio" name="nSearchFinalidade" value="Nome" checked> Nome</label>
-                                    <label ><input type="radio" name="nSearchFinalidade" value="nz"> NZ</label>
+                                    <label ><input type="radio" name="nSearchFinalidade" value="Matricula"> Matricula</label>
                                 </div>
                                 <div class="input-group">
                                     <input type="text" name="nSerachCampo" class="form-control">
@@ -185,22 +169,9 @@
                                     <?php endif; ?>
                                 </ul>
                             </li>
-                            <?php if (isset($_SESSION['usuario_sig_cootax']['nivel']) && $_SESSION['usuario_sig_cootax']['nivel'] >= 2) : ?>
-                                <li>
-                                    <a href="javascript:;" data-toggle="collapse" data-target="#menu_cootaxi_app"><i class="fa fa-mobile-alt "></i> Aplicativo<i class="fa fa-fw fa-caret-down pull-right"></i></a>
-                                    <ul id="menu_cootaxi_app" class="collapse">
-                                        <li>
-                                            <a href="<?php echo BASE_URL ?>/cadastrar/motorista"><i class="fa fa-user-plus"></i> Motorista</a>
-                                        </li>
-                                        <li>
-                                            <a href="<?php echo BASE_URL ?>/cootaxiapp"><i class="fa fa-list-ul"></i> Lista de motoristas</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                            <?php endif; ?>
                             <?php if (isset($_SESSION['usuario_sig_cootax']['nivel']) && $_SESSION['usuario_sig_cootax']['nivel'] >= 3): ?>
                                 <li>
-                                    <a href="<?php echo BASE_URL . '/cooperativa/index/' . $this->getCodCooperativa() ?>"><i class="fa fa-home"></i> Cooperativa</a>
+                                    <a href="<?php echo BASE_URL . '/associacao/index/' . $this->getCodCooperativa() ?>"><i class="fa fa-home"></i> Associação</a>
                                 </li>
                             <?php endif; ?>
                             <li>
@@ -223,7 +194,7 @@
                     <?php $this->loadViewInTemplate($viewName, $viewData) ?>
 
                     <div id="rodape">
-                        <p class="text-right text-uppercase">&copy; Copyright 2018 - Joab Torres Alencar.</p>
+                        <p class="text-right text-uppercase">&copy; Copyright 2022 - Joab Torres Alencar.</p>
                     </div>
                     <!--FIM #rodape-->
                 </div>
@@ -231,37 +202,10 @@
             <!-- /#conteudo_sistema -->
         </div>
         <!-- /#tela_sistema -->
-
-
-
         <!-- Inclui todos os plugins compilados (abaixo), ou inclua arquivos separadados se necessário -->
         <script src="<?php echo BASE_URL ?>/assets/js/bootstrap.min.js"></script>
         <script src="<?php echo BASE_URL ?>/assets/js/jquery.maskedinput.min.js"></script>
         <script src="<?php echo BASE_URL ?>/assets/js/jquery.maskMoney.js"></script>
         <script src="<?php echo BASE_URL ?>/assets/js/sig.js"  ></script>
-
-        <?php if (isset($_SESSION['usuario_sig_cootax']['nivel']) && $_SESSION['usuario_sig_cootax']['nivel'] >= 3): ?>
-            <script src="<?php echo BASE_URL ?>/assets/js/cootaxiapp.js"></script>
-        <?php endif; ?>
-
-        <!--MODAL - ESTRUTURA BÁSICA-->
-        <section class="modal fade" id="modal_recupera" tabindex="-1" role="dialog">
-            <article class="modal-dialog modal-md" role="document">
-                <section class="modal-content">
-                    <header class="modal-header bg-primary">
-                        <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <p class="panel-title">Mensagem</p>
-                    </header>
-                    <article class="modal-body">
-                        <p class="text-justify">Lorem Ipsum Dolor!</p>
-                    </article>
-                    <footer class="modal-footer">
-                        <button class="btn btn-default" type="button" data-dismiss="modal">Fechar</button>
-                    </footer>
-                </section>
-            </article>
-        </section>
-        <!--MODAL - ESTRUTURA BÁSICA-->
     </body>
-
 </html>

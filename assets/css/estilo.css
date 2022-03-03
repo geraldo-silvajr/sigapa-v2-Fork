@@ -97,7 +97,7 @@ form label{
 
 /*MENU PRINCIPAL - NAV*/
 .navbar-inverse{
-    background-color: #00a65a;
+    background-color: #733003;
     color: white;
 }
 @media(min-width: 768px){
@@ -127,7 +127,7 @@ form label{
 
 .top-nav>li>a:hover, .top-nav>li>a:focus, .top-nav>.open>a, .top-nav>.open>a:hover, .top-nav>.open>a:focus {
     color: #fff;
-    background-color: #222d32;
+    background-color: #512305;
 }
 
 .top-nav>.open>.dropdown-menu {
@@ -170,7 +170,7 @@ form label{
         border: none;
         border-radius: 0;
         overflow-y: auto;
-        background-color: #2F4554;
+        background-color: #2f4554;
         border-color: black;
         bottom: 0;
         overflow-x: hidden;
@@ -196,12 +196,12 @@ form label{
 }
 .side-nav>figure{
     margin-bottom: 10px;
-    background: #414B51;
+    background: #646c71;
     padding: 20px 0;
 }
 .side-nav>figure>img{
     width: 60px;
-    border: 3px solid #00a65a;
+    border: 3px solid white;
     margin-left:  10px;
     margin-right: 5px;
 }

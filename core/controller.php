@@ -24,7 +24,8 @@ class controller {
                 return $_SESSION['usuario_sig_cootax']['nivel'];
             }
         } else {
-            header("Location: /login");
+            $url = BASE_URL . '/login';
+            header("Location: " . $url);
             return 0;
         }
     }
