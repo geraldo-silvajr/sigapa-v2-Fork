@@ -14,9 +14,17 @@
         <!-- Bootstrap -->
         <link href="<?php echo BASE_URL ?>/assets/css/bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" href="<?php echo BASE_URL ?>/assets/css/fontawesome-all.min.css">
+        <!-- Date datepicker CSS -->
+        <link rel="stylesheet" href="<?php echo BASE_URL ?>/assets/css/jquery-ui.min.css">
+        <!-- Our Date datepicker 2 -->
+        <link rel="stylesheet" href="<?php echo BASE_URL ?>/assets/css/select2.min.css">
         <link rel="stylesheet" href="<?php echo BASE_URL ?>/assets/css/estilo.css">
-        <!-- jQuery (obrigatório para plugins JavaScript do Bootstrap) -->
+        <!-- jQuery CDN - Slim version (=without AJAX) -->
         <script src="<?php echo BASE_URL ?>/assets/js/jquery-3.1.1.min.js"></script>
+        <!-- Date datepicker JS -->
+        <script src="<?php echo BASE_URL ?>/assets/js/jquery-ui.min.js"></script>
+        <!-- select2 JS -->
+        <script defer src="<?php echo BASE_URL ?>/assets/js/select2.min.js"></script>
         <script>
             var base_url = "<?php echo BASE_URL ?>";
             function mostrarConteudo() {
@@ -38,7 +46,7 @@
 
     <body>
         <div id="tela_load">
-            <img src="<?php BASE_URL ?>/assets/imagens/loading.gif" style="display: block; margin: auto; margin-top: 300px;">
+            <img src="<?php echo BASE_URL ?>/assets/imagens/loading.gif" style="display: block; margin: auto; margin-top: 300px;">
         </div>
         <div id="tela_sistema">
 
@@ -62,7 +70,7 @@
                             <form action="<?php echo BASE_URL ?>/relatorio/buscarapida/1" class="navbar-form" method="POST" autocomplete="off" name="nSearchSGL">
                                 <div class="form-group">
                                     <label ><input type="radio" name="nSearchFinalidade" value="Nome" checked> Nome</label>
-                                    <label ><input type="radio" name="nSearchFinalidade" value="Matricula"> Matricula</label>
+                                    <label ><input type="radio" name="nSearchFinalidade" value="matricula"> Matricula</label>
                                 </div>
                                 <div class="input-group">
                                     <input type="text" name="nSerachCampo" class="form-control">

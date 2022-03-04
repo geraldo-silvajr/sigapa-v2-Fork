@@ -35,7 +35,7 @@
                             </div>
                              <div class="col-md-6 form-group">
                                 <label for='iData'>Data:* </label>
-                                <input type="text" id="iData" name="nData" class="form-control input-data" placeholder="Exemplo: 15/05/2018" value="<?php echo (!empty($financa['data'])) ? $financa['data'] : ''; ?>"/>
+                                <input type="text" id="iData" name="nData" class="form-control input-data date_serach" placeholder="Exemplo: 15/05/2018" value="<?php echo (!empty($financa['data'])) ? $financa['data'] : ''; ?>"/>
                             </div>
                         </div>
                     </article>

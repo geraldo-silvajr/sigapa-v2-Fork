@@ -99,14 +99,14 @@ class cadastrarController extends controller {
                 $cooperado['cooperado']['genero'] = addslashes($_POST['nGenero']);
                 //daca de nascimento
                 if (!empty($_POST['nDataNascimento']) && isset($_POST['nDataNascimento'])) {
-                    $cooperado['cooperado']['data_nascimento'] = addslashes($_POST['nDataNascimento']);
+                    $cooperado['cooperado']['data_nascimento'] = $this->formatDateBD(addslashes($_POST['nDataNascimento']));
                 } else {
                     $dados['cooperado_error']['data_nascimento']['msg'] = 'Informe a Data de Nascimento';
                     $dados['cooperado_error']['data_nascimento']['class'] = 'has-error';
                 }
                 //nDataInscricao
                 if (!empty($_POST['nDataInscricao']) && isset($_POST['nDataInscricao'])) {
-                    $cooperado['cooperado']['data_inscricao'] = addslashes($_POST['nDataInscricao']);
+                    $cooperado['cooperado']['data_inscricao'] = $this->formatDateBD(addslashes($_POST['nDataInscricao']));
                 } else {
                     $dados['cooperado_error']['data_inscricao']['msg'] = 'Informe a Data de Inscrição';
                     $dados['cooperado_error']['data_inscricao']['class'] = 'has-error';
@@ -150,8 +150,8 @@ class cadastrarController extends controller {
                 //carteira
                 $cooperado['carteira'] = array(
                     'associado_cod' => $cooperado['cooperado']['cod'],
-                    'data_inicial' => $_POST['nDataInicial'],
-                    'data_validade' => $_POST['nDataValidade']
+                    'data_inicial' => $this->formatDateBD($_POST['nDataInicial']),
+                    'data_validade' => $this->formatDateBD($_POST['nDataValidade'])
                 );
 
                 $dados['cooperado'] = $cooperado;

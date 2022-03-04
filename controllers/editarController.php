@@ -29,27 +29,23 @@ class EditarController extends controller {
      */
     public function cooperado($cod_cooperado) {
         if ($this->checkUser() >= 2 && intval($cod_cooperado) > 0) {
-            $viewName = "cooperado_editar";
+            $viewName = "associado/editar";
             $dados = array();
             $cooperado = array();
             $cooperadoModel = new cooperado();
-            $dados['cooperado']['cooperado'] = $cooperadoModel->read('SELECT * FROM sig_cooperado WHERE cod_cooperado=:cod', array('cod' => addslashes($cod_cooperado)));
-            $dados['cooperado']['cooperado'] = $dados['cooperado']['cooperado'][0];
-            $dados['cooperado']['endereco'] = $cooperadoModel->read('SELECT * FROM sig_cooperado_endereco WHERE cod_cooperado=:cod', array('cod' => addslashes($cod_cooperado)));
-            $dados['cooperado']['endereco'] = $dados['cooperado']['endereco'][0];
-            $dados['cooperado']['contato'] = $cooperadoModel->read('SELECT * FROM sig_cooperado_contato WHERE cod_cooperado=:cod', array('cod' => addslashes($cod_cooperado)));
-            $dados['cooperado']['contato'] = $dados['cooperado']['contato'][0];
-            $dados['cooperado']['veiculo'] = $cooperadoModel->read('SELECT * FROM sig_cooperado_veiculo WHERE cod_cooperado=:cod', array('cod' => addslashes($cod_cooperado)));
-            $dados['cooperado']['veiculo'] = $dados['cooperado']['veiculo'][0];
-            $dados['cooperado']['carteira'] = $cooperadoModel->read('SELECT * FROM sig_cooperado_carteira WHERE cod_cooperado=:cod', array('cod' => addslashes($cod_cooperado)));
-            $dados['cooperado']['carteira'] = $dados['cooperado']['carteira'][0];
+            $resultado = $cooperadoModel->read('SELECT * FROM associado WHERE cod=:cod', array('cod' => addslashes($cod_cooperado)));
+            $dados['cooperado']['cooperado'] = (!empty($resultado) && is_array($resultado)) ? $resultado[0] : '';
+            $resultado = $cooperadoModel->read('SELECT * FROM associado_endereco WHERE associado_cod=:cod', array('cod' => addslashes($cod_cooperado)));
+            $dados['cooperado']['endereco'] = (!empty($resultado) && is_array($resultado)) ? $resultado[0] : '';
+            $resultado = $cooperadoModel->read('SELECT * FROM associado_contato WHERE associado_cod=:cod', array('cod' => addslashes($cod_cooperado)));
+            $dados['cooperado']['contato'] = (!empty($resultado) && is_array($resultado)) ? $resultado[0] : '';
+            $resultado = $cooperadoModel->read('SELECT * FROM associado_carteira WHERE associado_cod=:cod', array('cod' => addslashes($cod_cooperado)));
+            $dados['cooperado']['carteira'] = (!empty($resultado) && is_array($resultado)) ? $resultado[0] : '';
 
             if (isset($_POST['nSalvar']) && !empty($_POST['nSalvar'])) {
 
-                $cooperado['cooperado']['cod_cooperado'] = addslashes($_POST['nCodCooperado']);
+                $cooperado['cooperado']['cod'] = addslashes($_POST['nCodCooperado']);
                 //cooperativa
-                $cooperado['cooperado']['cod_cooperativa'] = $this->getCodCooperativa();
-                //categoria de cooperado
                 $cooperado['cooperado']['tipo'] = addslashes($_POST['nTipo']);
                 //status
                 $cooperado['cooperado']['status'] = addslashes($_POST['nStatus']);
@@ -83,23 +79,6 @@ class EditarController extends controller {
                     $dados['cooperado_error']['rg']['msg'] = 'Informe o RG';
                     $dados['cooperado_error']['rg']['class'] = 'has-error';
                 }
-
-                //cnh
-                if (!empty($_POST['nCNH']) && isset($_POST['nCNH'])) {
-                    $cooperado['cooperado']['cnh'] = addslashes($_POST['nCNH']);
-                } else {
-                    $dados['cooperado_error']['cnh']['msg'] = 'Informe o CNH';
-                    $dados['cooperado_error']['cnh']['class'] = 'has-error';
-                }
-                //cat
-                if (!empty($_POST['nCAT']) && isset($_POST['nCAT'])) {
-                    $cooperado['cooperado']['cat'] = addslashes($_POST['nCAT']);
-                } else {
-                    $dados['cooperado_error']['cat']['msg'] = 'Informe a Categoria';
-                    $dados['cooperado_error']['cat']['class'] = 'has-error';
-                }
-                //inss
-                $cooperado['cooperado']['inss'] = addslashes($_POST['nINSS']);
                 //rg
                 if (!empty($_POST['nEstadoCivil']) && isset($_POST['nEstadoCivil'])) {
                     $cooperado['cooperado']['estado_civil'] = addslashes($_POST['nEstadoCivil']);
@@ -148,7 +127,7 @@ class EditarController extends controller {
 
                 //endereço
                 $cooperado['endereco'] = array(
-                    'cod_cooperado' => $cooperado['cooperado']['cod_cooperado'],
+                    'associado_cod' => $cooperado['cooperado']['cod'],
                     'logradouro' => addslashes($_POST['nLogradouro']),
                     'numero' => $_POST['nNumero'],
                     'bairro' => addslashes($_POST['nBairro']),
@@ -160,25 +139,15 @@ class EditarController extends controller {
                 );
                 //contato
                 $cooperado['contato'] = array(
-                    'cod_cooperado' => $cooperado['cooperado']['cod_cooperado'],
+                    'associado_cod' => $cooperado['cooperado']['cod'],
                     'celular_1' => addslashes($_POST['nTelefone']),
                     'celular_2' => addslashes($_POST['nCelular']),
                     'email' => addslashes($_POST['nEmail']),
                     'cod_contato' => addslashes($_POST['nCodContato'])
                 );
-                //veiculo
-                $cooperado['veiculo'] = array(
-                    'cod_cooperado' => $cooperado['cooperado']['cod_cooperado'],
-                    'nz' => addslashes($_POST['nNZ']),
-                    'veiculo' => addslashes($_POST['nVeiculo']),
-                    'cor' => addslashes($_POST['nCor']),
-                    'placa' => $_POST['nPlaca'],
-                    'ano_modelo' => $_POST['nAnoModelo'],
-                    'cod_veiculo' => $_POST['nCodVeiculo']
-                );
                 //carteira
                 $cooperado['carteira'] = array(
-                    'cod_cooperado' => $cooperado['cooperado']['cod_cooperado'],
+                    'associado_cod' => $cooperado['cooperado']['cod'],
                     'data_inicial' => $_POST['nDataInicial'],
                     'data_validade' => $_POST['nDataValidade'],
                     'cod' => addslashes($_POST['nCodCarteira']),
@@ -200,6 +169,8 @@ class EditarController extends controller {
                     }
                 }
                 $dados['cooperado'] = $cooperado;
+            } else {
+                
             }
             $this->loadTemplate($viewName, $dados);
         } else {
@@ -219,7 +190,7 @@ class EditarController extends controller {
             $viewName = "historico_editar";
             $dados = array();
             $crudModel = new crud_db();
-            $dados['cooperado']['historico'] = $crudModel->read('SELECT hist.*, user.usuario_usuario, coop.nome_completo FROM sig_cooperado_historico as hist INNER JOIN sig_usuario as user INNER JOIN sig_cooperado as coop WHERE coop.cod_cooperado=hist.cod_cooperado AND user.cod_usuario=hist.cod_usuario AND hist.cod_historico=:cod;', array('cod' => addslashes($cod)));
+            $dados['cooperado']['historico'] = $crudModel->read('SELECT hist.*, user.usuario_usuario, coop.nome_completo FROM associado_historico as hist INNER JOIN sig_usuario as user INNER JOIN associado as coop WHERE coop.cod_cooperado=hist.cod_cooperado AND user.cod_usuario=hist.cod_usuario AND hist.cod_historico=:cod;', array('cod' => addslashes($cod)));
             $dados['cooperado']['historico'] = $dados['cooperado']['historico'][0];
 
             if (isset($_POST['nSalvar']) && !empty($_POST['nSalvar'])) {
@@ -227,7 +198,7 @@ class EditarController extends controller {
                     'descricao_historico' => addslashes($_POST['nDescricao']),
                     'cod_historico' => addslashes($_POST['nCodHistorico'])
                 );
-                $cadHistorico = $crudModel->update("UPDATE sig_cooperado_historico SET descricao_historico=:descricao_historico WHERE cod_historico=:cod_historico", $dados['coopeado']['historico']);
+                $cadHistorico = $crudModel->update("UPDATE associado_historico SET descricao_historico=:descricao_historico WHERE cod_historico=:cod_historico", $dados['coopeado']['historico']);
                 if ($cadHistorico) {
                     $_SESSION['historico_acao'] = true;
                     $url = BASE_URL . "/editar/historico/" . $cod;
@@ -256,7 +227,7 @@ class EditarController extends controller {
             $viewName = "mensalidade_editar";
             $dados = array();
             $cooperadoModel = new crud_db();
-            $dados['cooperado']['mensalidade'] = $cooperadoModel->read('SELECT men.*, coop.nome_completo FROM sig_cooperado_mensalidade as men INNER JOIN sig_cooperado as coop WHERE coop.cod_cooperado=men.cod_cooperado AND men.cod_mensalidade=:cod', array('cod' => addslashes($cod)));
+            $dados['cooperado']['mensalidade'] = $cooperadoModel->read('SELECT men.*, coop.nome_completo FROM associado_mensalidade as men INNER JOIN associado as coop WHERE coop.cod_cooperado=men.cod_cooperado AND men.cod_mensalidade=:cod', array('cod' => addslashes($cod)));
             $dados['cooperado']['mensalidade'] = $dados['cooperado']['mensalidade'][0];
             if (isset($_POST['nSalvar']) && !empty($_POST['nSalvar'])) {
                 if (isset($_POST['nAno']) && !empty($_POST['nAno'])) {
@@ -277,7 +248,7 @@ class EditarController extends controller {
                         'dezembro' => !empty($_POST['nDezembro']) ? $this->formatDinheiroBD($_POST['nDezembro']) : 0,
                         'cod_mensalidade' => addslashes($_POST['nCodMensalidade'])
                     );
-                    $cadMensalidade = $cooperadoModel->update("UPDATE sig_cooperado_mensalidade SET cod_cooperado=:cod_cooperado, ano=:ano, janeiro=:janeiro, fevereiro=:fevereiro, marco=:marco, abril=:abril, maio=:maio, junho=:junho, julho=:julho, agosto=:agosto, setembro=:setembro, outubro=:outubro, novembro=:novembro, dezembro=:dezembro where cod_mensalidade=:cod_mensalidade", $dados['mensalidade']);
+                    $cadMensalidade = $cooperadoModel->update("UPDATE associado_mensalidade SET cod_cooperado=:cod_cooperado, ano=:ano, janeiro=:janeiro, fevereiro=:fevereiro, marco=:marco, abril=:abril, maio=:maio, junho=:junho, julho=:julho, agosto=:agosto, setembro=:setembro, outubro=:outubro, novembro=:novembro, dezembro=:dezembro where cod_mensalidade=:cod_mensalidade", $dados['mensalidade']);
                     if ($cadMensalidade) {
                         $_SESSION['mensalidade_acao'] = true;
                         $url = BASE_URL . "/editar/mensalidade/" . $cod;
@@ -359,7 +330,7 @@ class EditarController extends controller {
      */
     public function despesa($cod) {
         if ($this->checkUser() >= 2 && intval($cod) > 0) {
-             $viewName = "financeiro/despesa/editar";
+            $viewName = "financeiro/despesa/editar";
             $dados = array();
             $crudModel = new crud_db();
             $financa_db = $crudModel->read('SELECT * FROM sig_despesa WHERE cod=:cod', array('cod' => $cod));
@@ -412,7 +383,7 @@ class EditarController extends controller {
      */
     public function investimento($cod) {
         if ($this->checkUser() >= 2 && intval($cod) > 0) {
-             $viewName = "financeiro/investimento/editar";
+            $viewName = "financeiro/investimento/editar";
             $dados = array();
             $crudModel = new crud_db();
             $financa_db = $crudModel->read('SELECT * FROM sig_investimento WHERE cod=:cod', array('cod' => $cod));

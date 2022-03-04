@@ -30,10 +30,17 @@ class excluirController extends controller {
     public function cooperado($cod_cooperado) {
         if ($this->checkUser() >= 3 && intval($cod_cooperado) > 0) {
             $coopeadoModel = new cooperado();
-            $cooperado = $coopeadoModel->read('SELECT * FROM sig_cooperado WHERE cod_cooperado =:cod', array('cod' => addslashes($cod_cooperado)));
+            $cooperado = $coopeadoModel->read('SELECT * FROM associado WHERE cod =:cod', array('cod' => addslashes($cod_cooperado)));
             $cooperado = $cooperado[0];
             $coopeadoModel->delete_image($cooperado['imagem']);
-            $coopeadoModel->remove("DELETE FROM sig_cooperado WHERE cod_cooperado=:cod", array('cod' => addslashes($cod_cooperado)));
+            $coopeadoModel->remove("DELETE FROM associado_carteira WHERE associado_cod=:cod", array('cod' => addslashes($cod_cooperado)));
+            $coopeadoModel->remove("DELETE FROM associado_contato WHERE associado_cod=:cod", array('cod' => addslashes($cod_cooperado)));
+            $coopeadoModel->remove("DELETE FROM associado_endereco WHERE associado_cod=:cod", array('cod' => addslashes($cod_cooperado)));
+            $coopeadoModel->remove("DELETE FROM associado_historico WHERE associado_cod=:cod", array('cod' => addslashes($cod_cooperado)));
+            $coopeadoModel->remove("DELETE FROM associado_historico WHERE associado_cod=:cod", array('cod' => addslashes($cod_cooperado)));
+            $coopeadoModel->remove("DELETE FROM associado_mensalidade WHERE associado_cod=:cod", array('cod' => addslashes($cod_cooperado)));
+            $coopeadoModel->remove("DELETE FROM associado_producao WHERE associado_cod=:cod", array('cod' => addslashes($cod_cooperado)));
+            $coopeadoModel->remove("DELETE FROM associado WHERE cod=:cod", array('cod' => addslashes($cod_cooperado)));
             $_SESSION['cooperado_categoria'] = array();
             $_SESSION['cooperado_status'] = array();
             $url = BASE_URL . "/relatorio/cooperados";
@@ -54,7 +61,7 @@ class excluirController extends controller {
     public function historico($cod_cooperado, $cod) {
         if ($this->checkUser() >= 3 && intval($cod) > 0) {
             $crudModel = new crud_db();
-            $removeFinanca = $crudModel->remove("DELETE FROM sig_cooperado_historico WHERE cod_historico=:cod", array('cod' => addslashes($cod)));
+            $removeFinanca = $crudModel->remove("DELETE FROM associado_historico WHERE cod_historico=:cod", array('cod' => addslashes($cod)));
             if ($removeFinanca) {
                 $url = BASE_URL . "/cooperado/index/" . $cod_cooperado;
                 header("Location: " . $url);
@@ -75,7 +82,7 @@ class excluirController extends controller {
     public function mensalidade($cod_cooperado, $cod) {
         if ($this->checkUser() >= 3 && intval($cod) > 0) {
             $crudModel = new crud_db();
-            $removeFinanca = $crudModel->remove("DELETE FROM sig_cooperado_mensalidade WHERE cod_mensalidade=:cod", array('cod' => addslashes($cod)));
+            $removeFinanca = $crudModel->remove("DELETE FROM associado_mensalidade WHERE cod_mensalidade=:cod", array('cod' => addslashes($cod)));
             if ($removeFinanca) {
                 $url = BASE_URL . "/cooperado/index/" . $cod_cooperado;
                 header("Location: " . $url);

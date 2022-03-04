@@ -118,17 +118,13 @@ class cooperado extends model {
      * @author Joab Torres <joabtorres1508@gmail.com>
      */
     public function update($data) {
-        $sql = $this->db->prepare('UPDATE sig_cooperado SET cod_cooperativa=:cod_cooperativa, tipo=:tipo, status=:status, apelido=:apelido, nome_completo=:nome_completo, cpf=:cpf, rg=:rg, cnh=:cnh, cat=:cat,inss=:inss, estado_civil=:estado_civil, nacionalidade=:nacionalidade, genero=:genero, data_nascimento=:data_nascimento, data_inscricao= :data_inscricao, pai=:pai, mae=:mae, conjugue=:conjugue, filhos=:filhos, imagem=:imagem WHERE cod_cooperado=:cod_cooperado');
-        $sql->bindValue(":cod_cooperativa", $data['cooperado']['cod_cooperativa']);
+        $sql = $this->db->prepare('UPDATE associado SET tipo=:tipo, status=:status, apelido=:apelido, nome_completo=:nome_completo, cpf=:cpf, rg=:rg, estado_civil=:estado_civil, nacionalidade=:nacionalidade, genero=:genero, data_nascimento=:data_nascimento, data_inscricao= :data_inscricao, pai=:pai, mae=:mae, conjugue=:conjugue, filhos=:filhos, imagem=:imagem WHERE cod=:cod');
         $sql->bindValue(":tipo", $data['cooperado']['tipo']);
         $sql->bindValue(":status", $data['cooperado']['status']);
         $sql->bindValue(":apelido", $data['cooperado']['apelido']);
         $sql->bindValue(":nome_completo", $data['cooperado']['nome_completo']);
         $sql->bindValue(":cpf", $data['cooperado']['cpf']);
         $sql->bindValue(":rg", $data['cooperado']['rg']);
-        $sql->bindValue(":cnh", $data['cooperado']['cnh']);
-        $sql->bindValue(":cat", $data['cooperado']['cat']);
-        $sql->bindValue(":inss", $data['cooperado']['inss']);
         $sql->bindValue(":estado_civil", $data['cooperado']['estado_civil']);
         $sql->bindValue(":nacionalidade", $data['cooperado']['nacionalidade']);
         $sql->bindValue(":genero", $data['cooperado']['genero']);
@@ -139,28 +135,22 @@ class cooperado extends model {
         $sql->bindValue(":conjugue", $data['cooperado']['conjugue']);
         $sql->bindValue(":filhos", $data['cooperado']['filhos']);
         $sql->bindValue(":imagem", $data['cooperado']['imagem']);
-        $sql->bindValue(":cod_cooperado", $data['cooperado']['cod_cooperado']);
+        $sql->bindValue(":cod", $data['cooperado']['cod']);
         //endereço
         $sql->execute();
-        $sql = $this->db->prepare('UPDATE sig_cooperado_endereco SET cod_cooperado=:cod_cooperado, logradouro=:logradouro, numero=:numero, bairro=:bairro, complemento=:complemento, cidade=:cidade, estado=:estado, cep=:cep WHERE cod_endereco=:cod_endereco');
+        $sql = $this->db->prepare('UPDATE associado_endereco SET associado_cod=:associado_cod, logradouro=:logradouro, numero=:numero, bairro=:bairro, complemento=:complemento, cidade=:cidade, estado=:estado, cep=:cep WHERE cod_endereco=:cod_endereco');
         foreach ($data['endereco'] as $indice => $valor) {
             $sql->bindValue(":" . $indice, $valor);
         }
         $sql->execute();
         //contato
-        $sql = $this->db->prepare('UPDATE sig_cooperado_contato SET cod_cooperado=:cod_cooperado, celular_1=:celular_1, celular_2=:celular_2, email =:email WHERE cod_contato=:cod_contato');
+        $sql = $this->db->prepare('UPDATE associado_contato SET associado_cod=:associado_cod, celular_1=:celular_1, celular_2=:celular_2, email =:email WHERE cod_contato=:cod_contato');
         foreach ($data['contato'] as $indice => $valor) {
             $sql->bindValue(":" . $indice, $valor);
         }
         $sql->execute();
-        //veiculo
-        $sql = $this->db->prepare('UPDATE sig_cooperado_veiculo SET cod_cooperado=:cod_cooperado, nz=:nz, veiculo=:veiculo, cor=:cor, placa=:placa, ano_modelo=:ano_modelo WHERE cod_veiculo=:cod_veiculo');
-        foreach ($data['veiculo'] as $indice => $valor) {
-            $sql->bindValue(":" . $indice, $valor);
-        }
-        $sql->execute();
         //carteira
-        $sql = $this->db->prepare('UPDATE sig_cooperado_carteira SET cod_cooperado=:cod_cooperado, data_inicial=:data_inicial, data_validade=:data_validade WHERE cod=:cod');
+        $sql = $this->db->prepare('UPDATE associado_carteira SET associado_cod=:associado_cod, data_inicial=:data_inicial, data_validade=:data_validade WHERE cod=:cod');
         foreach ($data['carteira'] as $indice => $valor) {
             $sql->bindValue(":" . $indice, $valor);
         }

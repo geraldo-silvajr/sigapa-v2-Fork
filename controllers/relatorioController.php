@@ -29,13 +29,13 @@ class relatorioController extends controller {
      */
     public function cooperados($page = 1) {
         if ($this->checkUser() >= 2) {
-            $view = "cooperado_relatorio_avancado";
+            $view = "associado/relatorio_avancado";
             $dados = array();
             $cooperadoModel = new cooperado();
             $dados['modo_exebicao'] = 1;
             $campos_buscar = array();
             if (isset($_POST['nBuscarBT'])) {
-                $sql = "SELECT cooperado.cod_cooperado, cooperado.cod_cooperativa, cooperado.apelido, cooperado.nome_completo, cooperado.data_inscricao, cooperado.imagem, cooperado.tipo, veiculo.nz FROM sig_cooperado as cooperado INNER JOIN sig_cooperado_veiculo AS veiculo WHERE cooperado.cod_cooperado = veiculo.cod_cooperado";
+                $sql = "SELECT cooperado.cod, cooperado.apelido, cooperado.nome_completo, cooperado.data_inscricao, cooperado.imagem, cooperado.tipo FROM associado as cooperado WHERE cooperado.cod >= 1";
                 $filtro = array();
                 if (isset($_POST['nTipo']) && !empty($_POST['nTipo'])) {
                     $sql = $sql . " AND cooperado.tipo = :tipo ";
@@ -53,8 +53,8 @@ class relatorioController extends controller {
                 }
                 if (isset($_POST['nPor']) && !empty($_POST['nPor']) && !empty($_POST['nBuscar'])) {
                     switch ($_POST['nPor']) {
-                        case 'NZ':
-                            $sql = $sql . " AND veiculo.nz LIKE '%" . addslashes($_POST['nBuscar']) . "%' ";
+                        case 'matricula':
+                            $sql = $sql . " AND cooperado.cod = '" . addslashes($_POST['nBuscar']) . "' ";
                             break;
                         case 'Apelido':
                             $sql = $sql . " AND cooperado.apelido LIKE '%" . addslashes($_POST['nBuscar']) . "%' ";
@@ -79,7 +79,7 @@ class relatorioController extends controller {
                 $dados['modo_exebicao'] = $_POST['nModoExibicao'];
 
                 if ($_POST['nModoPDF'] == 1) {
-                    $viewPDF = "cooperado_relatorio_pdf";
+                    $viewPDF = "associado/relatorio_pdf";
                     $dadosPDF = array();
                     $crudModel = new crud_db();
                     $dadosPDF['busca'] = $campos_buscar;
@@ -96,7 +96,7 @@ class relatorioController extends controller {
                     $mpdf->Output($arquivo, 'D');
                 }
             } else {
-                $dados['cooperados'] = $cooperadoModel->read('SELECT cooperado.cod_cooperado, cooperado.cod_cooperativa, cooperado.apelido, cooperado.nome_completo, cooperado.data_inscricao, cooperado.imagem, cooperado.tipo, veiculo.nz FROM sig_cooperado as cooperado INNER JOIN sig_cooperado_veiculo AS veiculo WHERE cooperado.cod_cooperado = veiculo.cod_cooperado');
+                $dados['cooperados'] = $cooperadoModel->read('SELECT cooperado.cod, cooperado.apelido, cooperado.nome_completo, cooperado.data_inscricao, cooperado.imagem, cooperado.tipo FROM associado as cooperado WHERE cooperado.cod >= 1');
             }
             $this->loadTemplate($view, $dados);
         } else {
@@ -113,15 +113,15 @@ class relatorioController extends controller {
      */
     public function buscarapida($page = 1) {
         if ($this->checkUser() >= 2) {
-            $view = "cooperado_relatorio_busca_rapido";
+            $view = "associado/relatorio_busca_rapido";
             $dados = array();
             $cooperadoModel = new cooperado();
             $dados['modo_exebicao'] = 1;
             if (isset($_POST['nSerachCampo']) && !empty($_POST['nSerachCampo'])) {
-                $sql = "SELECT cooperado.cod_cooperado, cooperado.cod_cooperativa, cooperado.apelido, cooperado.nome_completo, cooperado.data_inscricao, cooperado.imagem, cooperado.tipo, veiculo.nz FROM sig_cooperado as cooperado INNER JOIN sig_cooperado_veiculo AS veiculo WHERE cooperado.cod_cooperado = veiculo.cod_cooperado";
+                $sql = "SELECT cooperado.cod, cooperado.apelido, cooperado.nome_completo, cooperado.data_inscricao, cooperado.imagem, cooperado.tipo FROM associado as cooperado WHERE cooperado.cod >= 1";
                 switch ($_POST['nSearchFinalidade']) {
-                    case 'nz':
-                        $sql = $sql . " AND veiculo.nz LIKE '%" . addslashes($_POST['nSerachCampo']) . "%' ";
+                    case 'matricula':
+                        $sql = $sql . " AND cooperado.cod = '" . addslashes($_POST['nSerachCampo']) . "' ";
                         break;
                     default :
                         $sql = $sql . " AND cooperado.nome_completo LIKE '%" . addslashes($_POST['nSerachCampo']) . "%' ";
@@ -129,7 +129,7 @@ class relatorioController extends controller {
                 }
                 $dados['cooperados'] = $cooperadoModel->read($sql);
             } else {
-                $dados['cooperados'] = $cooperadoModel->read('SELECT cooperado.cod_cooperado, cooperado.cod_cooperativa, cooperado.apelido, cooperado.nome_completo, cooperado.data_inscricao, cooperado.imagem, cooperado.tipo, veiculo.nz FROM sig_cooperado as cooperado INNER JOIN sig_cooperado_veiculo AS veiculo WHERE cooperado.cod_cooperado = veiculo.cod_cooperado');
+                $dados['cooperados'] = $cooperadoModel->read('SELECT cooperado.cod, cooperado.apelido, cooperado.nome_completo, cooperado.data_inscricao, cooperado.imagem, cooperado.tipo FROM associado as cooperado WHERE cooperado.cod >= 1');
             }
             $this->loadTemplate($view, $dados);
         } else {

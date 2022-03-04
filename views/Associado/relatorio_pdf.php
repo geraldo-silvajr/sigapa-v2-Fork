@@ -44,7 +44,7 @@
                             <th>#</th>
                             <th>Apelido</th>
                             <th>Nome Completo</th>
-                            <th>NZ</th>
+                            <th>Nº de Matricula</th>
                             <th>Inscrição</th>
                         </tr>
 
@@ -56,7 +56,7 @@
                                 <td class="text-center"><?php echo $qtd; ?></td>
                                 <td class="text-upercase"><?php echo!empty($cooperado['apelido']) ? $cooperado['apelido'] : '' ?></td>
                                 <td class="text-upercase"><?php echo!empty($cooperado['nome_completo']) ? $cooperado['nome_completo'] : '' ?></td>
-                                <td class="text-upercase"><?php echo!empty($cooperado['nz']) ? $cooperado['nz'] : '' ?></td>
+                                <td class="text-upercase"><?php echo!empty($cooperado['cod']) ? str_pad($cooperado['cod'], 3, '0', STR_PAD_LEFT) : '' ?></td>
                                 <td class="text-upercase"><?php echo!empty($cooperado['data_inscricao']) ? $this->formatDateView($cooperado['data_inscricao']) : '' ?></td>
                             </tr>
                             <?php

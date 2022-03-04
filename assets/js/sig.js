@@ -25,6 +25,14 @@ function mostrarConteudo() {
  */
 $(document).ready(function () {
     mostrarConteudo();
+    $('.select2-js').select2({
+        width: '100%'
+    });
+    $(".date_serach").datepicker({
+        changeYear: true,
+        changeMonth: true,
+        dateFormat: 'dd/mm/yy'
+    });
     $('.money-bank').maskMoney({symbol: 'R$ ', showSymbol: true, thousands: '.', decimal: ',', symbolStay: true});
     $('.input-data').mask("99/99/9999");
     $('.input-cpf').mask("999.999.999-99");

@@ -1,10 +1,10 @@
 <div id="section-container">
     <div class="row" >
         <div class="col-sm-12 col-md-12 col-lg-12" id="pagina-header">
-            <h2>Cadastrar Associado</h2>
+            <h2>Editar Associado</h2>
             <ol class="breadcrumb">
                 <li><a  href="<?php echo BASE_URL ?>/home"><i class="fa fa-tachometer-alt"></i> Inicial</a></li>
-                <li class="active"><i class="fa fa-plus-square"></i> Cadastrar Associado</li>
+                <li class="active"><i class="fa fa-edit"></i> Editar Associado</li>
             </ol>
         </div>
     </div>
@@ -18,6 +18,10 @@
         </div>
         <div class="col-md-12 clear">
             <form method="POST" enctype="multipart/form-data" autocomplete="off" id="form_cooperado">
+                <input type="hidden" name="nCodCooperado" value="<?php echo!empty($cooperado['cooperado']['cod']) ? $cooperado['cooperado']['cod'] : ''; ?>"/>
+                <input type="hidden" name="nCodEndereco" value="<?php echo!empty($cooperado['endereco']['cod_endereco']) ? $cooperado['endereco']['cod_endereco'] : ''; ?>"/>
+                <input type="hidden" name="nCodContato" value="<?php echo!empty($cooperado['contato']['cod_contato']) ? $cooperado['contato']['cod_contato'] : ''; ?>"/>
+                <input type="hidden" name="nCodCarteira" value="<?php echo!empty($cooperado['carteira']['cod']) ? $cooperado['carteira']['cod'] : ''; ?>"/>
                 <section class="panel panel-black">
                     <header class="panel-heading">
                         <h4 class="panel-title"> <i class="fa fa-user-circle pull-left"></i> Associado</h4>

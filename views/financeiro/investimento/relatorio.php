@@ -23,12 +23,12 @@
 
                                 <div class="col-md-3 form-group">
                                     <label for='iDataInicial'>De: </label>
-                                    <input type="text" id="iDataInicial" name="nDataInicial" class="form-control input-data" placeholder="15/01/2017">
+                                    <input type="text" id="iDataInicial" name="nDataInicial" class="form-control input-data date_serach" placeholder="15/01/2017">
                                 </div>
 
                                 <div class="col-md-3 form-group">
                                     <label for='iDatafinal'>Até: </label>
-                                    <input type="text" id="iDatafinal" name="nDatafinal" class="form-control input-data" placeholder="15/01/2017" value="<?php echo date('d/m/o') ?>">
+                                    <input type="text" id="iDatafinal" name="nDatafinal" class="form-control input-data date_serach" placeholder="15/01/2017" value="<?php echo date('d/m/o') ?>">
                                 </div>
 
                                 <div class="form-group col-md-3"></br>

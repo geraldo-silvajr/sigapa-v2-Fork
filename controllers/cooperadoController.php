@@ -18,24 +18,21 @@ class cooperadoController extends controller {
      * @access public
      * @author Joab Torres <joabtorres1508@gmail.com>
      */
-    public function index($cod_cooperado) {
-        if ($this->checkUser()>=2 && intval($cod_cooperado) > 0) {
-            $view = "cooperado_detalhado";
+    public function index($associado_cod) {
+        if ($this->checkUser()>=2 && intval($associado_cod) > 0) {
+            $view = "associado/perfil";
             $dados = array();
-            $cooperado = array();
             $cooperadoModel = new cooperado();
-            $dados['cooperado']['cooperado'] = $cooperadoModel->read('SELECT * FROM sig_cooperado WHERE cod_cooperado=:cod', array('cod' => addslashes($cod_cooperado)));
+            $dados['cooperado']['cooperado'] = $cooperadoModel->read('SELECT * FROM associado WHERE cod=:cod', array('cod' => addslashes($associado_cod)));
             $dados['cooperado']['cooperado'] = $dados['cooperado']['cooperado'][0];
-            $dados['cooperado']['endereco'] = $cooperadoModel->read('SELECT * FROM sig_cooperado_endereco WHERE cod_cooperado=:cod', array('cod' => addslashes($cod_cooperado)));
+            $dados['cooperado']['endereco'] = $cooperadoModel->read('SELECT * FROM associado_endereco WHERE associado_cod=:cod', array('cod' => addslashes($associado_cod)));
             $dados['cooperado']['endereco'] = $dados['cooperado']['endereco'][0];
-            $dados['cooperado']['contato'] = $cooperadoModel->read('SELECT * FROM sig_cooperado_contato WHERE cod_cooperado=:cod', array('cod' => addslashes($cod_cooperado)));
+            $dados['cooperado']['contato'] = $cooperadoModel->read('SELECT * FROM associado_contato WHERE associado_cod=:cod', array('cod' => addslashes($associado_cod)));
             $dados['cooperado']['contato'] = $dados['cooperado']['contato'][0];
-            $dados['cooperado']['veiculo'] = $cooperadoModel->read('SELECT * FROM sig_cooperado_veiculo WHERE cod_cooperado=:cod', array('cod' => addslashes($cod_cooperado)));
-            $dados['cooperado']['veiculo'] = $dados['cooperado']['veiculo'][0];
-            $dados['cooperado']['carteira'] = $cooperadoModel->read('SELECT * FROM sig_cooperado_carteira WHERE cod_cooperado=:cod', array('cod' => addslashes($cod_cooperado)));
+            $dados['cooperado']['carteira'] = $cooperadoModel->read('SELECT * FROM associado_carteira WHERE associado_cod=:cod', array('cod' => addslashes($associado_cod)));
             $dados['cooperado']['carteira'] = $dados['cooperado']['carteira'][0];
-            $dados['cooperado']['mensalidades'] = $cooperadoModel->read('SELECT * FROM sig_cooperado_mensalidade WHERE cod_cooperado=:cod ORDER BY ano ASC', array('cod' => addslashes($cod_cooperado)));
-            $dados['cooperado']['historicos'] = $cooperadoModel->read('SELECT *, usuario.usuario_usuario as usuario FROM sig_cooperado_historico as historico INNER JOIN sig_usuario as usuario WHERE historico.cod_usuario=usuario.cod_usuario and historico.cod_cooperado=:cod ORDER BY historico.cod_historico DESC', array('cod' => addslashes($cod_cooperado)));
+            $dados['cooperado']['mensalidades'] = $cooperadoModel->read('SELECT * FROM associado_mensalidade WHERE associado_cod=:cod ORDER BY ano ASC', array('cod' => addslashes($associado_cod)));
+            $dados['cooperado']['historicos'] = $cooperadoModel->read('SELECT * FROM associado_historico as historico WHERE historico.associado_cod=:cod ORDER BY historico.cod_historico DESC', array('cod' => addslashes($associado_cod)));
             $this->loadTemplate($view, $dados);
         }else{
             header('Location: /home');

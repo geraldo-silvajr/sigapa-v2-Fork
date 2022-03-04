@@ -29,9 +29,11 @@ class controller {
             return 0;
         }
     }
-    public function ajustaHorario(){
+
+    public function ajustaHorario() {
         return 3600 * 4; //360 sec *  horas 
     }
+
     /**
      * Está função é responsável para carrega uma view;
      * @param String viewName - nome da view;
@@ -179,6 +181,42 @@ class controller {
             $_SESSION['cooperado_categoria'] = $cooperado;
         }
         return $_SESSION['cooperado_categoria'];
+    }
+
+    /**
+     * Está função é responsável para converte uma data do padrão 'ano-mes-dia' para 'dia/mes/ano'
+     * @param String $date - data solicitada pelo parametro
+     * r
+     * @access protected
+     * @return $date - data formatada no padrão brasileiro
+     * @author Joab Torres <joabtorres1508@gmail.com>
+     */
+    protected function formatDateViewComplet($date) {
+        $datatime = explode(" ", $date);
+        $arrayDate = explode("-", $datatime[0]);
+        if (count($arrayDate) == 3) {
+            return $arrayDate[2] . '/' . $arrayDate[1] . '/' . $arrayDate[0] . ' ' . $datatime[1];
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Está função é responsável para converte uma data do padrão 'ano-mes-dia' para 'dia/mes/ano'
+     * @param String $date - data solicitada pelo parametro
+     * r
+     * @access protected
+     * @return $date - data formatada no padrão brasileiro
+     * @author Joab Torres <joabtorres1508@gmail.com>
+     */
+    protected function formatDateDBComplet($date) {
+        $datatime = explode(" ", $date);
+        $arrayDate = explode("/", $datatime[0]);
+        if (count($arrayDate) == 3) {
+            return $arrayDate[2] . '-' . $arrayDate[1] . '-' . $arrayDate[0] . ' ' . $datatime[1];
+        } else {
+            return false;
+        }
     }
 
 }

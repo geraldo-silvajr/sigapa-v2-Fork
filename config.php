@@ -10,7 +10,7 @@ if (ENVIRONMENT == 'development') {
     //Raiz
     define("BASE_URL", "http://localhost/sigapa-v2");
     //nome do projeto
-    define("NAME_PROJECT", "SIGAPA - Sistema de Informação Gerencial de Associação de Pequeno Agricultores");
+    define("NAME_PROJECT", "SIGAPA - Sistema de Informação Gerencial para Associação de Pequeno Agricultores");
     //Nome do banco
     $config['dbname'] = 'sigapa';
     //host
