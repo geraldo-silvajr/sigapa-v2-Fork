@@ -5,7 +5,7 @@
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => 'd665b4d11997ccab605dec086dae0b763cd92ed5',
+        'reference' => 'c6e1ceef6a4024fae2ba5f9c062211ad1bad2a81',
         'name' => '__root__',
         'dev' => true,
     ),
@@ -16,7 +16,7 @@
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => 'd665b4d11997ccab605dec086dae0b763cd92ed5',
+            'reference' => 'c6e1ceef6a4024fae2ba5f9c062211ad1bad2a81',
             'dev_requirement' => false,
         ),
         'mpdf/mpdf' => array(
@@ -47,12 +47,12 @@
             'dev_requirement' => false,
         ),
         'psr/log' => array(
-            'pretty_version' => '2.0.0',
-            'version' => '2.0.0.0',
+            'pretty_version' => '1.1.4',
+            'version' => '1.1.4.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../psr/log',
             'aliases' => array(),
-            'reference' => 'ef29f6d262798707a9edd554e2b82517ef3a9376',
+            'reference' => 'd49695b909c3b7628b6289db5479a1c204601f11',
             'dev_requirement' => false,
         ),
         'setasign/fpdi' => array(
