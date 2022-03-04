@@ -36,9 +36,11 @@ class excluirController extends controller {
             $coopeadoModel->remove("DELETE FROM sig_cooperado WHERE cod_cooperado=:cod", array('cod' => addslashes($cod_cooperado)));
             $_SESSION['cooperado_categoria'] = array();
             $_SESSION['cooperado_status'] = array();
-            header("Location: /relatorio/cooperados");
+            $url = BASE_URL . "/relatorio/cooperados";
+            header("Location: " . $url);
         } else {
-            header("Location: /home");
+            $url = BASE_URL . '/home';
+            header("Location: " . $url);
         }
     }
 
@@ -54,10 +56,12 @@ class excluirController extends controller {
             $crudModel = new crud_db();
             $removeFinanca = $crudModel->remove("DELETE FROM sig_cooperado_historico WHERE cod_historico=:cod", array('cod' => addslashes($cod)));
             if ($removeFinanca) {
-                header("Location: /cooperado/index/" . $cod_cooperado);
+                $url = BASE_URL . "/cooperado/index/" . $cod_cooperado;
+                header("Location: " . $url);
             }
         } else {
-            header("Location: /home");
+            $url = BASE_URL . '/home';
+            header("Location: " . $url);
         }
     }
 
@@ -73,10 +77,12 @@ class excluirController extends controller {
             $crudModel = new crud_db();
             $removeFinanca = $crudModel->remove("DELETE FROM sig_cooperado_mensalidade WHERE cod_mensalidade=:cod", array('cod' => addslashes($cod)));
             if ($removeFinanca) {
-                header("Location: /cooperado/index/" . $cod_cooperado);
+                $url = BASE_URL . "/cooperado/index/" . $cod_cooperado;
+                header("Location: " . $url);
             }
         } else {
-            header("Location: /home");
+            $url = BASE_URL . '/home';
+            header("Location: " . $url);
         }
     }
 
@@ -92,10 +98,12 @@ class excluirController extends controller {
             $removeFinanca = $crudModel->remove("DELETE FROM sig_lucro WHERE cod=:cod", array('cod' => addslashes($cod)));
             if ($removeFinanca) {
                 $_SESSION['financa_atual'] = array();
-                header("Location: /relatorio/lucros");
+                $url = BASE_URL . "/relatorio/lucros";
+                header("Location: " . $url);
             }
         } else {
-            header("Location: /relatorio/lucros");
+            $url = BASE_URL . '/home';
+            header("Location: " . $url);
         }
     }
 
@@ -111,10 +119,12 @@ class excluirController extends controller {
             $removeFinanca = $crudModel->remove("DELETE FROM sig_despesa WHERE cod=:cod", array('cod' => addslashes($cod)));
             if ($removeFinanca) {
                 $_SESSION['financa_atual'] = array();
-                header("Location: /relatorio/despesas");
+                $url = BASE_URL . "/relatorio/despesas";
+                header("Location: " . $url);
             }
         } else {
-            header("Location: /relatorio/investimentos");
+            $url = BASE_URL . '/home';
+            header("Location: " . $url);
         }
     }
 
@@ -130,10 +140,12 @@ class excluirController extends controller {
             $removeFinanca = $crudModel->remove("DELETE FROM sig_investimento WHERE cod=:cod", array('cod' => addslashes($cod)));
             if ($removeFinanca) {
                 $_SESSION['financa_atual'] = array();
-                header("Location: /relatorio/investimentos");
+                $url = BASE_URL . "/relatorio/investimentos";
+                header("Location: " . $url);
             }
         } else {
-            header("Location: /relatorio/investimentos");
+            $url = BASE_URL . '/home';
+            header("Location: " . $url);
         }
     }
 
@@ -147,9 +159,11 @@ class excluirController extends controller {
         if ($this->checkUser() >= 3 && intval($cod_usuario) > 0) {
             $usuarioModel = new usuario();
             $usuarioModel->remove(array('cod' => addslashes($cod_usuario)));
-            header("Location: /usuario/index");
+            $url = BASE_URL . "/usuario/index";
+            header("Location: " . $url);
         } else {
-            header("Location: /usuario/index");
+            $url = BASE_URL . "/usuario/index";
+            header("Location: " . $url);
         }
     }
 

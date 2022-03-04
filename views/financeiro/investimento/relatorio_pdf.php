@@ -33,6 +33,10 @@
                         </tr>
                     </table>
                 <?php endif; ?>
+                
+                <p align="right">Este documento foi gerado em <?php echo $this->formatDateView(date("Y-m-d")) . ' as ' . date("H:i:s", (time() - $this->ajustaHorario())) ?>.</p>
+
+
                 <hr>
                 <?php if (!empty($financas)): ?>
                     <h4 class="text-right">Valor Total: <?php echo $this->formatDinheiroView($valor_total) ?></h4>

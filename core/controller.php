@@ -29,7 +29,9 @@ class controller {
             return 0;
         }
     }
-
+    public function ajustaHorario(){
+        return 3600 * 4; //360 sec *  horas 
+    }
     /**
      * Está função é responsável para carrega uma view;
      * @param String viewName - nome da view;

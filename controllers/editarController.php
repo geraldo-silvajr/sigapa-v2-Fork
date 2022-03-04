@@ -184,7 +184,6 @@ class EditarController extends controller {
                     'cod' => addslashes($_POST['nCodCarteira']),
                 );
 
-
                 if (isset($dados['cooperado_error']) && !empty($dados['cooperado_error'])) {
                     $dados['erro'] = array('class' => 'alert-danger', 'msg' => "Preenchar os campos obrigatórios.");
                 } else {
@@ -204,7 +203,8 @@ class EditarController extends controller {
             }
             $this->loadTemplate($viewName, $dados);
         } else {
-            header('Location: /home');
+            $url = BASE_URL . '/home';
+            header("Location: " . $url);
         }
     }
 
@@ -230,7 +230,8 @@ class EditarController extends controller {
                 $cadHistorico = $crudModel->update("UPDATE sig_cooperado_historico SET descricao_historico=:descricao_historico WHERE cod_historico=:cod_historico", $dados['coopeado']['historico']);
                 if ($cadHistorico) {
                     $_SESSION['historico_acao'] = true;
-                    header("Location: /editar/historico/" . $cod);
+                    $url = BASE_URL . "/editar/historico/" . $cod;
+                    header("Location: " . $url);
                 }
             } else if (isset($_SESSION['historico_acao']) && !empty($_SESSION['historico_acao'])) {
                 $_SESSION['historico_acao'] = false;
@@ -239,7 +240,8 @@ class EditarController extends controller {
 
             $this->loadTemplate($viewName, $dados);
         } else {
-            header('Location: /home');
+            $url = BASE_URL . '/home';
+            header("Location: " . $url);
         }
     }
 
@@ -278,7 +280,8 @@ class EditarController extends controller {
                     $cadMensalidade = $cooperadoModel->update("UPDATE sig_cooperado_mensalidade SET cod_cooperado=:cod_cooperado, ano=:ano, janeiro=:janeiro, fevereiro=:fevereiro, marco=:marco, abril=:abril, maio=:maio, junho=:junho, julho=:julho, agosto=:agosto, setembro=:setembro, outubro=:outubro, novembro=:novembro, dezembro=:dezembro where cod_mensalidade=:cod_mensalidade", $dados['mensalidade']);
                     if ($cadMensalidade) {
                         $_SESSION['mensalidade_acao'] = true;
-                        header("Location: /editar/mensalidade/" . $cod);
+                        $url = BASE_URL . "/editar/mensalidade/" . $cod;
+                        header("Location: " . $url);
                     }
                 } else {
                     $dados['erro'] = array('class' => 'alert-danger', 'msg' => "Preenchar os campos obrigatórios, ANO não foi informado");
@@ -290,7 +293,8 @@ class EditarController extends controller {
 
             $this->loadTemplate($viewName, $dados);
         } else {
-            header('Location: /home');
+            $url = BASE_URL . '/home';
+            header("Location: " . $url);
         }
     }
 
@@ -302,7 +306,7 @@ class EditarController extends controller {
      */
     public function lucro($cod) {
         if ($this->checkUser() >= 2 && intval($cod) > 0) {
-            $viewName = "lucro_editar";
+            $viewName = "financeiro/lucro/editar";
             $dados = array();
             $crudModel = new crud_db();
             $financa_db = $crudModel->read('SELECT * FROM sig_lucro WHERE cod=:cod', array('cod' => $cod));
@@ -330,7 +334,8 @@ class EditarController extends controller {
                     if ($cadFinanca) {
                         $_SESSION['financa_acao'] = true;
                         $_SESSION['financa_atual'] = array();
-                        header("Location: /editar/lucro/" . $cod);
+                        $url = BASE_URL . "/editar/lucro/" . $cod;
+                        header("Location: " . $url);
                     }
                 } else {
                     $dados['erro'] = array('class' => 'alert-danger', 'msg' => "Preenchar os campos obrigatórios.");
@@ -340,6 +345,9 @@ class EditarController extends controller {
                 $dados['erro'] = array('class' => 'alert-success', 'msg' => "Alteração realizada com sucesso!");
             }
             $this->loadTemplate($viewName, $dados);
+        } else {
+            $url = BASE_URL . '/home';
+            header("Location: " . $url);
         }
     }
 
@@ -351,7 +359,7 @@ class EditarController extends controller {
      */
     public function despesa($cod) {
         if ($this->checkUser() >= 2 && intval($cod) > 0) {
-            $viewName = "despesa_editar";
+             $viewName = "financeiro/despesa/editar";
             $dados = array();
             $crudModel = new crud_db();
             $financa_db = $crudModel->read('SELECT * FROM sig_despesa WHERE cod=:cod', array('cod' => $cod));
@@ -379,7 +387,8 @@ class EditarController extends controller {
                     if ($cadFinanca) {
                         $_SESSION['financa_acao'] = true;
                         $_SESSION['financa_atual'] = array();
-                        header("Location: /editar/despesa/" . $cod);
+                        $url = BASE_URL . "/editar/despesa/" . $cod;
+                        header("Location: " . $url);
                     }
                 } else {
                     $dados['erro'] = array('class' => 'alert-danger', 'msg' => "Preenchar os campos obrigatórios.");
@@ -389,6 +398,9 @@ class EditarController extends controller {
                 $dados['erro'] = array('class' => 'alert-success', 'msg' => "Alteração realizada com sucesso!");
             }
             $this->loadTemplate($viewName, $dados);
+        } else {
+            $url = BASE_URL . '/home';
+            header("Location: " . $url);
         }
     }
 
@@ -400,7 +412,7 @@ class EditarController extends controller {
      */
     public function investimento($cod) {
         if ($this->checkUser() >= 2 && intval($cod) > 0) {
-            $viewName = "investimento_editar";
+             $viewName = "financeiro/investimento/editar";
             $dados = array();
             $crudModel = new crud_db();
             $financa_db = $crudModel->read('SELECT * FROM sig_investimento WHERE cod=:cod', array('cod' => $cod));
@@ -428,7 +440,8 @@ class EditarController extends controller {
                     if ($cadFinanca) {
                         $_SESSION['financa_acao'] = true;
                         $_SESSION['financa_atual'] = array();
-                        header("Location: /editar/investimento/" . $cod);
+                        $url = BASE_URL . "/editar/investimento/" . $cod;
+                        header("Location: " . $url);
                     }
                 } else {
                     $dados['erro'] = array('class' => 'alert-danger', 'msg' => "Preenchar os campos obrigatórios.");
@@ -439,7 +452,8 @@ class EditarController extends controller {
             }
             $this->loadTemplate($viewName, $dados);
         } else {
-            header('Location: /home');
+            $url = BASE_URL . '/home';
+            header("Location: " . $url);
         }
     }
 
@@ -573,10 +587,12 @@ class EditarController extends controller {
                 }
                 $this->loadTemplate($view, $dados);
             } else {
-                header('Location: /home');
+                $url = BASE_URL . '/home';
+                header("Location: " . $url);
             }
         } else {
-            header('Location: /home');
+            $url = BASE_URL . '/home';
+            header("Location: " . $url);
         }
     }
 

@@ -28,18 +28,20 @@ class cadastrarController extends controller {
      */
     public function cooperado() {
         if ($this->checkUser() >= 2) {
-            $viewName = "cooperado_cadastrar";
+            $viewName = "associado/cadastrar";
             $dados = array();
             $cooperado = array();
             $cooperadoModel = new cooperado();
             if (isset($_POST['nSalvar']) && !empty($_POST['nSalvar'])) {
                 /* Adicionando */
-                if (!isset($cooperado['cod_cooperado'])) {
-                    $ultimo_codigo = $cooperadoModel->read("SELECT MAX(cod_cooperado) AS qtd FROM sig_cooperado ORDER BY cod_cooperado DESC LIMIT 1");
-                    $cooperado['cooperado']['cod_cooperado'] = ++$ultimo_codigo[0]['qtd'];
+                if (!isset($cooperado['associado_cod'])) {
+                    $ultimo_codigo = $cooperadoModel->read("SELECT MAX(cod) AS qtd FROM associado ORDER BY cod DESC LIMIT 1");
+                    if (!empty($ultimo_codigo) && is_array($ultimo_codigo)) {
+                        $cooperado['cooperado']['cod'] = ++$ultimo_codigo[0]['qtd'];
+                    } else {
+                        $cooperado['cooperado']['cod'] = 1;
+                    }
                 }
-                //cooperativa
-                $cooperado['cooperado']['cod_cooperativa'] = $this->getCodCooperativa();
                 //categoria de cooperado
                 $cooperado['cooperado']['tipo'] = addslashes($_POST['nTipo']);
                 //status
@@ -61,7 +63,7 @@ class cadastrarController extends controller {
 
                 //cpf
                 if (!empty($_POST['nCPF']) && isset($_POST['nCPF'])) {
-                    if (!is_array($cooperadoModel->read("SELECT * FROM sig_cooperado WHERE cpf=:cpf", array('cpf' => $_POST['nCPF'])))) {
+                    if (!is_array($cooperadoModel->read("SELECT * FROM associado WHERE cpf=:cpf", array('cpf' => $_POST['nCPF'])))) {
                         $cooperado['cooperado']['cpf'] = addslashes($_POST['nCPF']);
                     } else {
                         $dados['cooperado_error']['cpf']['msg'] = 'CPF já cadastrado, não possível registrar mais de um CPF.';
@@ -79,24 +81,7 @@ class cadastrarController extends controller {
                     $dados['cooperado_error']['rg']['msg'] = 'Informe o RG';
                     $dados['cooperado_error']['rg']['class'] = 'has-error';
                 }
-
-                //cnh
-                if (!empty($_POST['nCNH']) && isset($_POST['nCNH'])) {
-                    $cooperado['cooperado']['cnh'] = addslashes($_POST['nCNH']);
-                } else {
-                    $dados['cooperado_error']['cnh']['msg'] = 'Informe o CNH';
-                    $dados['cooperado_error']['cnh']['class'] = 'has-error';
-                }
-                //cat
-                if (!empty($_POST['nCAT']) && isset($_POST['nCAT'])) {
-                    $cooperado['cooperado']['cat'] = addslashes($_POST['nCAT']);
-                } else {
-                    $dados['cooperado_error']['cat']['msg'] = 'Informe a Categoria';
-                    $dados['cooperado_error']['cat']['class'] = 'has-error';
-                }
-                //inss
-                $cooperado['cooperado']['inss'] = addslashes($_POST['nINSS']);
-                //rg
+                //nEstadoCivil
                 if (!empty($_POST['nEstadoCivil']) && isset($_POST['nEstadoCivil'])) {
                     $cooperado['cooperado']['estado_civil'] = addslashes($_POST['nEstadoCivil']);
                 } else {
@@ -119,7 +104,7 @@ class cadastrarController extends controller {
                     $dados['cooperado_error']['data_nascimento']['msg'] = 'Informe a Data de Nascimento';
                     $dados['cooperado_error']['data_nascimento']['class'] = 'has-error';
                 }
-                //daca de nascimento
+                //nDataInscricao
                 if (!empty($_POST['nDataInscricao']) && isset($_POST['nDataInscricao'])) {
                     $cooperado['cooperado']['data_inscricao'] = addslashes($_POST['nDataInscricao']);
                 } else {
@@ -144,34 +129,27 @@ class cadastrarController extends controller {
 
                 //endereço
                 $cooperado['endereco'] = array(
-                    'cod_cooperado' => $cooperado['cooperado']['cod_cooperado'],
+                    'associado_cod' => $cooperado['cooperado']['cod'],
                     'logradouro' => addslashes($_POST['nLogradouro']),
                     'numero' => $_POST['nNumero'],
                     'bairro' => addslashes($_POST['nBairro']),
                     'complemento' => addslashes($_POST['nComplementos']),
                     'cidade' => addslashes($_POST['nCidade']),
                     'estado' => addslashes($_POST['nEstado']),
+                    'latitude' => addslashes($_POST['nEstado']),
+                    'longitude' => addslashes($_POST['nEstado']),
                     'cep' => addslashes($_POST['nCEP'])
                 );
                 //contato
                 $cooperado['contato'] = array(
-                    'cod_cooperado' => $cooperado['cooperado']['cod_cooperado'],
+                    'associado_cod' => $cooperado['cooperado']['cod'],
                     'celular_1' => addslashes($_POST['nTelefone']),
                     'celular_2' => addslashes($_POST['nCelular']),
                     'email' => addslashes($_POST['nEmail'])
                 );
-                //veiculo
-                $cooperado['veiculo'] = array(
-                    'cod_cooperado' => $cooperado['cooperado']['cod_cooperado'],
-                    'nz' => addslashes($_POST['nNZ']),
-                    'veiculo' => addslashes($_POST['nVeiculo']),
-                    'cor' => addslashes($_POST['nCor']),
-                    'placa' => $_POST['nPlaca'],
-                    'ano_modelo' => $_POST['nAnoModelo']
-                );
                 //carteira
                 $cooperado['carteira'] = array(
-                    'cod_cooperado' => $cooperado['cooperado']['cod_cooperado'],
+                    'associado_cod' => $cooperado['cooperado']['cod'],
                     'data_inicial' => $_POST['nDataInicial'],
                     'data_validade' => $_POST['nDataValidade']
                 );

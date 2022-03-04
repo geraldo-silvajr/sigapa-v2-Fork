@@ -107,7 +107,7 @@
                                     <a href="javascript:;" data-toggle="collapse" data-target="#menu_cadastro"><i class="fa fa-plus-circle "></i> Cadastrar <i class="fa fa-fw fa-caret-down pull-right"></i></a>
                                     <ul id="menu_cadastro" class="collapse">
                                         <li>
-                                            <a href="<?php echo BASE_URL ?>/cadastrar/cooperado"><i class="fa fa-plus-square"></i> Cooperado</a>
+                                            <a href="<?php echo BASE_URL ?>/cadastrar/cooperado"><i class="fa fa-plus-square"></i> Associado</a>
                                         </li>
                                         <li>
                                             <a href="<?php echo BASE_URL ?>/cadastrar/lucro"><i class="fa fa-dollar-sign"></i> Entrada (R$)</a>
@@ -126,7 +126,7 @@
                                 <ul id="menu_relatorio" class="collapse">
                                     <?php if (isset($_SESSION['usuario_sig_cootax']['nivel']) && $_SESSION['usuario_sig_cootax']['nivel'] >= 2): ?>
                                         <li>
-                                            <a href="<?php echo BASE_URL ?>/relatorio/cooperados"><i class="fa fa-list"></i> Cooperados</a>
+                                            <a href="<?php echo BASE_URL ?>/relatorio/cooperados"><i class="fa fa-list"></i> Associados</a>
                                         </li>
                                     <?php endif; ?>
                                     <?php if (isset($_SESSION['usuario_sig_cootax']['nivel']) && $_SESSION['usuario_sig_cootax']['nivel'] >= 2): ?>

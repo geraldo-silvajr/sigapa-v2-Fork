@@ -63,6 +63,11 @@
                         </tbody>
                     </table>
                 <?php endif; ?>
+
+
+                <p align="right">Este documento foi gerado em <?php echo $this->formatDateView(date("Y-m-d")) . ' as ' . date("H:i:s", (time() - $this->ajustaHorario())) ?>.</p>
+
+
                 <table class="table">
                     <thead>
                         <tr>

@@ -18,6 +18,10 @@ class loginController extends controller {
      * @author Joab Torres <joabtorres1508@gmail.com
      */
     public function index() {
+        $this->login_test();
+    }
+
+    public function login() {
         $view = "login";
         $dados = array();
         $_SESSION = array();
@@ -91,7 +95,7 @@ class loginController extends controller {
         }
     }
 
-    public function login() {
+    public function login_test() {
         $view = "login";
         $dados = array();
         $_SESSION = array();

@@ -265,7 +265,7 @@ class relatorioController extends controller {
                     $campo_buscar['data_final'] = $_POST['nDatafinal'];
                 }
                 if ($_POST['nModoPDF'] == 1) {
-                     $viewPDF = "financeiro/lucro/relatorio_pdf";
+                    $viewPDF = "financeiro/lucro/relatorio_pdf";
                     $dadosPDF = array();
                     $crudModel = new crud_db();
                     $dadosPDF['busca'] = isset($campo_buscar) ? $campo_buscar : null;
@@ -323,7 +323,7 @@ class relatorioController extends controller {
                     $campo_buscar['data_final'] = $_POST['nDatafinal'];
                 }
                 if ($_POST['nModoPDF'] == 1) {
-                   $viewPDF = "financeiro/despesa/relatorio_pdf";
+                    $viewPDF = "financeiro/despesa/relatorio_pdf";
                     $dadosPDF = array();
                     $crudModel = new crud_db();
                     $dadosPDF['busca'] = isset($campo_buscar) ? $campo_buscar : null;
@@ -444,7 +444,7 @@ class relatorioController extends controller {
                     $campo_buscar['data_final'] = $_POST['nDatafinal'];
                     $campo_buscar['modo_exibicao'] = $dados['modo_exibicao'];
                 }
-                if ($_POST['nModoPDF'] == 1) {                   
+                if ($_POST['nModoPDF'] == 1) {
                     $viewPDF = "financeiro/relatorio_pdf";
                     $dadosPDF = array();
                     $dadosPDF['busca'] = isset($campo_buscar) ? $campo_buscar : null;
@@ -470,7 +470,7 @@ class relatorioController extends controller {
 
                     $dadosPDF['cidade'] = $crudModel->read_specific('SELECT * FROM sig_cooperativa WHERE cod=:cod', array('cod' => $this->getCodCooperativa()));
                     ob_start();
-                    $this->loadView($viewPDF, $dadosPDF);
+                    $this->loadView($viewPDF, $dadosPDF);                    
                     $html = ob_get_contents();
                     ob_end_clean();
                     $mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8']);

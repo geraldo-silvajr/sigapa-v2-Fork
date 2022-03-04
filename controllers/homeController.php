@@ -23,10 +23,11 @@ class homeController extends controller {
             $dados = array();
             $crudModel = new crud_db();
             $dados['financa'] = $this->checkFinancaAtual();
-            $dados['cooperado_tipo'] = $this->checkCategoriaCooperado();
-            $dados['cooperado_status'] = $this->checkStatusCooperado();
-            $dados['cooperativa'] = $crudModel->read("SELECT * FROM sig_cooperativa WHERE cod=:cod", array('cod' => $this->getCodCooperativa()));
-            $dados['cooperativa'] = $dados['cooperativa'][0];
+            /*
+              $dados['cooperado_tipo'] = $this->checkCategoriaCooperado();
+              $dados['cooperado_status'] = $this->checkStatusCooperado();
+              $dados['cooperativa'] = $crudModel->read("SELECT * FROM sig_cooperativa WHERE cod=:cod", array('cod' => $this->getCodCooperativa()));
+              $dados['cooperativa'] = $dados['cooperativa'][0]; */
             $this->loadTemplate($view, $dados);
         } else {
             $_SESSION = array();

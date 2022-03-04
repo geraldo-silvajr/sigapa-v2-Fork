@@ -8,7 +8,7 @@ require 'environment.php';
 $config = array();
 if (ENVIRONMENT == 'development') {
     //Raiz
-    define("BASE_URL", "https://localhost/sigapa-v2");
+    define("BASE_URL", "http://localhost/sigapa-v2");
     //nome do projeto
     define("NAME_PROJECT", "SIGAPA - Sistema de Informação Gerencial de Associação de Pequeno Agricultores");
     //Nome do banco

@@ -39,18 +39,14 @@ class cooperado extends model {
      */
     public function create($data) {
         try {
-            $sql = $this->db->prepare('INSERT INTO sig_cooperado (cod_cooperado, cod_cooperativa, tipo, status, apelido, nome_completo, cpf, rg, cnh, cat, inss, estado_civil, nacionalidade, genero, data_nascimento, data_inscricao, pai, mae, conjugue, filhos, imagem) VALUES  (:cod_cooperado, :cod_cooperativa, :tipo, :status, :apelido, :nome_completo, :cpf, :rg, :cnh, :cat, :inss, :estado_civil, :nacionalidade, :genero, :data_nascimento, :data_inscricao, :pai, :mae, :conjugue, :filhos, :imagem)');
-            $sql->bindValue(":cod_cooperado", $data['cooperado']['cod_cooperado']);
-            $sql->bindValue(":cod_cooperativa", $data['cooperado']['cod_cooperativa']);
+            $sql = $this->db->prepare('INSERT INTO associado (cod, tipo, status, apelido, nome_completo, cpf, rg, estado_civil, nacionalidade, genero, data_nascimento, data_inscricao, pai, mae, conjugue, filhos, imagem) VALUES  (:cod, :tipo, :status, :apelido, :nome_completo, :cpf, :rg, :estado_civil, :nacionalidade, :genero, :data_nascimento, :data_inscricao, :pai, :mae, :conjugue, :filhos, :imagem)');
+            $sql->bindValue(":cod", $data['cooperado']['cod']);
             $sql->bindValue(":tipo", $data['cooperado']['tipo']);
             $sql->bindValue(":status", $data['cooperado']['status']);
             $sql->bindValue(":apelido", $data['cooperado']['apelido']);
             $sql->bindValue(":nome_completo", $data['cooperado']['nome_completo']);
             $sql->bindValue(":cpf", $data['cooperado']['cpf']);
             $sql->bindValue(":rg", $data['cooperado']['rg']);
-            $sql->bindValue(":cnh", $data['cooperado']['cnh']);
-            $sql->bindValue(":cat", $data['cooperado']['cat']);
-            $sql->bindValue(":inss", $data['cooperado']['inss']);
             $sql->bindValue(":estado_civil", $data['cooperado']['estado_civil']);
             $sql->bindValue(":nacionalidade", $data['cooperado']['nacionalidade']);
             $sql->bindValue(":genero", $data['cooperado']['genero']);
@@ -63,25 +59,19 @@ class cooperado extends model {
             $sql->bindValue(":imagem", $data['cooperado']['imagem']);
             //endereço
             $sql->execute();
-            $sql = $this->db->prepare('INSERT INTO sig_cooperado_endereco (cod_cooperado, logradouro, numero, bairro, complemento, cidade, estado, cep) VALUES (:cod_cooperado, :logradouro, :numero, :bairro, :complemento, :cidade, :estado, :cep);');
+            $sql = $this->db->prepare('INSERT INTO associado_endereco (associado_cod, logradouro, numero, bairro, complemento, cidade, estado, cep, longitude, latitude) VALUES (:associado_cod, :logradouro, :numero, :bairro, :complemento, :cidade, :estado, :cep,  :longitude, :latitude);');
             foreach ($data['endereco'] as $indice => $valor) {
                 $sql->bindValue(":" . $indice, $valor);
             }
             $sql->execute();
             //contato
-            $sql = $this->db->prepare('INSERT INTO sig_cooperado_contato (cod_cooperado, celular_1, celular_2, email) VALUES (:cod_cooperado, :celular_1, :celular_2, :email);');
+            $sql = $this->db->prepare('INSERT INTO associado_contato (associado_cod, celular_1, celular_2, email) VALUES (:associado_cod, :celular_1, :celular_2, :email);');
             foreach ($data['contato'] as $indice => $valor) {
                 $sql->bindValue(":" . $indice, $valor);
             }
             $sql->execute();
-            //veiculo
-            $sql = $this->db->prepare('INSERT INTO sig_cooperado_veiculo (cod_cooperado, nz, veiculo, cor, placa, ano_modelo) VALUES (:cod_cooperado, :nz, :veiculo, :cor, :placa, :ano_modelo)');
-            foreach ($data['veiculo'] as $indice => $valor) {
-                $sql->bindValue(":" . $indice, $valor);
-            }
-            $sql->execute();
             //carteira
-            $sql = $this->db->prepare('INSERT INTO sig_cooperado_carteira (cod_cooperado, data_inicial, data_validade) VALUES (:cod_cooperado, :data_inicial, :data_validade)');
+            $sql = $this->db->prepare('INSERT INTO associado_carteira (associado_cod, data_inicial, data_validade) VALUES (:associado_cod, :data_inicial, :data_validade)');
             foreach ($data['carteira'] as $indice => $valor) {
                 $sql->bindValue(":" . $indice, $valor);
             }
