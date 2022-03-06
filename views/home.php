@@ -185,6 +185,54 @@
                 </div>
             </div>
         <?php } ?>
+        <div class="col-sm-6 col-md-4 col-lg-3">
+            <div class="panel panel-black">
+                <div class="panel-heading">
+                    <i class="fa fa-calculator fa-3x pull-left"></i>                               
+                    <div class="font-bold">Associados</div>
+                    <div>Total de Registros</div>
+                </div>
+                <div class="panel-body">
+                    <div class="text-right">3000</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-4 col-lg-3">
+            <div class="panel panel-black">
+                <div class="panel-heading">
+                    <i class="fa fa-calculator fa-3x pull-left"></i>                               
+                    <div class="font-bold">Lucro</div>
+                    <div>Valor Total</div>
+                </div>
+                <div class="panel-body">
+                    <div class="text-right">R$ 1.000,00</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-4 col-lg-3">
+            <div class="panel panel-black">
+                <div class="panel-heading">
+                    <i class="fa fa-calculator fa-3x pull-left"></i>                               
+                    <div class="font-bold">Despesa</div>
+                    <div>Valor Total</div>
+                </div>
+                <div class="panel-body">
+                    <div class="text-right">R$ 1.000,00</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-4 col-lg-3">
+            <div class="panel panel-black">
+                <div class="panel-heading">
+                    <i class="fa fa-calculator fa-3x pull-left"></i>                               
+                    <div class="font-bold">Investimento</div>
+                    <div>Valor Total</div>
+                </div>
+                <div class="panel-body">
+                    <div class="text-right">R$ 1.000,00</div>
+                </div>
+            </div>
+        </div>
     </div>
     <!--FIM .ROW-->
     <div class="row">
@@ -196,7 +244,7 @@
                     <div>Associados Registrados</div>
                 </header>
                 <article class="panel-body">
-                    <canvas id="grafico_tipo_cooperado" width="100%"></canvas>
+                    <canvas id="grafico_tipo_protocolo" width="100%" ></canvas>
                 </article>
             </section>
         </div>
@@ -208,7 +256,7 @@
                     <div>Associados Registrados</div>
                 </header>
                 <article class="panel-body">
-                    <canvas id="grafico_status_cooperado" width="100%"></canvas>
+                    <canvas id="grafico_tipo_suporte_interno" width="100%"></canvas>
                 </article>
             </section>
         </div>
@@ -219,10 +267,86 @@
                 <header class="panel-heading">
                     <i class="fa fa-chart-bar fa-3x pull-left" ></i>
                     <h4 class="panel-title font-bold">Financeiro </h4>
-                    <div>Lucro, Despesa, Investimento</div>
+                    <div>Lucro, Despesa e Investimento</div>
                 </header>
                 <article class="panel-body">
-                    <canvas id="grafico_status_financeiro"  height="80vh" ></canvas>
+                    <canvas id="grafico_protocolo_objetivo" height="40vh"></canvas>
+                </article>
+            </section>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <section class="panel panel-black">
+                <header class="panel-heading">
+                    <i class="fa fa-child  fa-3x pull-left"></i>                    
+                    <div class="font-bold">Produção</div>
+                    <div>Lista dos produtos produzidos na associção</div>
+                </header>
+                <article class="panel-body">
+                    <?php $cooperados = array('5' => 5); ?>
+                    <h5 class="text-right">Total: <?php echo count($cooperados) > 1 ? count($cooperados) . ' registros encontrados' : count($cooperados) . ' registro encontrado' ?>.</h5 >
+                    <hr/>
+                </article>
+                <article class="table-responsive">
+                    <table class="table table-striped table-bordered table-hover table-condensed">
+                        <tr>
+                            <th width="50px">#</th>
+                            <th width="200px">Produto</th>
+                            <th width="200px">Total de produtores</th>
+                            <th>Porcentagem</th>
+                        </tr>
+                        <tr>
+                            <td>01</td>
+                            <td>Açai</td>
+                            <td>25</td>
+                            <td>
+                                <div class="progress" style="margin-bottom: 0;">
+                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger active" role="progressbar" style="width: 100%; height: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">100%</div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>02</td>
+                            <td>Mamão</td>
+                            <td>20</td>
+                            <td>
+                                <div class="progress" style="margin-bottom: 0;">
+                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger active" role="progressbar" style="width: 75%; height: 100%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">75%</div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>03</td>
+                            <td>Galinha</td>
+                            <td>15</td>
+                            <td>
+                                <div class="progress" style="margin-bottom: 0;">
+                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger active" role="progressbar" style="width: 50%; height: 100%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">50%</div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>04</td>
+                            <td>Arroz</td>
+                            <td>10</td>
+                            <td>
+                                <div class="progress" style="margin-bottom: 0;">
+                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger active" role="progressbar" style="width: 25%; height: 100%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>05</td>
+                            <td>Limão</td>
+                            <td>5</td>
+                            <td>
+                                <div class="progress" style="margin-bottom: 0;">
+                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-success active" role="progressbar" style="width: 10%; height: 100%;" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100">10%</div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
                 </article>
             </section>
         </div>
@@ -231,160 +355,4 @@
 <!-- /#section-container -->
 
 <script src="<?php echo BASE_URL ?>/assets/js/Chart.min.js"></script>
-<?php echo "<script>lucro='" . $financa['lucro']['valor'] . "'</script>" ?>
-<?php echo "<script>despesa='" . $financa['despesa']['valor'] . "'</script>" ?>
-<?php echo "<script>investimento='" . $financa['investimento']['valor'] . "'</script>" ?>
-<?php
-echo "<script>"
- . "ativo='" . $cooperado_status['ativo'] . "';"
- . "inativo='" . $cooperado_status['inativo'] . "';"
- . " </script>"
-?>
-<?php
-echo "<script>"
- . "permissionario='" . $cooperado_tipo['per'] . "';"
- . "participativo='" . $cooperado_tipo['par'] . "';"
- . " </script>"
-?>
-
-<script type="text/javascript">
-    graficoStatusCooperados(ativo, inativo);
-    graficoTipoCooperados(participativo, permissionario);
-    graficoFinanca(lucro, despesa, investimento);
-    function graficoTipoCooperados(participativos, permissionarios) {
-        var data = {
-            datasets: [{
-                    data: [participativos, permissionarios],
-                    backgroundColor: [
-                        "#f38b4a",
-                        "#56d798",
-                    ],
-                    hoverBackgroundColor: [
-                        "#f38b4a",
-                        "#56d798",
-                    ]
-                }],
-            labels: [
-                'Participativos',
-                'Permissionários'
-            ]
-        };
-        var option = {
-            responsive: true,
-            legend: {
-                position: 'top',
-            },
-            title: {
-                display: false,
-                text: 'Cooperados Registrados'
-            },
-            animation: {
-                animateScale: true,
-                animateRotate: true
-            }
-        };
-        var ctx = document.getElementById("grafico_tipo_cooperado");
-        var myChart = new Chart(ctx, {
-            type: 'doughnut',
-            data: data,
-            options: option
-        });
-    }
-
-    function graficoStatusCooperados(ativos, inativos) {
-        var data = {
-            datasets: [{
-                    data: [ativos, inativos],
-                    backgroundColor: [
-                        "#56d798",
-                        "#ff8397",
-                        "#f38b4a",
-                        "#6970d5"
-                    ],
-                    hoverBackgroundColor: [
-                        "#56d798",
-                        "#ff8397",
-                        "#f38b4a",
-                        "#6970d5"
-                    ]
-                }],
-            labels: [
-                'Ativos',
-                'Inativos'
-            ]
-        };
-        var option = {
-            responsive: true,
-            legend: {
-                position: 'top',
-            },
-            title: {
-                display: false,
-                text: 'Cooperados Registrados'
-            },
-            animation: {
-                animateScale: true,
-                animateRotate: true
-            }
-        };
-        var ctx = document.getElementById("grafico_status_cooperado");
-        var myChart = new Chart(ctx, {
-            type: 'doughnut',
-            data: data,
-            options: option
-        });
-    }
-    function graficoFinanca(lucro, despesa, investimento) {
-        var horizontalBarChartData = {
-            labels: [],
-            datasets: [{
-                    label: 'Entrada',
-                    backgroundColor: "#56d798",
-                    borderColor: "#56d798",
-                    borderWidth: 1,
-                    data: [
-                        lucro, 0
-                    ]
-                }, {
-                    label: 'Saída',
-                    backgroundColor: "#f38b4a",
-                    borderColor: "#f38b4a",
-                    data: [
-                        despesa, 0
-                    ]
-                }, {
-                    label: 'Investimento',
-                    backgroundColor: "#dd4b39",
-                    borderColor: "#dd4b39",
-                    data: [
-                        investimento, 0
-                    ]
-                }]
-
-        };
-        var option = {
-
-            elements: {
-                rectangle: {
-                    borderWidth: 2,
-                }
-            },
-            responsive: true,
-            legend: {
-                position: 'bottom'
-            },
-            title: {
-                display: true,
-                text: 'CONTROLE FINANCEIRO DO MÊS'
-            }
-        };
-        window.onload = function () {
-            var ctx = document.getElementById('grafico_status_financeiro').getContext('2d');
-            window.myHorizontalBar = new Chart(ctx, {
-                type: 'horizontalBar',
-                data: horizontalBarChartData,
-                options: option
-            });
-        };
-    }
-</script>
+<script src="<?php echo BASE_URL ?>/assets/js/graficos.js"></script>

@@ -5,7 +5,7 @@
             <ol class="breadcrumb">
                 <li><a  href="<?php echo BASE_URL ?>/home"><i class="fa fa-tachometer-alt"></i> Inicial</a></li>
                 <li><a  href="<?php echo BASE_URL ?>/relatorio/cooperados"><i class="fa fa-list-alt"></i> Cooperados</a></li>
-                <li class="text-uppercase"><a href="<?php echo BASE_URL ?>/cooperado/index/<?php echo!empty($cooperado['cooperado']['cod_cooperado']) ? $cooperado['cooperado']['cod_cooperado'] : '' ?>"><i class="fa fa-user"></i> <?php echo!empty($cooperado['cooperado']['nome_completo']) ? $cooperado['cooperado']['nome_completo'] : '' ?></a></li>
+                <li class="text-uppercase"><a href="<?php echo BASE_URL ?>/cooperado/index/<?php echo!empty($cooperado['cooperado']['cod']) ? $cooperado['cooperado']['cod'] : '' ?>"><i class="fa fa-user"></i> <?php echo!empty($cooperado['cooperado']['nome_completo']) ? $cooperado['cooperado']['nome_completo'] : '' ?></a></li>
                 <li class="active"><i class="fa fa-plus-square"></i> Mensalidade</li>
             </ol>
         </div>
@@ -26,7 +26,7 @@
                     </header>
                     <article class="panel-body">
                         <div class="row">
-                            <input type="hidden" name="nCodCooperado" value="<?php echo!empty($cooperado['cooperado']['cod_cooperado']) ? $cooperado['cooperado']['cod_cooperado'] : null; ?>"/>
+                            <input type="hidden" name="nCodCooperado" value="<?php echo!empty($cooperado['cooperado']['cod']) ? $cooperado['cooperado']['cod'] : null; ?>"/>
                             <input type="hidden" name="nCodMensalidade" value="<?php echo!empty($cooperado['mensalidade']['cod_mensalidade']) ? $cooperado['mensalidade']['cod_mensalidade'] : null; ?>"/>
                             <div class="col-md-4 form-group">
                                 <label for='iAno'>Ano:* </label>

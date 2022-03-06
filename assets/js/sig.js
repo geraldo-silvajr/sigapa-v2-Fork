@@ -80,9 +80,9 @@ if (document.getElementById("container-usuario-form")) {
     readDefaultURL = function () {
         var valor = $('input[name=nSexo]:checked').val();
         if (valor === "M") {
-            $("#viewImagem-1").attr('src', base_url+'/assets/imagens/user_masculino.png');
+            $("#viewImagem-1").attr('src', base_url + '/assets/imagens/user_masculino.png');
         } else {
-            $("#viewImagem-1").attr('src', base_url+'/assets/imagens/user_feminino.png');
+            $("#viewImagem-1").attr('src', base_url + '/assets/imagens/user_feminino.png');
         }
         if ($("#iImagem-user").val() !== null) {
             $("#iImagem-user").val(null);

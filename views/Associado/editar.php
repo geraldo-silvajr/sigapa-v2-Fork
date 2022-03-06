@@ -4,6 +4,9 @@
             <h2>Editar Associado</h2>
             <ol class="breadcrumb">
                 <li><a  href="<?php echo BASE_URL ?>/home"><i class="fa fa-tachometer-alt"></i> Inicial</a></li>
+                <li><a  href="<?php echo BASE_URL ?>/relatorio/cooperados"><i class="fa fa-list-alt"></i> Associados</a></li>
+                <li class="text-uppercase"><a href="<?php echo BASE_URL ?>/cooperado/index/<?php echo!empty($cooperado['cooperado']['cod']) ? $cooperado['cooperado']['cod'] : '' ?>"><i class="fa fa-user"></i> <?php echo!empty($cooperado['cooperado']['nome_completo']) ? $cooperado['cooperado']['nome_completo'] : '' ?></a></li>
+
                 <li class="active"><i class="fa fa-edit"></i> Editar Associado</li>
             </ol>
         </div>
@@ -204,12 +207,12 @@
                         <div class="row">
                             <div class="col-md-4 form-group">
                                 <label for="iTelefone" class="control-label">Celular 1:</label>
-                                <input type="text" id="iTelefone" name="nTelefone" placeholder="Exemplo: (93) 99205-6868" class="form-control input-celular" value="<?php echo (!empty($cooperado['contato']['celular_2'])) ? $cooperado['contato']['celular_2'] : ''; ?>"/>
+                                <input type="text" id="iTelefone" name="nTelefone" placeholder="Exemplo: (93) 99205-6868" class="form-control input-celular" value="<?php echo (!empty($cooperado['contato']['celular_1'])) ? $cooperado['contato']['celular_1'] : ''; ?>"/>
                             </div>
 
                             <div class="col-md-4 form-group">
                                 <label for="iCelular" class="control-label">Celular 2: </label>
-                                <input type="text" id="iCelular" name="nCelular" placeholder="Exemplo: (93) 98155-1122" class="form-control input-celular" value="<?php echo (!empty($cooperado['contato']['celular_1'])) ? $cooperado['contato']['celular_1'] : ''; ?>"/>
+                                <input type="text" id="iCelular" name="nCelular" placeholder="Exemplo: (93) 98155-1122" class="form-control input-celular" value="<?php echo (!empty($cooperado['contato']['celular_2'])) ? $cooperado['contato']['celular_2'] : ''; ?>"/>
                             </div>
 
                             <div class="col-md-4 form-group">

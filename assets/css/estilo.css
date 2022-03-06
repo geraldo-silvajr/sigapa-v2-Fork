@@ -97,9 +97,10 @@ form label{
 
 /*MENU PRINCIPAL - NAV*/
 .navbar-inverse{
-    background-color: #733003;
+    background-color: #00a65a;;
     color: white;
 }
+
 @media(min-width: 768px){
     .navbar-inverse>.navbar-header>.navbar-brand{padding: 10px 15px 0 15px;}
 }
@@ -127,7 +128,7 @@ form label{
 
 .top-nav>li>a:hover, .top-nav>li>a:focus, .top-nav>.open>a, .top-nav>.open>a:hover, .top-nav>.open>a:focus {
     color: #fff;
-    background-color: #512305;
+    background-color: #046739;
 }
 
 .top-nav>.open>.dropdown-menu {
@@ -230,6 +231,7 @@ form label{
 /*Breadcrumbs */
 #pagina-header>h2{
     border-bottom: 1px solid #cecece;
+    font-size: 15pt;
 }
 /* panel*/
 .panel-heading a:active, .panel-heading a:hover,.panel-heading a:focus{text-decoration: none;}
@@ -263,7 +265,7 @@ form label{
 .panel-black > .panel-body > a:hover,.panel-success > .panel-body > a:focus {color: #b93a2b}
 .panel-black > .panel-body > a {color: #2F4554}
 .panel-black > .panel-body > a > span{background-color: #2F4554}
-.panel-black input, .panel-black select, .panel-black textarea{border-color: #2F4554 !important}
+.panel-black input, .panel-black select, .panel-black textarea, .panel-black .select2-container--default .select2-selection--single {border-color: #2F4554 !important}
 .panel textarea{
     min-width: 100%;
     max-width: 100%;

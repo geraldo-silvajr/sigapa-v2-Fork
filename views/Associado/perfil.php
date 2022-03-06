@@ -1,7 +1,7 @@
 <div id="section-container">
     <div class="row" >
         <div class="col-sm-12 col-md-12 col-lg-12" id="pagina-header">
-            <h3 class="text-uppercase"><?php echo!empty($cooperado['cooperado']['nome_completo']) ? $cooperado['cooperado']['nome_completo'] : '' ?></h3>
+            <h2 class="text-uppercase"><?php echo!empty($cooperado['cooperado']['nome_completo']) ? $cooperado['cooperado']['nome_completo'] : '' ?></h2>
             <ol class="breadcrumb">
                 <li><a  href="<?php echo BASE_URL ?>/home"><i class="fa fa-tachometer-alt"></i> Inicial</a></li>
                 <li><a  href="<?php echo BASE_URL ?>/relatorio/cooperados"><i class="fa fa-list-alt"></i> Associados</a></li>
@@ -12,7 +12,8 @@
     <!--FIM pagina-header-->
     <div class="col-md-12 clear">
         <p class="text-right">
-            <a class="btn btn-primary btn-xs" href="<?php echo BASE_URL . '/editar/cooperado/' . $cooperado['cooperado']['cod']; ?>" title="Editar"><i class="fa fa-pencil-alt"></i></a> 
+            <a class="btn btn-success btn-xs" href="<?php echo BASE_URL . '/cooperado/pdf/' . $cooperado['cooperado']['cod']; ?>" title="Editar" target="_blank"><i class="fa fa-print"></i> Imprimir</a> 
+            <a class="btn btn-primary btn-xs" href="<?php echo BASE_URL . '/editar/cooperado/' . $cooperado['cooperado']['cod']; ?>" title="Editar"><i class="fa fa-pencil-alt"></i> Editar</a> 
         </p>
     </div>
     <div class="row">
@@ -222,33 +223,41 @@
         <div class="col-md-12 clear">
             <section class="panel panel-black">
                 <header class="panel-heading">
-                    <h4 class="panel-title"><i class="fa fa-car pull-left"></i> Veículo</h4>
+                    <h4 class="panel-title"><i class="fa fa-child pull-left"></i> Produção</h4>
                 </header>
                 <article class="panel-body">
-                    <!--inicio row-->
-                    <div class="row">
-                        <div class="col-sm-6 col-md-3 ">
-                            <p><span class="text-destaque">NZ:</span> <?php echo!empty($cooperado['veiculo']['nz']) ? $cooperado['veiculo']['nz'] : '' ?></p>
-                        </div>
-                        <div class="col-sm-6 col-md-3 ">
-                            <p><span class="text-destaque">Veículo:</span> <?php echo!empty($cooperado['veiculo']['veiculo']) ? $cooperado['veiculo']['veiculo'] : '' ?></p>
-                        </div>
-                        <div class="col-sm-6 col-md-3 ">
-                            <p><span class="text-destaque">Placa:</span> <?php echo!empty($cooperado['veiculo']['veiculo']) ? $cooperado['veiculo']['placa'] : '' ?></p>
-                        </div>
-                        <div class="col-sm-6 col-md-3 ">
-                            <p><span class="text-destaque">Cor:</span> <?php echo!empty($cooperado['veiculo']['cor']) ? $cooperado['veiculo']['cor'] : '' ?></p>
-                        </div>
-                    </div>
-                    <!--fim row-->
-                    <!--inicio row-->
-                    <div class="row">
-                        <div class="col-sm-6 col-md-3 ">
-                            <p><span class="text-destaque">Ano Modelo:</span> <?php echo!empty($cooperado['veiculo']['ano_modelo']) ? $cooperado['veiculo']['ano_modelo'] : '' ?></p>
-                        </div>
-                    </div>
-                    <!-- fim row-->
+                    <span class="pull-right"><a href="<?php echo BASE_URL . '/cadastrar/producao/' . $cooperado['cooperado']['cod'] ?>" class="btn btn-sm btn-warning" title="Adicionar Produção"><i class="fa fa-plus-circle"></i> Adicionar</a></span>
                 </article>
+                <article class="table-responsive">
+                    <table class="table table-striped table-bordered table-hover table-condensed">
+                        <tr>
+                            <th width="50px">#</th>
+                            <th> Produto</th>
+                            <th width="300px">Área em metro quadrado(m²)</th>
+                            <th>Ação</th>
+                        </tr>
+                        <?php
+                        if (isset($cooperado['producao']) && !empty($cooperado['producao'])):
+                            $qtd = 1;
+                            foreach ($cooperado['producao'] as $index):
+                                ?>
+                                <tr>
+                                    <td><?php echo $qtd ?></td>
+                                    <td><?php echo $index['producao'] . " - " . $index['categoria'] ?></td>
+                                    <td><?php echo!empty($index['area']) ? $index['area'] . ' m²' : '' ?></td>
+                                    <td class="table-acao text-center">
+                                        <a class="btn btn-primary btn-xs" href="<?php echo BASE_URL . '/editar/producao/' . $index['cod_produto']; ?>" title="Editar"><i class="fa fa-pencil-alt"></i></a> 
+                                        <?php if ($this->checkUser() >= 3) : ?>
+                                            <button type="button"  class="btn btn-danger btn-xs" data-toggle="modal" data-target="#modal_producao_<?php echo $index['cod_produto'] ?>" title="Excluir"><i class="fa fa-trash"></i></button>
+                                        <?php endif; ?>
+                                    </td>
+                                </tr>
+                                <?php
+                                ++$qtd;
+                            endforeach;
+                        endif;
+                        ?>
+                    </table>
             </section>
         </div>
         <!--fim col-md-12 clea-->
@@ -324,9 +333,8 @@
                 <article class="table-responsive">
                     <table class="table table-striped table-bordered table-hover table-condensed">
                         <tr>
-                            <th>#</th>
-                            <th>Data</th>
-                            <th>Usuario</th>
+                            <th width="50px">#</th>
+                            <th width="200px">Data</th>
                             <th>Descrição / Atendimento</th>
                             <th>Ação</th>
                         </tr>
@@ -337,8 +345,7 @@
                                 ?>
                                 <tr>
                                     <td><?php echo $qtd ?></td>
-                                    <td><?php echo $historico['data_historico'] ?></td>
-                                    <td><?php echo $historico['usuario'] ?></td>
+                                    <td><?php echo $this->formatDateViewComplet($historico['data_historico']) ?></td>
                                     <td><?php echo $historico['descricao_historico'] ?></td>
                                     <td class="table-acao text-center">
                                         <a class="btn btn-primary btn-xs" href="<?php echo BASE_URL . '/editar/historico/' . $historico['cod_historico']; ?>" title="Editar"><i class="fa fa-pencil-alt"></i></a> 
@@ -415,6 +422,37 @@ if (isset($cooperado['historicos']) && !empty($cooperado['historicos'])):
                     </article>
                     <footer class="modal-footer">
                         <a class="btn btn-danger pull-left" href="<?php echo BASE_URL . '/excluir/historico/' . $cooperado['cooperado']['cod'] . '/' . $historico['cod_historico'] ?>"> <i class="fa fa-trash"></i> Excluir</a> 
+                        <button class="btn btn-default" type="button" data-dismiss="modal"><i class="fa fa-times"></i> Fechar</button>
+                    </footer>
+                </section>
+            </article>
+        </section>
+        <?php
+    endforeach;
+endif;
+?>
+<?php
+if (isset($cooperado['producao']) && !empty($cooperado['producao'])):
+    foreach ($cooperado['producao'] as $index):
+        ?>
+        <!--MODAL - ESTRUTURA BÁSICA-->
+        <section class="modal fade" id="modal_producao_<?php echo $index['cod_produto'] ?>" tabindex="-1" role="dialog">
+            <article class="modal-dialog modal-md" role="document">
+                <section class="modal-content">
+                    <header class="modal-header bg-primary">
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 >Deseja remover este registro?</h4>
+                    </header>
+                    <article class="modal-body">
+                        <ul class="list-unstyled">
+                            <li><b>Código: </b> <?php echo!empty($index['cod_produto']) ? $index['cod_produto'] : '' ?>;</li>
+                            <li><b>Produção: </b> <?php echo $index['producao'] . " - " . $index['categoria'] ?></li>
+                            <li><b>Tamanho da Área: </b> <?php echo!empty($index['area']) ? $index['area'] . ' m²' : '' ?></li>
+                        </ul>
+                        <p class="text-justify text-danger"><span class="font-bold">OBS : </span> Se você remove este registro, o mesmo deixará de existir no sistema.</p>
+                    </article>
+                    <footer class="modal-footer">
+                        <a class="btn btn-danger pull-left" href="<?php echo BASE_URL . '/excluir/producao/' . $index['associado_cod'] . '/' . $index['cod_produto'] ?>"> <i class="fa fa-trash"></i> Excluir</a> 
                         <button class="btn btn-default" type="button" data-dismiss="modal"><i class="fa fa-times"></i> Fechar</button>
                     </footer>
                 </section>

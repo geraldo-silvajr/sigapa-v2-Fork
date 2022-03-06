@@ -180,6 +180,45 @@ class EditarController extends controller {
     }
 
     /**
+     * Está função pertence a uma action do controle MVC, ela é responśavel pelo controlle nas ações de editar produção do cooperado e valida os campus preenchidos via formulário.
+     * @access public
+     * @param int $cod - código do cooperado registrada no banco
+     * @author Joab Torres <joabtorres1508@gmail.com>
+     */
+    public function producao($cod) {
+        if ($this->checkUser() > 2 && intval($cod) > 0) {
+            $viewName = "associado/producao/editar";
+            $dados = array();
+            $crudModel = new crud_db();
+            $dados['associado'] = $crudModel->read_specific('SELECT p.*, ap.* FROM associado AS p INNER JOIN associado_producao as ap WHERE  p.cod=ap.associado_cod AND ap.cod_produto=:cod', array('cod' => addslashes($cod)));
+            $dados['producao'] = $crudModel->read("SELECT * FROM producao");
+
+            if (isset($_POST['nSalvar']) && !empty($_POST['nSalvar'])) {
+
+                $dados['produto'] = array(
+                    'producao_cod' => addslashes($_POST['nProducao']),
+                    'area' => addslashes($_POST['nArea']),
+                    'cod_produto' => $dados['associado']['cod_produto']
+                );
+                $cadastro = $crudModel->create("UPDATE associado_producao SET producao_cod=:producao_cod, area=:area WHERE cod_produto=:cod_produto", $dados['produto']);
+
+                if ($cadastro) {
+                    $_SESSION['produto_acao'] = true;
+                    $url = BASE_URL . "/editar/producao/" . $dados['associado']['cod_produto'];
+                    header("Location: " . $url);
+                }
+            } else if (isset($_SESSION['produto_acao']) && !empty($_SESSION['produto_acao'])) {
+                $_SESSION['produto_acao'] = false;
+                $dados['erro'] = array('class' => 'alert-success', 'msg' => "Alteração realizada com sucesso!");
+            }
+            $this->loadTemplate($viewName, $dados);
+        } else {
+            $url = BASE_URL . '/home';
+            header("Location: " . $url);
+        }
+    }
+
+    /**
      * Está função pertence a uma action do controle MVC, ela é responśavel pelo controlle nas ações de editar históricos do cooperado e valida os campus preenchidos via formulário.
      * @access public
      * @param int $cod - código do lucro registrada no banco
@@ -187,10 +226,10 @@ class EditarController extends controller {
      */
     public function historico($cod) {
         if ($this->checkUser() >= 2 && intval($cod) > 0) {
-            $viewName = "historico_editar";
+            $viewName = "associado/historico/editar";
             $dados = array();
             $crudModel = new crud_db();
-            $dados['cooperado']['historico'] = $crudModel->read('SELECT hist.*, user.usuario_usuario, coop.nome_completo FROM associado_historico as hist INNER JOIN sig_usuario as user INNER JOIN associado as coop WHERE coop.cod_cooperado=hist.cod_cooperado AND user.cod_usuario=hist.cod_usuario AND hist.cod_historico=:cod;', array('cod' => addslashes($cod)));
+            $dados['cooperado']['historico'] = $crudModel->read('SELECT hist.*, coop.nome_completo FROM associado_historico as hist INNER JOIN associado as coop WHERE coop.cod=hist.associado_cod AND hist.cod_historico=:cod;', array('cod' => addslashes($cod)));
             $dados['cooperado']['historico'] = $dados['cooperado']['historico'][0];
 
             if (isset($_POST['nSalvar']) && !empty($_POST['nSalvar'])) {
@@ -224,15 +263,15 @@ class EditarController extends controller {
      */
     public function mensalidade($cod) {
         if ($this->checkUser() >= 2 && intval($cod) > 0) {
-            $viewName = "mensalidade_editar";
+            $viewName = "associado/mensalidade/editar";
             $dados = array();
             $cooperadoModel = new crud_db();
-            $dados['cooperado']['mensalidade'] = $cooperadoModel->read('SELECT men.*, coop.nome_completo FROM associado_mensalidade as men INNER JOIN associado as coop WHERE coop.cod_cooperado=men.cod_cooperado AND men.cod_mensalidade=:cod', array('cod' => addslashes($cod)));
+            $dados['cooperado']['mensalidade'] = $cooperadoModel->read('SELECT men.*, coop.nome_completo FROM associado_mensalidade as men INNER JOIN associado as coop WHERE coop.cod=men.associado_cod AND men.cod_mensalidade=:cod', array('cod' => addslashes($cod)));
             $dados['cooperado']['mensalidade'] = $dados['cooperado']['mensalidade'][0];
             if (isset($_POST['nSalvar']) && !empty($_POST['nSalvar'])) {
                 if (isset($_POST['nAno']) && !empty($_POST['nAno'])) {
                     $dados['mensalidade'] = array(
-                        'cod_cooperado' => addslashes($_POST['nCodCooperado']),
+                        'associado_cod' => addslashes($_POST['nCodCooperado']),
                         'ano' => addslashes($_POST['nAno']),
                         'janeiro' => !empty($_POST['nJaneiro']) ? $this->formatDinheiroBD($_POST['nJaneiro']) : 0,
                         'fevereiro' => !empty($_POST['nFevereiro']) ? $this->formatDinheiroBD($_POST['nFevereiro']) : 0,
@@ -248,7 +287,7 @@ class EditarController extends controller {
                         'dezembro' => !empty($_POST['nDezembro']) ? $this->formatDinheiroBD($_POST['nDezembro']) : 0,
                         'cod_mensalidade' => addslashes($_POST['nCodMensalidade'])
                     );
-                    $cadMensalidade = $cooperadoModel->update("UPDATE associado_mensalidade SET cod_cooperado=:cod_cooperado, ano=:ano, janeiro=:janeiro, fevereiro=:fevereiro, marco=:marco, abril=:abril, maio=:maio, junho=:junho, julho=:julho, agosto=:agosto, setembro=:setembro, outubro=:outubro, novembro=:novembro, dezembro=:dezembro where cod_mensalidade=:cod_mensalidade", $dados['mensalidade']);
+                    $cadMensalidade = $cooperadoModel->update("UPDATE associado_mensalidade SET associado_cod=:associado_cod, ano=:ano, janeiro=:janeiro, fevereiro=:fevereiro, marco=:marco, abril=:abril, maio=:maio, junho=:junho, julho=:julho, agosto=:agosto, setembro=:setembro, outubro=:outubro, novembro=:novembro, dezembro=:dezembro where cod_mensalidade=:cod_mensalidade", $dados['mensalidade']);
                     if ($cadMensalidade) {
                         $_SESSION['mensalidade_acao'] = true;
                         $url = BASE_URL . "/editar/mensalidade/" . $cod;

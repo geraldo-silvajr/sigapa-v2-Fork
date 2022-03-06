@@ -1,9 +1,22 @@
+
+
 <!DOCTYPE html>
 <html lang="pt-br">
+
     <head>
-        <meta charset="UTF-8">
-        <title>Relatório Financeio</title>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="icon" type="image/gif" href="<?php echo BASE_URL ?>/assets/imagens/icon.png" sizes="32x32" />
+        <meta property="ogg:title" content="<?php echo NAME_PROJECT; ?>">
+        <meta property="ogg:description" content="<?php echo NAME_PROJECT; ?>">
+        <title> <?php echo NAME_PROJECT; ?> </title>
+        <link rel="stylesheet" href="<?php echo BASE_URL ?>/assets/css/relatorio_1.css" media=”print” >
         <style>
+            .table td{
+                border: 1px solid black;    
+                border-collapse: collapse;
+            }
             .text-center{text-align: center;}
             .text-left{text-align: left;}
             .text-right{text-align: right;}
@@ -28,22 +41,36 @@
         </style>
     </head>
     <body>
-        <div id="container">
-            <div class="header">
-                <table>
-                    <tr>
-                        <td class="text-center">
-                            <h2 class="text-center"><span class="text-uppercase"><?php echo $cidade['nome_siglas'] ?></span> - <?php echo $cidade['nome_completo'] ?></h2>
-                            <p class="text-center"><?php echo $cidade['endereco'] ?> - CEP: <?php echo $cidade['cep'] ?></p>
-                            <p class="text-center"><?php echo $cidade['url_site'] ?> | <?php echo $cidade['telefone'] ?> | <?php echo $cidade['email'] ?></p>
-                            <p class="text-center">CNPJ <?php echo $cidade['cnpj'] ?></p>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-            <!-- fim header -->
-            <div class="section">
-                <h3 class="title-table text-center">Relatório Financeiro</h3>
+        <table style="width:100%; ">	    
+            <tr>
+                <td align="left">
+                    <img src="<?php echo BASE_URL . '/assets/imagens/logo-aparaa.png'; ?>" alt="Logo" style="width: 80px;"/>
+
+                </td>
+                <td align="left">
+                    <h4 class="text-center text-upercase" style="margin: 0;"> <?php echo $cidade['nome_siglas'] ?> <?php echo $cidade['nome_completo'] ?> </h4>
+                    <p class="text-center">                    
+                        <small>
+                            <?php echo $cidade['endereco'] ?> - CEP: <?php echo $cidade['cep'] ?><br/>
+                            <?php echo $cidade['telefone'] ?> | <?php echo $cidade['email'] ?><br/>
+                            CNPJ <?php echo $cidade['cnpj'] ?>
+                        </small>
+                    </p>
+                </td>
+                <td align="right">
+                    <img src="<?php echo BASE_URL . '/assets/imagens/ifpa_sigapa.png'; ?>" alt="Logo" style="width: 140px;"/>
+                </td>
+            </tr>
+            <tr>
+                <td align="center" colspan="3">
+                    <p><?php echo NAME_PROJECT ?></p><br/>
+                    <h4>Relatório de Entradas</h4>
+                </td>
+            </tr>
+        </table>
+        <div align="right">Este documento foi gerado em <?php echo $this->formatDateView(date("Y-m-d")) . ' as ' . date("H:i:s", (time() - $this->ajustaHorario())) ?>.</div>
+        <div id="conteudo">
+            <div id="section">
                 <?php if (isset($busca) && !empty($busca)): ?>
                     <table class="table">
                         <thead>
@@ -63,11 +90,7 @@
                         </tbody>
                     </table>
                 <?php endif; ?>
-
-
-                <p align="right">Este documento foi gerado em <?php echo $this->formatDateView(date("Y-m-d")) . ' as ' . date("H:i:s", (time() - $this->ajustaHorario())) ?>.</p>
-
-
+                <hr>
                 <table class="table">
                     <thead>
                         <tr>
@@ -93,12 +116,12 @@
                     if (!empty($financas['lucro'])):
                         ?>
 
-                        <h3 class="title-table">Entradas</h3>
+                <h4 class="title-table">Entradas</h4>
                         <table class="table">
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Descricao</th>
+                                    <th>Descrição</th>
                                     <th>Data</th>
                                     <th>Valor</th>
                                 </tr>
@@ -127,12 +150,12 @@
                     <?php endif; ?>
                     <?php if (!empty($financas['despesa'])): ?>
 
-                        <h3 class="title-table">Saídas</h3>
+                        <h4 class="title-table">Saídas</h4>
                         <table class="table">
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Descricao</th>
+                                    <th>Descrição</th>
                                     <th>Data</th>
                                     <th>Valor</th>
                                 </tr>
@@ -161,12 +184,12 @@
                     <?php endif; ?>
                     <?php if (!empty($financas['investimento'])): ?>
 
-                        <h3 class="title-table">Investimento</h3>
+                        <h4 class="title-table">Investimento</h4>
                         <table class="table">
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Descricao</th>
+                                    <th>Descrição</th>
                                     <th>Data</th>
                                     <th>Valor</th>
                                 </tr>

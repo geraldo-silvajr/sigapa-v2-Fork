@@ -200,12 +200,12 @@
                         <div class="row">
                             <div class="col-md-4 form-group">
                                 <label for="iTelefone" class="control-label">Celular 1:</label>
-                                <input type="text" id="iTelefone" name="nTelefone" placeholder="Exemplo: (93) 99205-6868" class="form-control input-celular" value="<?php echo (!empty($cooperado['contato']['celular_2'])) ? $cooperado['contato']['celular_2'] : ''; ?>"/>
+                                <input type="text" id="iTelefone" name="nTelefone" placeholder="Exemplo: (93) 99205-6868" class="form-control input-celular" value="<?php echo (!empty($cooperado['contato']['celular_1'])) ? $cooperado['contato']['celular_1'] : ''; ?>"/>
                             </div>
 
                             <div class="col-md-4 form-group">
                                 <label for="iCelular" class="control-label">Celular 2: </label>
-                                <input type="text" id="iCelular" name="nCelular" placeholder="Exemplo: (93) 98155-1122" class="form-control input-celular" value="<?php echo (!empty($cooperado['contato']['celular_1'])) ? $cooperado['contato']['celular_1'] : ''; ?>"/>
+                                <input type="text" id="iCelular" name="nCelular" placeholder="Exemplo: (93) 98155-1122" class="form-control input-celular" value="<?php echo (!empty($cooperado['contato']['celular_2'])) ? $cooperado['contato']['celular_2'] : ''; ?>"/>
                             </div>
 
                             <div class="col-md-4 form-group">

@@ -180,6 +180,43 @@ class cadastrarController extends controller {
     }
 
     /**
+     * Está função pertence a uma action do controle MVC, ela é responśavel pelo controlle nas ações de cadastra produção do cooperado e valida os campus preenchidos via formulário.
+     * @access public
+     * @param int $cod_cooperado - código do cooperado registrada no banco
+     * @author Joab Torres <joabtorres1508@gmail.com>
+     */
+    public function producao($cod_cooperado) {
+        if ($this->checkUser() > 2 && intval($cod_cooperado) > 0) {
+            $viewName = "associado/producao/cadastrar";
+            $dados = array();
+            $crudModel = new crud_db();
+            $dados['associado'] = $crudModel->read_specific('SELECT * FROM associado WHERE cod=:cod', array('cod' => addslashes($cod_cooperado)));
+            $dados['producao'] = $crudModel->read("SELECT * FROM producao");
+            if (isset($_POST['nSalvar']) && !empty($_POST['nSalvar'])) {
+
+                $dados['produto'] = array(
+                    'associado_cod' => addslashes($_POST['nCodCooperado']),
+                    'producao_cod' => addslashes($_POST['nProducao']),
+                    'area' => addslashes($_POST['nArea'])
+                );
+                $cadastro = $crudModel->create("INSERT INTO associado_producao (associado_cod, producao_cod, area) VALUES (:associado_cod, :producao_cod, :area)", $dados['produto']);
+                if ($cadastro) {
+                    $_SESSION['produto_acao'] = true;
+                    $url = BASE_URL . "/cadastrar/producao/" . $cod_cooperado;
+                    header("Location: " . $url);
+                }
+            } else if (isset($_SESSION['produto_acao']) && !empty($_SESSION['produto_acao'])) {
+                $_SESSION['produto_acao'] = false;
+                $dados['erro'] = array('class' => 'alert-success', 'msg' => "Cadastro realizado com sucesso!");
+            }
+            $this->loadTemplate($viewName, $dados);
+        } else {
+            $url = BASE_URL . '/home';
+            header("Location: " . $url);
+        }
+    }
+
+    /**
      * Está função pertence a uma action do controle MVC, ela é responśavel pelo controlle nas ações de cadastra históricos do cooperado e valida os campus preenchidos via formulário.
      * @access public
      * @param int $cod_cooperado - código do cooperado registrada no banco
@@ -187,20 +224,19 @@ class cadastrarController extends controller {
      */
     public function historico($cod_cooperado) {
         if ($this->checkUser() > 2 && intval($cod_cooperado) > 0) {
-            $viewName = "historico_cadastrar";
+            $viewName = "associado/historico/cadastrar";
             $dados = array();
             $crudModel = new crud_db();
-            $dados['cooperado']['cooperado'] = $crudModel->read('SELECT * FROM sig_cooperado WHERE cod_cooperado=:cod', array('cod' => addslashes($cod_cooperado)));
+            $dados['cooperado']['cooperado'] = $crudModel->read('SELECT * FROM associado WHERE cod=:cod', array('cod' => addslashes($cod_cooperado)));
             $dados['cooperado']['cooperado'] = $dados['cooperado']['cooperado'][0];
             $dados['cooperado']['usuario'] = $crudModel->read("SELECT * FROM sig_usuario WHERE cod_usuario=:cod", array('cod' => $_SESSION['usuario_sig_cootax']['cod']));
             $dados['cooperado']['usuario'] = $dados['cooperado']['usuario'][0];
             if (isset($_POST['nSalvar']) && !empty($_POST['nSalvar'])) {
                 $dados['coopeado']['historico'] = array(
-                    'cod_usuario' => addslashes($_POST['nCodUsuario']),
-                    'cod_cooperado' => addslashes($_POST['nCodCooperado']),
+                    'associado_cod' => addslashes($_POST['nCodCooperado']),
                     'descricao_historico' => addslashes($_POST['nDescricao'])
                 );
-                $cadHistorico = $crudModel->create("INSERT INTO sig_cooperado_historico (cod_usuario, cod_cooperado, descricao_historico, data_historico) VALUES (:cod_usuario, :cod_cooperado, :descricao_historico, NOW())", $dados['coopeado']['historico']);
+                $cadHistorico = $crudModel->create("INSERT INTO associado_historico (associado_cod, descricao_historico, data_historico) VALUES (:associado_cod, :descricao_historico, NOW())", $dados['coopeado']['historico']);
                 if ($cadHistorico) {
                     $_SESSION['historico_acao'] = true;
                     $url = BASE_URL . "/cadastrar/historico/" . $cod_cooperado;
@@ -225,15 +261,15 @@ class cadastrarController extends controller {
      */
     public function mensalidade($cod_cooperado) {
         if ($this->checkUser() > 2 && intval($cod_cooperado) > 0) {
-            $viewName = "mensalidade_cadastrar";
+            $viewName = "associado/mensalidade/cadastrar";
             $dados = array();
             $cooperadoModel = new cooperado();
-            $dados['cooperado']['cooperado'] = $cooperadoModel->read('SELECT * FROM sig_cooperado WHERE cod_cooperado=:cod', array('cod' => addslashes($cod_cooperado)));
+            $dados['cooperado']['cooperado'] = $cooperadoModel->read('SELECT * FROM associado WHERE cod=:cod', array('cod' => addslashes($cod_cooperado)));
             $dados['cooperado']['cooperado'] = $dados['cooperado']['cooperado'][0];
             if (isset($_POST['nSalvar']) && !empty($_POST['nSalvar'])) {
                 if (isset($_POST['nAno']) && !empty($_POST['nAno'])) {
                     $dados['mensalidade'] = array(
-                        'cod_cooperado' => addslashes($_POST['nCodCooperado']),
+                        'associado_cod' => addslashes($_POST['nCodCooperado']),
                         'ano' => addslashes($_POST['nAno']),
                         'janeiro' => !empty($_POST['nJaneiro']) ? $this->formatDinheiroBD($_POST['nJaneiro']) : 0,
                         'fevereiro' => !empty($_POST['nFevereiro']) ? $this->formatDinheiroBD($_POST['nFevereiro']) : 0,
@@ -249,7 +285,7 @@ class cadastrarController extends controller {
                         'dezembro' => !empty($_POST['nDezembro']) ? $this->formatDinheiroBD($_POST['nDezembro']) : 0,
                     );
                     $crudModel = new crud_db();
-                    $cadMensalidade = $crudModel->create("INSERT INTO sig_cooperado_mensalidade (cod_cooperado, ano, janeiro, fevereiro, marco, abril, maio, junho, julho, agosto, setembro, outubro, novembro, dezembro) VALUES (:cod_cooperado, :ano, :janeiro, :fevereiro, :marco, :abril, :maio, :junho, :julho, :agosto, :setembro, :outubro, :novembro, :dezembro)", $dados['mensalidade']);
+                    $cadMensalidade = $crudModel->create("INSERT INTO associado_mensalidade (associado_cod, ano, janeiro, fevereiro, marco, abril, maio, junho, julho, agosto, setembro, outubro, novembro, dezembro) VALUES (:associado_cod, :ano, :janeiro, :fevereiro, :marco, :abril, :maio, :junho, :julho, :agosto, :setembro, :outubro, :novembro, :dezembro)", $dados['mensalidade']);
                     if ($cadMensalidade) {
                         $_SESSION['mensalidade_acao'] = true;
                         $url = BASE_URL . "/cadastrar/mensalidade/" . $cod_cooperado;

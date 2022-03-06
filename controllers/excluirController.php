@@ -58,6 +58,27 @@ class excluirController extends controller {
      * @param int $cod - código do historico registrada no banco
      * @author Joab Torres <joabtorres1508@gmail.com>
      */
+    public function producao($cod_cooperado, $cod) {
+        if ($this->checkUser() >= 3 && intval($cod) > 0) {
+            $crudModel = new crud_db();
+            $removeFinanca = $crudModel->remove("DELETE FROM associado_producao WHERE cod_produto=:cod", array('cod' => addslashes($cod)));
+            if ($removeFinanca) {
+                $url = BASE_URL . "/cooperado/index/" . $cod_cooperado;
+                header("Location: " . $url);
+            }
+        } else {
+            $url = BASE_URL . '/home';
+            header("Location: " . $url);
+        }
+    }
+
+    /**
+     * Está função pertence a uma action do controle MVC, ela é responśavel pelo controlle nas ações de excluir históricos do cooperado.
+     * @access public
+     * @param int $cod_cooperado - código do historico registrada no banco
+     * @param int $cod - código do historico registrada no banco
+     * @author Joab Torres <joabtorres1508@gmail.com>
+     */
     public function historico($cod_cooperado, $cod) {
         if ($this->checkUser() >= 3 && intval($cod) > 0) {
             $crudModel = new crud_db();
