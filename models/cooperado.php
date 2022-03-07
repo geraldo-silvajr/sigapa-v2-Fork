@@ -138,7 +138,7 @@ class cooperado extends model {
         $sql->bindValue(":cod", $data['cooperado']['cod']);
         //endereço
         $sql->execute();
-        $sql = $this->db->prepare('UPDATE associado_endereco SET associado_cod=:associado_cod, logradouro=:logradouro, numero=:numero, bairro=:bairro, complemento=:complemento, cidade=:cidade, estado=:estado, cep=:cep WHERE cod_endereco=:cod_endereco');
+        $sql = $this->db->prepare('UPDATE associado_endereco SET associado_cod=:associado_cod, logradouro=:logradouro, numero=:numero, bairro=:bairro, complemento=:complemento, cidade=:cidade, estado=:estado, latitude=:latitude, longitude=:longitude, cep=:cep WHERE cod_endereco=:cod_endereco');
         foreach ($data['endereco'] as $indice => $valor) {
             $sql->bindValue(":" . $indice, $valor);
         }
@@ -194,12 +194,10 @@ class cooperado extends model {
 
             list($larguraOriginal, $alturaOriginal) = getimagesize($imagem['temp']);
 
-
             $ratio = max($largura / $larguraOriginal, $altura / $alturaOriginal);
             $alturaOriginal = $altura / $ratio;
             $x = ($larguraOriginal - $largura / $ratio) / 2;
             $larguraOriginal = $largura / $ratio;
-
 
             $imagem_final = imagecreatetruecolor($largura, $altura);
 

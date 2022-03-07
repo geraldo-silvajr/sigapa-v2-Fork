@@ -86,7 +86,7 @@ class crud_db extends model {
      * @return array $sql->fetch() [caso encontre] | bollean FALSE [caso contrário] 
      * @author Joab Torres <joabtorres1508@gmail.com>
      */
-    public function read_specific($sql_command, $data) {
+    public function read_specific($sql_command, $data = array()) {
         if (!empty($data)) {
             $sql = $this->db->prepare($sql_command);
 

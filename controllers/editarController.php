@@ -134,6 +134,8 @@ class EditarController extends controller {
                     'complemento' => addslashes($_POST['nComplementos']),
                     'cidade' => addslashes($_POST['nCidade']),
                     'estado' => addslashes($_POST['nEstado']),
+                    'latitude' => addslashes($_POST['nLatitude']),
+                    'longitude' => addslashes($_POST['nLongitude']),
                     'cep' => addslashes($_POST['nCEP']),
                     'cod_endereco' => addslashes($_POST['nCodEndereco'])
                 );

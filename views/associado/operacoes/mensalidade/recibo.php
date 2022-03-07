@@ -5,7 +5,7 @@
             <ol class="breadcrumb">
                 <li><a  href="<?php echo BASE_URL ?>/home"><i class="fa fa-tachometer-alt"></i> Inicial</a></li>
                 <li><a  href="<?php echo BASE_URL ?>/relatorio/cooperados"><i class="fa fa-list-alt"></i> Cooperados</a></li>
-                <li class="text-uppercase"><a href="<?php echo BASE_URL ?>/cooperado/index/<?php echo!empty($cooperado['cooperado']['cod_cooperado']) ? $cooperado['cooperado']['cod_cooperado'] : '' ?>"><i class="fa fa-user"></i> <?php echo!empty($cooperado['cooperado']['nome_completo']) ? $cooperado['cooperado']['nome_completo'] : '' ?></a></li>
+                <li class="text-uppercase"><a href="<?php echo BASE_URL ?>/cooperado/index/<?php echo!empty($cooperado['cooperado']['cod']) ? $cooperado['cooperado']['cod'] : '' ?>"><i class="fa fa-user"></i> <?php echo!empty($cooperado['cooperado']['nome_completo']) ? $cooperado['cooperado']['nome_completo'] : '' ?></a></li>
                 <li class="active"><i class="fa fa-list-alt"></i> Mensalidade</li>
             </ol>
         </div>

@@ -64,7 +64,7 @@
             <tr>
                 <td align="center" colspan="3">
                     <p><?php echo NAME_PROJECT ?></p><br/>
-                    <h4>Relatório de Entradas</h4>
+                    <h4>Relatório Financeiro</h4>
                 </td>
             </tr>
         </table>

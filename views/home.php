@@ -193,7 +193,7 @@
                     <div>Total de Registros</div>
                 </div>
                 <div class="panel-body">
-                    <div class="text-right">3000</div>
+                    <div class="text-right"><?php echo!empty($totalAssociados) ? $totalAssociados['qtd'] : '0' ?></div>
                 </div>
             </div>
         </div>
@@ -205,7 +205,7 @@
                     <div>Valor Total</div>
                 </div>
                 <div class="panel-body">
-                    <div class="text-right">R$ 1.000,00</div>
+                    <div class="text-right"><?php echo!empty($totalEntradas) ? $this->formatDinheiroView($totalEntradas['valor']) : '0' ?></div>
                 </div>
             </div>
         </div>
@@ -217,7 +217,7 @@
                     <div>Valor Total</div>
                 </div>
                 <div class="panel-body">
-                    <div class="text-right">R$ 1.000,00</div>
+                    <div class="text-right"><?php echo!empty($totalDespesas) ? $this->formatDinheiroView($totalDespesas['valor']) : '0' ?></div>
                 </div>
             </div>
         </div>
@@ -229,7 +229,7 @@
                     <div>Valor Total</div>
                 </div>
                 <div class="panel-body">
-                    <div class="text-right">R$ 1.000,00</div>
+                    <div class="text-right"><?php echo!empty($totalInvestimentos) ? $this->formatDinheiroView($totalInvestimentos['valor']) : '0' ?></div>
                 </div>
             </div>
         </div>
@@ -244,7 +244,7 @@
                     <div>Associados Registrados</div>
                 </header>
                 <article class="panel-body">
-                    <canvas id="grafico_tipo_protocolo" width="100%" ></canvas>
+                    <canvas id="grafico_tipo_associado" width="100%" ></canvas>
                 </article>
             </section>
         </div>
@@ -256,7 +256,7 @@
                     <div>Associados Registrados</div>
                 </header>
                 <article class="panel-body">
-                    <canvas id="grafico_tipo_suporte_interno" width="100%"></canvas>
+                    <canvas id="grafico_associado_status" width="100%"></canvas>
                 </article>
             </section>
         </div>
@@ -270,7 +270,7 @@
                     <div>Lucro, Despesa e Investimento</div>
                 </header>
                 <article class="panel-body">
-                    <canvas id="grafico_protocolo_objetivo" height="40vh"></canvas>
+                    <canvas id="grafico_protocolo_objetivo" height="60vh"></canvas>
                 </article>
             </section>
         </div>
@@ -283,69 +283,34 @@
                     <div class="font-bold">Produção</div>
                     <div>Lista dos produtos produzidos na associção</div>
                 </header>
-                <article class="panel-body">
-                    <?php $cooperados = array('5' => 5); ?>
-                    <h5 class="text-right">Total: <?php echo count($cooperados) > 1 ? count($cooperados) . ' registros encontrados' : count($cooperados) . ' registro encontrado' ?>.</h5 >
-                    <hr/>
-                </article>
                 <article class="table-responsive">
                     <table class="table table-striped table-bordered table-hover table-condensed">
                         <tr>
                             <th width="50px">#</th>
-                            <th width="200px">Produto</th>
-                            <th width="200px">Total de produtores</th>
+                            <th width="400px">Produto</th>
+                            <th width="150px">Total de produtores</th>
                             <th>Porcentagem</th>
                         </tr>
-                        <tr>
-                            <td>01</td>
-                            <td>Açai</td>
-                            <td>25</td>
-                            <td>
-                                <div class="progress" style="margin-bottom: 0;">
-                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger active" role="progressbar" style="width: 100%; height: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">100%</div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>02</td>
-                            <td>Mamão</td>
-                            <td>20</td>
-                            <td>
-                                <div class="progress" style="margin-bottom: 0;">
-                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger active" role="progressbar" style="width: 75%; height: 100%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">75%</div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>03</td>
-                            <td>Galinha</td>
-                            <td>15</td>
-                            <td>
-                                <div class="progress" style="margin-bottom: 0;">
-                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger active" role="progressbar" style="width: 50%; height: 100%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">50%</div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>04</td>
-                            <td>Arroz</td>
-                            <td>10</td>
-                            <td>
-                                <div class="progress" style="margin-bottom: 0;">
-                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger active" role="progressbar" style="width: 25%; height: 100%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>05</td>
-                            <td>Limão</td>
-                            <td>5</td>
-                            <td>
-                                <div class="progress" style="margin-bottom: 0;">
-                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-success active" role="progressbar" style="width: 10%; height: 100%;" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100">10%</div>
-                                </div>
-                            </td>
-                        </tr>
+                        <?php
+                        if (!empty($producao)):
+                            $qtd = 1;
+                            foreach ($producao as $index) :
+                                ?>
+                                <tr>
+                                    <td><?php echo $qtd ?></td>
+                                    <td><?php echo $index['producao'] ?></td>
+                                    <td><?php echo $index['qtd'] ?></td>
+                                    <td>
+                                        <div class = "progress" style = "margin-bottom: 0;">
+                                            <div class = "progress-bar progress-bar-striped progress-bar-animated bg-danger active" role = "progressbar" style = "width: <?php echo $this->getporcentagem($index['qtd'], $totalProducao) ?>%; height: 100%;" aria-valuenow = "100" aria-valuemin = "0" aria-valuemax = "<?php echo $this->getporcentagem($index['qtd'], $totalProducao) ?>"><?php echo $this->getporcentagem($index['qtd'], $totalProducao) ?>%</div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <?php
+                                $qtd++;
+                            endforeach;
+                        endif;
+                        ?>
                     </table>
                 </article>
             </section>

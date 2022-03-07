@@ -52,7 +52,7 @@
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="iarea">Tamanho da àrea em metro quadrado (m²): </label>
-                                <input type="text" name="nArea" id="iarea" class="form-control" value="<?php echo!empty($produto['area']) ? $associado['area'] : '' ?>"/>
+                                <input type="text" name="nArea" id="iarea" class="form-control" value="<?php echo!empty($produto['area']) ? $produto['area'] : '' ?>"/>
                             </div>
                         </div>
                     </div>

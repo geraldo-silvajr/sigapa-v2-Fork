@@ -195,7 +195,29 @@
                                 <label for="iEstado" class="control-label">Estado:</label>
                                 <input type="text" id="iEstado" name="nEstado" placeholder="Exemplo: PA" class="form-control" value="<?php echo (!empty($cooperado['endereco']['estado'])) ? $cooperado['endereco']['estado'] : 'PA'; ?>"/>
                             </div>                            
+                            <div class="col-md-10 form-group">
+                                <label for="cEndereco">Endereço via mapa:</label>
+                                <input type="text" name="tEndereco" id="cEndereco" class="form-control">
+                            </div>
+                            <div class="col-md-2 form-group">
+                                <label>Pesquisar Endereço:</label>
+                                <span class="btn btn-danger btn-block form-control" id="btnEndereco"><i class="fas fa-search-location"></i> Pesquisar</span>
+                            </div>
                         </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label for='cLatitude'>Latitude:  </label><br/>
+                                <input type="text" name="nLatitude"  class="form-control" id="cLatitude" placeholder="Exemplo: -1.2955583054409823" value="<?php echo!empty($cooperado['endereco']['latitude']) ? $cooperado['endereco']['latitude'] : ''; ?>">
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label for='cLongitude'>Longitude:  </label><br/>
+                                <input type="text" name="nLongitude"  class="form-control" id="cLongitude" placeholder="Exemplo: -47.91926629129639" value="<?php echo!empty($cooperado['endereco']['longitude']) ? $cooperado['endereco']['longitude'] : ''; ?>" >
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col" id="viewMapa">
+                            </div>
+                        </div>  
                     </article>
                 </section> <!-- fim panel endereco-->
                 <!--panel contato-->

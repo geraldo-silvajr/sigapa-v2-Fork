@@ -92,8 +92,8 @@ class relatorioController extends controller {
                     ob_end_clean();
                     $mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8', 'format' => 'A4-L']);
                     $mpdf->WriteHTML($html);
-                    $arquivo = 'cooperados_' . date('d_m_Y.') . 'pdf';
-                    $mpdf->Output($arquivo, 'D');
+                    $arquivo = 'Associados_' . date('d_m_Y.') . 'pdf';
+                    $mpdf->Output($arquivo, 'I');
                 }
             } else {
                 $dados['cooperados'] = $cooperadoModel->read('SELECT cooperado.cod, cooperado.apelido, cooperado.nome_completo, cooperado.data_inscricao, cooperado.imagem, cooperado.tipo FROM associado as cooperado WHERE cooperado.cod >= 1');
@@ -139,19 +139,22 @@ class relatorioController extends controller {
     }
 
     /**
-     * Está função pertence a uma action do controle MVC, ela é responsável para mostra todas as mensalidades.
+     * Está função pertence a uma action do controle MVC, ela é responsável para mostra todas as produções.
      * @param int $page - paginação
      * @access public
      * @author Joab Torres <joabtorres1508@gmail.com>
      */
-    public function mensalidades($page = 1) {
+    public function producao($page = 1) {
         if ($this->checkUser() >= 2) {
-            $viewName = "mensalidade_relatorio";
+            $viewName = "associado/producao/relatorio";
             $dados = array();
             $cooperadoModel = new cooperado();
+            $crudModel = new crud_db();
+            $dados['producao'] = $crudModel->read("SELECT * FROM producao");
             $cooperados = array();
             if (isset($_POST['nBuscarBT'])) {
-                $sql = "SELECT cooperado.cod_cooperado, cooperado.cod_cooperativa, cooperado.apelido, cooperado.nome_completo, cooperado.data_inscricao, cooperado.imagem, cooperado.tipo, veiculo.nz FROM sig_cooperado as cooperado INNER JOIN sig_cooperado_veiculo AS veiculo WHERE cooperado.cod_cooperado = veiculo.cod_cooperado";
+                $sql = "SELECT count(cooperado.cod) as qtd, cooperado.cod, cooperado.nome_completo FROM associado as cooperado LEFT JOIN associado_producao as am ON am.associado_cod=cooperado.cod WHERE cooperado.cod>0 ";
+                $sql_producao = "SELECT p.*, am.area FROM associado as cooperado INNER JOIN associado_producao as am ON am.associado_cod=cooperado.cod  INNER JOIN producao AS p WHERE am.associado_cod=:cod  AND p.cod=am.producao_cod";
                 $filtro = array();
                 if (isset($_POST['nTipo']) && !empty($_POST['nTipo'])) {
                     $sql = $sql . " AND cooperado.tipo = :tipo ";
@@ -160,17 +163,19 @@ class relatorioController extends controller {
                 } else {
                     $campos_buscar['tipo'] = 'Todos';
                 }
-                if (isset($_POST['nStatus']) && !empty($_POST['nStatus'])) {
-                    $sql = $sql . " AND cooperado.status = :status ";
-                    $filtro['status'] = (addslashes($_POST['nStatus']) == 'Ativo') ? 1 : 0;
-                    $campos_buscar['status'] = addslashes($_POST['nStatus']);
+                if (isset($_POST['nProducao']) && !empty($_POST['nProducao'])) {
+                    $filtro['producao_cod'] = addslashes($_POST['nProducao']);
+                    $sql = $sql . " AND am.producao_cod = :producao_cod ";
+                    $sql_producao = $sql_producao . " AND am.producao_cod =" . $filtro['producao_cod'];
+                    $resultado = $crudModel->read_specific("SELECT producao FROM producao WHERE cod=" . $filtro['producao_cod']);
+                    $campos_buscar['producao'] = !empty($resultado) ? $resultado['producao'] : '';
                 } else {
-                    $campos_buscar['status'] = 'Todos';
+                    $campos_buscar['producao'] = 'Todos';
                 }
                 if (isset($_POST['nPor']) && !empty($_POST['nPor']) && !empty($_POST['nBuscar'])) {
                     switch ($_POST['nPor']) {
-                        case 'NZ':
-                            $sql = $sql . " AND veiculo.nz LIKE '%" . addslashes($_POST['nBuscar']) . "%' ";
+                        case 'matricula':
+                            $sql = $sql . " AND cooperado.cod = '" . addslashes($_POST['nBuscar']) . "' ";
                             break;
                         case 'Apelido':
                             $sql = $sql . " AND cooperado.apelido LIKE '%" . addslashes($_POST['nBuscar']) . "%' ";
@@ -190,16 +195,17 @@ class relatorioController extends controller {
                     $campos_buscar['por'] = 'Todos';
                     $campos_buscar['campo'] = '';
                 }
-
+                $sql = $sql . ' GROUP BY cooperado.cod, cooperado.nome_completo ORDER BY cooperado.cod ASC';
+                $sql_producao = $sql_producao . ' ORDER BY p.producao ASC';
                 $cooperados = $cooperadoModel->read($sql, $filtro);
                 if (!empty($cooperados)) {
                     foreach ($cooperados as $indice => $value) {
-                        $cooperados[$indice]['mensalidades'] = $cooperadoModel->read('SELECT * FROM sig_cooperado_mensalidade WHERE cod_cooperado=:cod ORDER BY ano ASC', array('cod' => addslashes($value['cod_cooperado'])));
+                        $cooperados[$indice]['producao'] = $cooperadoModel->read($sql_producao, array('cod' => addslashes($value['cod'])));
                     }
                 }
 
                 if ($_POST['nModoPDF'] == 1) {
-                    $viewPDF = "mensalidade_relatorio_pdf";
+                    $viewPDF = "associado/producao/relatorio_pdf";
                     $dadosPDF = array();
                     $crudModel = new crud_db();
                     $dadosPDF['busca'] = $campos_buscar;
@@ -210,16 +216,117 @@ class relatorioController extends controller {
                     $this->loadView($viewPDF, $dadosPDF);
                     $html = ob_get_contents();
                     ob_end_clean();
-                    $mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8', 'format' => 'A4-L']);
+                    $mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8']);
                     $mpdf->WriteHTML($html);
-                    $arquivo = 'mensalidade_relatorio_' . date('d_m_Y.') . 'pdf';
-                    $mpdf->Output($arquivo, 'D');
+                    $arquivo = 'producao_relatorio_' . date('d_m_Y.') . 'pdf';
+                    $mpdf->Output($arquivo, 'I');
                 }
             } else {
-                $cooperados = $cooperadoModel->read('SELECT cooperado.cod_cooperado, cooperado.cod_cooperativa, cooperado.apelido, cooperado.nome_completo, cooperado.data_inscricao, cooperado.imagem, cooperado.tipo, veiculo.nz FROM sig_cooperado as cooperado INNER JOIN sig_cooperado_veiculo AS veiculo WHERE cooperado.cod_cooperado = veiculo.cod_cooperado ORDER BY cooperado.cod_cooperado ASC');
+                $cooperados = $cooperadoModel->read('SELECT count(cooperado.cod) as qtd, cooperado.cod, cooperado.nome_completo FROM associado as cooperado LEFT JOIN associado_producao as am ON am.associado_cod=cooperado.cod WHERE cooperado.cod>0 GROUP BY cooperado.cod, cooperado.nome_completo ORDER BY cooperado.cod ASC');
                 if (!empty($cooperados)) {
                     foreach ($cooperados as $indice => $value) {
-                        $cooperados[$indice]['mensalidades'] = $cooperadoModel->read('SELECT * FROM sig_cooperado_mensalidade WHERE cod_cooperado=:cod ORDER BY ano ASC', array('cod' => addslashes($value['cod_cooperado'])));
+                        $cooperados[$indice]['producao'] = $cooperadoModel->read('SELECT p.*, am.area FROM associado as cooperado INNER JOIN associado_producao as am ON am.associado_cod=cooperado.cod  INNER JOIN producao AS p WHERE am.associado_cod=:cod  AND p.cod=am.producao_cod ORDER BY p.producao ASC', array('cod' => addslashes($value['cod'])));
+                    }
+                }
+            }
+
+
+            $dados['cooperados'] = $cooperados;
+            $this->loadTemplate($viewName, $dados);
+        } else {
+            $url = BASE_URL . '/home';
+            header("Location: " . $url);
+        }
+    }
+
+    /**
+     * Está função pertence a uma action do controle MVC, ela é responsável para mostra todas as mensalidades.
+     * @param int $page - paginação
+     * @access public
+     * @author Joab Torres <joabtorres1508@gmail.com>
+     */
+    public function mensalidades($page = 1) {
+        if ($this->checkUser() >= 2) {
+            $viewName = "associado/mensalidade/relatorio";
+            $dados = array();
+            $cooperadoModel = new cooperado();
+            $cooperados = array();
+            if (isset($_POST['nBuscarBT'])) {
+                $sql = "SELECT count(cooperado.cod) as qtd, cooperado.cod, cooperado.nome_completo FROM associado as cooperado LEFT JOIN associado_mensalidade as am ON am.associado_cod=cooperado.cod WHERE cooperado.cod>0 ";
+                $sql_mensalidade = "SELECT am.* FROM associado as cooperado INNER JOIN associado_mensalidade as am ON am.associado_cod=cooperado.cod WHERE associado_cod=:cod ";
+                $filtro = array();
+                if (isset($_POST['nTipo']) && !empty($_POST['nTipo'])) {
+                    $sql = $sql . " AND cooperado.tipo = :tipo ";
+                    $filtro['tipo'] = addslashes($_POST['nTipo']);
+                    $campos_buscar['tipo'] = addslashes($_POST['nTipo']);
+                } else {
+                    $campos_buscar['tipo'] = 'Todos';
+                }
+                if (isset($_POST['nStatus']) && !empty($_POST['nStatus'])) {
+                    $sql = $sql . " AND cooperado.status = :status ";
+                    $filtro['status'] = (addslashes($_POST['nStatus']) == 'Ativo') ? 1 : 0;
+                    $campos_buscar['status'] = addslashes($_POST['nStatus']);
+                } else {
+                    $campos_buscar['status'] = 'Todos';
+                }
+                if (isset($_POST['nPor']) && !empty($_POST['nPor']) && !empty($_POST['nBuscar'])) {
+                    switch ($_POST['nPor']) {
+                        case 'matricula':
+                            $sql = $sql . " AND cooperado.cod = '" . addslashes($_POST['nBuscar']) . "' ";
+                            break;
+                        case 'Apelido':
+                            $sql = $sql . " AND cooperado.apelido LIKE '%" . addslashes($_POST['nBuscar']) . "%' ";
+                            break;
+                        case 'Nome Completo':
+                            $sql = $sql . " AND cooperado.nome_completo LIKE '%" . addslashes($_POST['nBuscar']) . "%' ";
+                            break;
+                        case 'Ano de Inscrição':
+                            $sql = $sql . " AND cooperado.data_inscricao LIKE '%" . addslashes($_POST['nBuscar']) . "%' ";
+                            break;
+                        case 'Ano da Mensalidade':
+                            $sql = $sql . " AND am.ano LIKE '%" . addslashes($_POST['nBuscar']) . "%' ";
+                            $sql_mensalidade = $sql_mensalidade . " AND am.ano LIKE '%" . addslashes($_POST['nBuscar']) . "%' ";
+                            break;
+                        default :
+                            break;
+                    }
+                    $campos_buscar['por'] = $_POST['nPor'];
+                    $campos_buscar['campo'] = $_POST['nBuscar'];
+                } else {
+                    $campos_buscar['por'] = 'Todos';
+                    $campos_buscar['campo'] = '';
+                }
+                $sql = $sql . ' GROUP BY cooperado.cod, cooperado.nome_completo ORDER BY cooperado.cod ASC';
+                $sql_mensalidade = $sql_mensalidade . ' ORDER BY ano ASC';
+                $cooperados = $cooperadoModel->read($sql, $filtro);
+                if (!empty($cooperados)) {
+                    foreach ($cooperados as $indice => $value) {
+                        $cooperados[$indice]['mensalidades'] = $cooperadoModel->read($sql_mensalidade, array('cod' => addslashes($value['cod'])));
+                    }
+                }
+
+                if ($_POST['nModoPDF'] == 1) {
+                    $viewPDF = "associado/mensalidade/relatorio_pdf";
+                    $dadosPDF = array();
+                    $crudModel = new crud_db();
+                    $dadosPDF['busca'] = $campos_buscar;
+                    $dadosPDF['cidade'] = $crudModel->read('SELECT * FROM sig_cooperativa WHERE cod=:cod', array('cod' => $this->getCodCooperativa()));
+                    $dadosPDF['cidade'] = $dadosPDF['cidade'][0];
+                    $dadosPDF['cooperados'] = $cooperados;
+                    ob_start();
+                    $this->loadView($viewPDF, $dadosPDF);
+                    $html = ob_get_contents();
+                    ob_end_clean();
+                    $mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8']);
+                    $mpdf->WriteHTML($html);
+                    $arquivo = 'mensalidade_relatorio_' . date('d_m_Y.') . 'pdf';
+                    $mpdf->Output($arquivo, 'I');
+                }
+            } else {
+                $cooperados = $cooperadoModel->read('SELECT count(cooperado.cod) as qtd, cooperado.cod, cooperado.nome_completo FROM associado as cooperado LEFT JOIN associado_mensalidade as am ON am.associado_cod=cooperado.cod WHERE cooperado.cod>0 GROUP BY cooperado.cod, cooperado.nome_completo ORDER BY cooperado.cod ASC');
+                if (!empty($cooperados)) {
+                    foreach ($cooperados as $indice => $value) {
+                        $cooperados[$indice]['mensalidades'] = $cooperadoModel->read('SELECT am.* FROM associado as cooperado INNER JOIN associado_mensalidade as am ON am.associado_cod=cooperado.cod WHERE am.associado_cod=:cod ORDER BY am.ano ASC', array('cod' => addslashes($value['cod'])));
                     }
                 }
             }
@@ -280,7 +387,7 @@ class relatorioController extends controller {
                     $mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8']);
                     $mpdf->WriteHTML($html);
                     $arquivo = 'entradas_' . date('d_m_Y.') . 'pdf';
-                    $mpdf->Output($arquivo, 'D');
+                    $mpdf->Output($arquivo, 'I');
                 }
             }
 
@@ -338,7 +445,7 @@ class relatorioController extends controller {
                     $mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8']);
                     $mpdf->WriteHTML($html);
                     $arquivo = 'saidas_' . date('d_m_Y.') . 'pdf';
-                    $mpdf->Output($arquivo, 'D');
+                    $mpdf->Output($arquivo, 'I');
                 }
             }
 
@@ -396,7 +503,7 @@ class relatorioController extends controller {
                     $mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8']);
                     $mpdf->WriteHTML($html);
                     $arquivo = 'investimentos_' . date('d_m_Y.') . 'pdf';
-                    $mpdf->Output($arquivo, 'D');
+                    $mpdf->Output($arquivo, 'I');
                 }
             }
 
@@ -414,9 +521,9 @@ class relatorioController extends controller {
             $crudModel = new crud_db();
             //modo de exebicao
             $dados['modo_exibicao'] = 1;
-            $dados['lucro'] = $crudModel->read_specific('SELECT SUM(valor) as valor FROM sig_lucro WHERE cod_cooperativa=:cod AND data BETWEEN "' . date('o-m-01') . '" AND "' . date('o-m-31') . '"', array('cod' => $this->getCodCooperativa()));
-            $dados['despesa'] = $crudModel->read_specific('SELECT SUM(valor) as valor FROM sig_despesa WHERE cod_cooperativa=:cod AND data BETWEEN "' . date('o-m-01') . '" AND "' . date('o-m-31') . '"', array('cod' => $this->getCodCooperativa()));
-            $dados['investimento'] = $crudModel->read_specific('SELECT SUM(valor) as valor FROM sig_investimento WHERE cod_cooperativa=:cod AND data BETWEEN "' . date('o-m-01') . '" AND "' . date('o-m-31') . '"', array('cod' => $this->getCodCooperativa()));
+            $dados['lucro'] = $crudModel->read_specific('SELECT SUM(valor) as valor FROM sig_lucro WHERE cod_cooperativa=:cod', array('cod' => $this->getCodCooperativa()));
+            $dados['despesa'] = $crudModel->read_specific('SELECT SUM(valor) as valor FROM sig_despesa WHERE cod_cooperativa=:cod', array('cod' => $this->getCodCooperativa()));
+            $dados['investimento'] = $crudModel->read_specific('SELECT SUM(valor) as valor FROM sig_investimento WHERE cod_cooperativa=:cod', array('cod' => $this->getCodCooperativa()));
             $dados['valorTotalGrafico'] = doubleval($dados['lucro']['valor']) - (doubleval($dados['despesa']['valor']) + doubleval($dados['investimento']['valor']));
 
             if (isset($_POST['nBuscar']) && !empty($_POST['nBuscar'])) {
@@ -470,13 +577,13 @@ class relatorioController extends controller {
 
                     $dadosPDF['cidade'] = $crudModel->read_specific('SELECT * FROM sig_cooperativa WHERE cod=:cod', array('cod' => $this->getCodCooperativa()));
                     ob_start();
-                    $this->loadView($viewPDF, $dadosPDF);                    
+                    $this->loadView($viewPDF, $dadosPDF);
                     $html = ob_get_contents();
                     ob_end_clean();
                     $mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8']);
                     $mpdf->WriteHTML($html);
                     $arquivo = 'financas_' . date('d_m_Y.') . 'pdf';
-                    $mpdf->Output($arquivo, 'D');
+                    $mpdf->Output($arquivo, 'I');
                 }
             }
 
@@ -527,7 +634,7 @@ class relatorioController extends controller {
         // Create a bar pot
         $bplot = new BarPlot($datay);
         $bplot->SetColor("black");
-        $bplot->SetFillColor(array('#56d798', '#f38b4a', '#dd4b39'));
+        $bplot->SetFillColor(array('#00a65a', '#dd4b39', '#e89e29'));
         $bplot->SetWidth(0.5);
         $bplot->SetYMin(0);
 
@@ -537,7 +644,7 @@ class relatorioController extends controller {
 
     public function temp() {
         $crudModel = new crud_db();
-        $cooperados = $crudModel->read("SELECT * FROM sig_cooperado ORDER BY nome_completo ASC");
+        $cooperados = $crudModel->read("SELECT * FROM associado ORDER BY nome_completo ASC");
         foreach ($cooperados as $cooperado) {
             echo $cooperado['cod_cooperado'] . '<br/>';
         }

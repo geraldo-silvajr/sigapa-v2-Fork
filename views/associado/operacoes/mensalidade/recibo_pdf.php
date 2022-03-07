@@ -72,18 +72,18 @@ Referente ao mês de ' . $meses[$i],
         ),
         array(
             'name' => 'Valor ' . $recibo['valor'] . ' data de vencimento de 05 de cada mês
-Data de Pagamento ___/____/' . date('o'),
+Data de Pagamento ___/____/______',
             'font-size' => '10',
             'color' => 'black',
             'font-family' => 'ubuntu_regular',
             'margin-bottom' => 70,
             'x' => 110
         ), array(
-            'name' => $recibo['nz'],
+            'name' => 'Matricula: '. $recibo['cod'],
             'font-size' => '10',
             'color' => 'black',
             'font-family' => 'ubuntu_regular',
-            'x' => 360
+            'x' => 340
         )
     );
     $recibos[] = create_image($user, $i);
@@ -116,5 +116,5 @@ ob_end_clean();
 $mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8']);
 $mpdf->WriteHTML($html);
 $arquivo = 'recibo_mensalidade_' . date('d_m_Y.') . 'pdf';
-$mpdf->Output($arquivo, 'D');
+$mpdf->Output($arquivo, 'I');
 ?>

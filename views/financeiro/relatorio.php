@@ -211,7 +211,6 @@
 <?php
 echo "<script>var lucro = '" . $lucro['valor'] . "'; var despesa = '" . $despesa['valor'] . "'; var investimento='" . $investimento['valor'] . "' </script>";
 ?>
-
 <script type="text/javascript">
     graficoFinanca(lucro, despesa, investimento);
     function graficoFinanca(lucro, despesa, investimento) {
@@ -219,23 +218,23 @@ echo "<script>var lucro = '" . $lucro['valor'] . "'; var despesa = '" . $despesa
             labels: [],
             datasets: [{
                     label: 'Entrada',
-                    backgroundColor: "#56d798",
-                    borderColor: "#56d798",
+                    backgroundColor: "#00a65a",
+                    borderColor: "#00a65a",
                     borderWidth: 1,
                     data: [
                         lucro, 0
                     ]
                 }, {
                     label: 'Saída',
-                    backgroundColor: "#f38b4a",
-                    borderColor: "#f38b4a",
+                    backgroundColor: "#dd4b39",
+                    borderColor: "#dd4b39",
                     data: [
                         despesa, 0
                     ]
                 }, {
                     label: 'Investimento',
-                    backgroundColor: "#dd4b39",
-                    borderColor: "#dd4b39",
+                    backgroundColor: "#e89e29",
+                    borderColor: "#e89e29",
                     data: [
                         investimento, 0
                     ]

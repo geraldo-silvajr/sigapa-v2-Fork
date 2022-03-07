@@ -136,8 +136,8 @@ class cadastrarController extends controller {
                     'complemento' => addslashes($_POST['nComplementos']),
                     'cidade' => addslashes($_POST['nCidade']),
                     'estado' => addslashes($_POST['nEstado']),
-                    'latitude' => addslashes($_POST['nEstado']),
-                    'longitude' => addslashes($_POST['nEstado']),
+                    'latitude' => addslashes($_POST['nLatitude']),
+                    'longitude' => addslashes($_POST['nLongitude']),
                     'cep' => addslashes($_POST['nCEP'])
                 );
                 //contato
@@ -199,11 +199,17 @@ class cadastrarController extends controller {
                     'producao_cod' => addslashes($_POST['nProducao']),
                     'area' => addslashes($_POST['nArea'])
                 );
-                $cadastro = $crudModel->create("INSERT INTO associado_producao (associado_cod, producao_cod, area) VALUES (:associado_cod, :producao_cod, :area)", $dados['produto']);
-                if ($cadastro) {
-                    $_SESSION['produto_acao'] = true;
-                    $url = BASE_URL . "/cadastrar/producao/" . $cod_cooperado;
-                    header("Location: " . $url);
+                $resultado = $crudModel->read_specific('SELECT* FROM associado_producao WHERE producao_cod=:producao_cod AND associado_cod=:associado_cod', array('producao_cod' => $dados['produto']['producao_cod'], 'associado_cod' => $dados['produto']['associado_cod']));
+                if ($resultado) {
+                    $_SESSION['produto_acao'] = false;
+                    $dados['erro'] = array('class' => 'alert-danger', 'msg' => "PRODUÇÃO JÁ CADASTRADA, volte para a página do associado e solicite a edição deste registro se necessário!");
+                } else {
+                    $cadastro = $crudModel->create("INSERT INTO associado_producao (associado_cod, producao_cod, area) VALUES (:associado_cod, :producao_cod, :area)", $dados['produto']);
+                    if ($cadastro) {
+                        $_SESSION['produto_acao'] = true;
+                        $url = BASE_URL . "/cadastrar/producao/" . $cod_cooperado;
+                        header("Location: " . $url);
+                    }
                 }
             } else if (isset($_SESSION['produto_acao']) && !empty($_SESSION['produto_acao'])) {
                 $_SESSION['produto_acao'] = false;

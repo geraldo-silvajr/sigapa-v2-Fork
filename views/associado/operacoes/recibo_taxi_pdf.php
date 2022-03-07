@@ -82,7 +82,7 @@ $user = array(
         'margin-bottom' => 0
     ),
     array(
-        'name' =>  $cooperado['nz'],
+        'name' => $cooperado['nz'],
         'font-size' => '14',
         'color' => 'black',
         'font-family' => 'ubuntu_regular',
@@ -131,5 +131,5 @@ ob_end_clean();
 $mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8']);
 $mpdf->WriteHTML($html);
 $arquivo = 'recibo_de_taxi_' . date('d_m_Y.') . 'pdf';
-$mpdf->Output($arquivo, 'D');
+$mpdf->Output($arquivo, 'I');
 ?>

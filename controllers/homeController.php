@@ -22,12 +22,16 @@ class homeController extends controller {
             $view = "home";
             $dados = array();
             $crudModel = new crud_db();
-            $dados['financa'] = $this->checkFinancaAtual();
-            /*
-              $dados['cooperado_tipo'] = $this->checkCategoriaCooperado();
-              $dados['cooperado_status'] = $this->checkStatusCooperado();
-              $dados['cooperativa'] = $crudModel->read("SELECT * FROM sig_cooperativa WHERE cod=:cod", array('cod' => $this->getCodCooperativa()));
-              $dados['cooperativa'] = $dados['cooperativa'][0]; */
+            $dados['totalAssociados'] = $crudModel->read_specific("SELECT count(*) as qtd FROM associado");
+            $dados['totalEntradas'] = $crudModel->read_specific("SELECT sum(valor) as valor FROM sig_lucro");
+            $dados['totalDespesas'] = $crudModel->read_specific("SELECT sum(valor) as valor FROM sig_despesa");
+            $dados['totalInvestimentos'] = $crudModel->read_specific("SELECT sum(valor) as valor FROM sig_investimento");
+            $dados['producao'] = $crudModel->read('SELECT p.producao, COUNT(*) as qtd FROM associado_producao as ap INNER JOIN producao as p ON p.cod=ap.producao_cod GROUP BY p.producao ORDER BY qtd DESC');
+            $resultado = $crudModel->read_specific('SELECT COUNT(*) as qtd FROM associado_producao ');
+            $dados['totalProducao'] = 0;
+            if (!empty($resultado)) {
+                $dados['totalProducao'] = $resultado['qtd'];
+            }
             $this->loadTemplate($view, $dados);
         } else {
             $_SESSION = array();

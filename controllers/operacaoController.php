@@ -19,10 +19,10 @@ class operacaoController extends controller {
     public function carteira($cod_cooperado) {
         if ($this->checkUser() >= 2 && intval($cod_cooperado) > 0) {
             $dados = array();
-            $viewName = 'carteira_pdf';
+            $viewName = 'associado/operacoes/carteira_pdf';
             $crudModel = new crud_db();
             $dados['cidade'] = $crudModel->read_specific("SELECT * FROM sig_cooperativa WHERE cod=:cod", array('cod' => $this->getCodCooperativa()));
-            $dados['cooperado'] = $crudModel->read_specific('SELECT coop.*, vei.nz, cart.data_inicial, cart.data_validade FROM associado AS coop INNER JOIN associado_veiculo AS vei INNER JOIN associado_carteira AS cart WHERE coop.cod_cooperado=vei.cod_cooperado AND coop.cod_cooperado=cart.cod_cooperado AND coop.cod_cooperado=:cod', array('cod' => addslashes($cod_cooperado)));
+            $dados['cooperado'] = $crudModel->read_specific('SELECT coop.*, cart.data_inicial, cart.data_validade FROM associado AS coop INNER JOIN associado_carteira AS cart WHERE coop.cod=cart.associado_cod AND coop.cod=:cod', array('cod' => addslashes($cod_cooperado)));
             if (!empty($dados['cidade']) && !empty($dados['cooperado'])) {
                 $this->loadView($viewName, $dados);
             } else {
@@ -36,10 +36,10 @@ class operacaoController extends controller {
     public function recibo_taxi($cod_cooperado) {
         if ($this->checkUser() >= 2 && intval($cod_cooperado) > 0) {
             $dados = array();
-            $viewName = 'recibo_taxi_pdf';
+            $viewName = 'associado/operacoes/recibo_taxi_pdf';
             $crudModel = new crud_db();
             $dados['cidade'] = $crudModel->read_specific("SELECT * FROM sig_cooperativa WHERE cod=:cod", array('cod' => $this->getCodCooperativa()));
-            $dados['cooperado'] = $crudModel->read_specific('SELECT coop.nome_completo,coop.cpf, coop.cod_cooperado, vei.nz, vei.placa, con.celular_1 FROM associado AS coop INNER JOIN associado_veiculo AS vei INNER JOIN associado_contato AS con WHERE coop.cod_cooperado=vei.cod_cooperado AND coop.cod_cooperado=con.cod_cooperado AND coop.cod_cooperado=:cod', array('cod' => addslashes($cod_cooperado)));
+            $dados['cooperado'] = $crudModel->read_specific('SELECT coop.nome_completo,coop.cpf, coop.cod, con.celular_1 FROM associado AS coop INNER JOIN associado_contato AS con WHERE coop.cod=con.associado_cod AND coop.cod=:cod', array('cod' => addslashes($cod_cooperado)));
             if (!empty($dados['cidade']) && !empty($dados['cooperado'])) {
                 $this->loadView($viewName, $dados);
             } else {
@@ -53,7 +53,7 @@ class operacaoController extends controller {
     public function recibo_mensalidade($cod_cooperado) {
         if ($this->checkUser() >= 2 && intval($cod_cooperado) > 0) {
             $dados = array();
-            $viewName = 'associado/mensalidade/mensalidade_recibo';
+            $viewName = 'associado/operacoes/mensalidade/recibo';
             $crudModel = new crud_db();
             $dados['cooperado'] = $crudModel->read('SELECT coop.cod, coop.nome_completo FROM associado as coop WHERE coop.cod=:cod', array('cod' => $cod_cooperado));
             $dados['cooperado']['cooperado'] = $dados['cooperado'][0];
@@ -63,13 +63,13 @@ class operacaoController extends controller {
                 if (!empty($_POST['nValor']) && !empty($_POST['nAno'])) {
                     $recibo = array(
                         'cooperado' => $dados['cooperado']['cooperado']['nome_completo'],
-                        'nz' => $dados['cooperado']['cooperado']['nz'],
+                        'cod' => str_pad($dados['cooperado']['cooperado']['cod'], 3, '0', STR_PAD_LEFT),
                         'ano' => $_POST['nAno'],
                         'valor' => $_POST['nValor'],
                         'mes_inicial' => $_POST['nDe'],
                         'mes_final' => $_POST['nAte'],
                     );
-                    $viewNamePDF = 'mensalidade_recibo_pdf';
+                    $viewNamePDF = 'associado/operacoes/mensalidade/recibo_pdf';
                     $dadosPDF = array('recibo' => $recibo);
                     $this->loadView($viewNamePDF, $dadosPDF);
                 } else {
@@ -86,9 +86,9 @@ class operacaoController extends controller {
     public function cartao_visita($cod_cooperado) {
         if ($this->checkUser() >= 2 && intval($cod_cooperado) > 0) {
             $dados = array();
-            $viewName = 'cartao_visita';
+            $viewName = 'associado/operacoes/cartao_visita';
             $crudModel = new crud_db();
-            $dados['cooperado'] = $crudModel->read_specific('SELECT coop.apelido, con.celular_1, con.celular_2 FROM associado AS coop INNER JOIN associado_contato as con WHERE coop.cod_cooperado=con.cod_cooperado AND coop.cod_cooperado=:cod', array('cod' => $cod_cooperado));
+            $dados['cooperado'] = $crudModel->read_specific('SELECT coop.apelido, con.celular_1, con.celular_2 FROM associado AS coop INNER JOIN associado_contato as con WHERE coop.cod=con.associado_cod AND coop.cod=:cod', array('cod' => $cod_cooperado));
             $this->loadView($viewName, $dados);
         }else{
             header("Location: /home");

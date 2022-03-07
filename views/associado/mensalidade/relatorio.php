@@ -40,10 +40,11 @@
                                     <label for='iPor'>Por: </label>
                                     <select id="iPor" name="nPor" class="form-control">
                                         <option value="" checked='checked'>Todos</option>
-                                        <option value="NZ" >NZ</option>
+                                        <option value="matricula" >Nº de Matricula</option>
                                         <option value="Apelido">Apelido</option>
                                         <option value="Nome Completo">Nome Completo</option>
                                         <option value="Ano de Inscrição">Ano de Inscrição</option>
+                                        <option value="Ano da Mensalidade">Ano da Mensalidade</option>
                                     </select>
                                 </div>
                                 <div class="col-md-3 form-group">
@@ -70,16 +71,23 @@
         </div>
     </div>
     <div class="row">
-        <?php
-        if (isset($cooperados) && !empty($cooperados)) {
+        <?php if (isset($cooperados) && !empty($cooperados)) { ?>
+            <article class="panel-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h4 class="text-right">Total: <?php echo count($cooperados) > 1 ? count($cooperados) . ' registros encontrados' : count($cooperados) . ' registro encontrado' ?>.</h4 >
+                        <hr/>
+                    </div>
+                </div>
+            </article>
+            <?php
             foreach ($cooperados as $cooperado):
                 ?>
                 <div class="col-md-12">
                     <section class="panel panel-black">
                         <header class="panel-heading">
-                            <h4 class="panel-title text-upercase"> <?php echo !empty($cooperado['nome_completo']) ? $cooperado['nome_completo'] : '';?>  <?php echo !empty($cooperado['nz']) ? "- ".$cooperado['nz'] : '';?> </h4>
+                            <h4 class="panel-title text-upercase"> <?php echo!empty($cooperado['nome_completo']) ? $cooperado['nome_completo'] : ''; ?>  <?php echo ' -- Nº de Matricula: ' . str_pad($cooperado['cod'], 3, '0', STR_PAD_LEFT); ?> </h4>
                         </header>
-
                         <article class="table-responsive">
                             <table class="table table-striped table-bordered table-hover table-condensed">
                                 <tr>
@@ -98,7 +106,7 @@
                                     <th>Dezembro</th>
                                     <th>Total</th>
                                 </tr>
-                                
+
                                 <?php
                                 if (isset($cooperado['mensalidades']) && !empty($cooperado['mensalidades'])):
                                     $total = 0;
@@ -134,7 +142,7 @@
                 </div>
                 <?php
             endforeach;
-        }else {
+        } else {
             echo '<div class="col-md-12">
                     <div class="alert alert-danger alert-dismissible fade in" role="alert">
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>

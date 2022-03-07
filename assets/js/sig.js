@@ -18,7 +18,31 @@ function mostrarConteudo() {
         elemento.style.display = "block";
     }
 }
-
+if (document.getElementById('viewMapa2')) {
+    function initialize() {
+        if ((typeof latitude !== "undefined") && (typeof longitude !== "undefined")) {
+            var latlng = new google.maps.LatLng(latitude, longitude);
+        } else {
+            var latlng = new google.maps.LatLng(-1.2955583054409823, -47.91926629129639);
+        }
+        var options = {
+            zoom: 14,
+            center: latlng,
+        };
+        map = new google.maps.Map(document.getElementById("viewMapa2"), options);
+        marker = new google.maps.Marker({
+            map: map
+        });
+        marker.setPosition(latlng);
+    }
+    function loadScriptGoogleMapsAPI() {
+        var script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyCg1ogHawJGuDbw7nd6qBz9yYxYPoGTWQo&callback=initialize';
+        document.body.appendChild(script);
+    }
+    loadScriptGoogleMapsAPI();
+}
 /**
  * @author Joab Torres Alencar
  * @description classes para tratamento de preenchimento de campos
@@ -97,6 +121,79 @@ if (document.getElementById("container-usuario-form")) {
  */
 
 if (document.getElementById("form_cooperado")) {
+    /*
+     * Google mapas
+     */
+    var geocoder;
+    var map;
+    var marker;
+    function initialize() {
+        if (document.getElementById("cLatitude").value != '' && document.getElementById("cLongitude").value != '') {
+            var latlng = new google.maps.LatLng(document.getElementById("cLatitude").value, document.getElementById("cLongitude").value);
+        } else {
+            var latlng = new google.maps.LatLng(-1.2955583054409823, -47.91926629129639);
+        }
+        var options = {
+            zoom: 14,
+            center: latlng,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        map = new google.maps.Map(document.getElementById("viewMapa"), options);
+        geocoder = new google.maps.Geocoder();
+        marker = new google.maps.Marker({
+            map: map,
+            draggable: true
+        });
+        marker.setPosition(latlng);
+
+        google.maps.event.addListener(marker, 'drag', function () {
+            geocoder.geocode({'latLng': marker.getPosition()}, function (results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    if (results[0]) {
+                        $('#cEndereco').val(results[0].formatted_address);
+                        $('#cLatitude').val(marker.getPosition().lat());
+                        $('#cLongitude').val(marker.getPosition().lng());
+                    }
+                }
+            });
+        });
+    }
+
+    function loadScriptGoogleMapsAPI() {
+        var script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyCg1ogHawJGuDbw7nd6qBz9yYxYPoGTWQo&callback=initialize';
+        document.body.appendChild(script);
+    }
+
+    function carregarNoMapa(endereco) {
+        geocoder.geocode({'address': endereco + ', Brasil', 'region': 'BR'}, function (results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                if (results[0]) {
+                    var latitude = results[0].geometry.location.lat();
+                    var longitude = results[0].geometry.location.lng();
+                    $('#cEndereco').val(results[0].formatted_address);
+                    $('#cLatitude').val(latitude);
+                    $('#cLongitude').val(longitude);
+                    var location = new google.maps.LatLng(latitude, longitude);
+                    marker.setPosition(location);
+                    map.setCenter(location);
+                    map.setZoom(16);
+                }
+            }
+        });
+    }
+    loadScriptGoogleMapsAPI();
+    $(document).ready(function () {
+        $("#btnEndereco").click(function () {
+            if ($(this).val() !== "")
+                carregarNoMapa($("#txtEndereco").val());
+        });
+        $("#cEndereco").blur(function () {
+            if ($(this).val() !== "")
+                carregarNoMapa($(this).val());
+        });
+    });
     /**
      * @author Joab Torres <joabtorres1508@gmail.com>
      * @description Este codigo abaixo é responsável para fazer o carregamento da imagem setada pelo usuário ao muda a foto do perfil
@@ -112,3 +209,5 @@ if (document.getElementById("form_cooperado")) {
         }
     };
 }
+
+

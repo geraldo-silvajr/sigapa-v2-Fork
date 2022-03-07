@@ -1,58 +1,40 @@
-/*graficoChamados();
- graficoTramitacao();
- graficoObjetivo();*/
-var teste = new Array();
-teste[0] = {
-    'label': 'Permissionário',
-    'data': 10
-}
-teste[1] = {
-    'label': 'Participativo',
-    'data': 150
-}
-teste[2] = {
-    'label': 'Teste',
-    'data': 30
-}
-
-
-geraGraficoPizza(teste, 'grafico_tipo_suporte_interno');
-geraGraficoPizza(teste, 'grafico_tipo_protocolo');
-geraGraficoBarraVertical(teste, 'grafico_protocolo_objetivo');
-function graficoChamados() {
+graficoAssociado();
+graficoFinanceiro();
+graficoAssociadoStatus();
+function graficoAssociado() {
     xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             array = JSON.parse(this.responseText);
-            geraGraficoPizza(array, 'grafico_tipo_suporte_interno');
+            geraGraficoPizza(array, 'grafico_tipo_associado');
         }
     };
-    xhttp.open("GET", base_url + "/grafico/suporte_interno", true);
+    xhttp.open("GET", base_url + "/grafico/associado_tipo", true);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send();
 }
-function graficoTramitacao() {
+function graficoAssociadoStatus() {
     xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             array = JSON.parse(this.responseText);
-            geraGraficoPizza(array, 'grafico_tipo_protocolo');
+            geraGraficoPizza(array, 'grafico_associado_status');
         }
     };
-    xhttp.open("GET", base_url + "/grafico/protocolo_tipo", true);
+    xhttp.open("GET", base_url + "/grafico/asssociado_status", true);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send();
 }
 
-function graficoObjetivo() {
+function graficoFinanceiro() {
     xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             array = JSON.parse(this.responseText);
-            geraGraficoBarraVertical(array, 'grafico_protocolo_objetivo');
+            geraGraficoBarraVertical(array, 'grafico_protocolo_objetivo', 'Gráfico Finánceiro Anual');
         }
     };
-    xhttp.open("GET", base_url + "/grafico/protocolo_objetivo", true);
+    xhttp.open("GET", base_url + "/grafico/grafico_financeiro", true);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send();
 }
@@ -71,7 +53,7 @@ function geraGraficoPizza(array, id_grafico) {
     for (var i = 0; i < array.length; i++) {
         titulo[i] = (array[i]['label']);
         valores[i] = array[i]['data'];
-        cores[i] = gera_cor();
+        cores[i] = cor(i);
     }
     var data = {
         datasets: [{
@@ -112,12 +94,12 @@ function geraGraficoPizza(array, id_grafico) {
  */
 
 
-function geraGraficoBarraVertical(array, id_grafico) {
+function geraGraficoBarraVertical(array, id_grafico, legenda) {
     var dataset = [];
     for (var i = 0; i < array.length; i++) {
         dataset[i] = {
             label: array[i]['label'],
-            backgroundColor: gera_cor(),
+            backgroundColor: cor(i),
             borderWidth: 1,
             data: [
                 array[i]['data'], 0
@@ -140,8 +122,8 @@ function geraGraficoBarraVertical(array, id_grafico) {
             position: 'bottom'
         },
         title: {
-            display: false,
-            text: 'Objetos de tramitação'
+            display: true,
+            text: legenda
         }
     };
     var ctx = document.getElementById(id_grafico).getContext('2d');
@@ -152,6 +134,10 @@ function geraGraficoBarraVertical(array, id_grafico) {
     });
 }
 
+function cor(num) {
+    var cores = ['#00a65a', '#dd4b39', '#e89e29', '#6c5ae2', '#543324', '#ed6636', , '#121833', '#0c799a', '#d9b557', '#1888b8'];
+    return cores[num];
+}
 function gera_cor() {
     var hexadecimais = '0123456789ABCDEF';
     var cor = '#';

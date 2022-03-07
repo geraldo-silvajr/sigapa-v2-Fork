@@ -25,7 +25,7 @@
                             <div class="col-xs-12">
                                 <i class="fa fa-address-card  fa-3x pull-left"> </i> 
                                 <div class="font-bold"> Carteira</div>
-                                <div>Cooperado</div>
+                                <div>Associado</div>
                             </div>
                         </a>
                     </div>
@@ -40,7 +40,7 @@
                         <a href="<?php echo BASE_URL ?>/operacao/recibo_taxi/<?php echo!empty($cooperado['cooperado']['cod']) ? $cooperado['cooperado']['cod'] : '' ?>" target="_blank" >
                             <div class="col-xs-12">
                                 <i class="fa fa-clipboard-list fa-3x pull-left"></i>
-                                <div class="font-bold">Táxi</div>
+                                <div class="font-bold">Produção</div>
                                 <div> Recibo</div>
                             </div>
                         </a>
@@ -71,7 +71,7 @@
                             <div class="col-xs-12">
                                 <i class="fa fa-address-card fa-3x pull-left" ></i>
                                 <div class="font-bold"> Cartão de Visita </div>
-                                <div>Disk Táxi</div>
+                                <div>Meios p/ Contato</div>
                             </div>
                         </a>
                     </div>
@@ -194,6 +194,12 @@
                             <p class="text-uppercase"><span class="text-destaque text-capitalize">Endereço:</span> <?php echo!empty($cooperado['endereco']['logradouro']) ? $cooperado['endereco']['logradouro'] : '' ?>, <?php echo!empty($cooperado['endereco']['numero']) ? 'nº ' . $cooperado['endereco']['numero'] : 'S/N' ?>, <?php echo!empty($cooperado['endereco']['bairro']) ? 'bairro ' . $cooperado['endereco']['bairro'] : '' ?>, <?php echo!empty($cooperado['endereco']['complemento']) ? $cooperado['endereco']['complemento'] : '' ?> - <?php echo!empty($cooperado['endereco']['cidade']) ? $cooperado['endereco']['cidade'] : '' ?>  - <?php echo!empty($cooperado['endereco']['estado']) ? $cooperado['endereco']['estado'] : '' ?> <?php echo!empty($cooperado['endereco']['cep']) ? ' - CEP: ' . $cooperado['endereco']['cep'] : '' ?></p>
                         </div>
                     </div>
+                    <div class="row">
+                        <?php echo (isset($cooperado['endereco']) && !empty($cooperado['endereco']['latitude'])) ? '<script> var latitude="' . $cooperado['endereco']['latitude'] . '" </script>' : ''; ?>     
+                        <?php echo (isset($cooperado['endereco']) && !empty($cooperado['endereco']['longitude'])) ? '<script> var longitude="' . $cooperado['endereco']['longitude'] . '" </script>' : ''; ?>     
+                        <div class="col bg-secondary mb-1" id="viewMapa2">
+                        </div>
+                    </div>
                     <!--fim row-->
                 </article>
             </section>
@@ -258,6 +264,7 @@
                         endif;
                         ?>
                     </table>
+                </article>
             </section>
         </div>
         <!--fim col-md-12 clea-->

@@ -142,6 +142,11 @@
                                             <a href="<?php echo BASE_URL ?>/relatorio/mensalidades"><i class="fa fa-list"></i> Mensalidades</a>
                                         </li>
                                     <?php endif; ?>
+                                    <?php if (isset($_SESSION['usuario_sig_cootax']['nivel']) && $_SESSION['usuario_sig_cootax']['nivel'] >= 2): ?>
+                                        <li>
+                                            <a href="<?php echo BASE_URL ?>/relatorio/producao"><i class="fa fa-list"></i> Produções</a>
+                                        </li>
+                                    <?php endif; ?>
                                     <li>
                                         <a href="<?php echo BASE_URL ?>/relatorio/lucros"><i class="fa fa-list"></i> Entradas (R$)</a>
                                     </li>

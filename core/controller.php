@@ -34,6 +34,10 @@ class controller {
         return 3600 * 4; //360 sec *  horas 
     }
 
+    public function getporcentagem($valorInicial, $valorTotal) {
+        return ($valorInicial / $valorTotal) * 100;
+    }
+
     /**
      * Está função é responsável para carrega uma view;
      * @param String viewName - nome da view;
@@ -146,12 +150,9 @@ class controller {
         $financa = array();
         $crudModel = new crud_db();
         if (empty($_SESSION['financa_atual'])) {
-            $financa['lucro'] = $crudModel->read('SELECT SUM(valor) as valor FROM sig_lucro WHERE data BETWEEN "' . date('o-m-01') . '" AND "' . date('o-m-31') . '"');
-            $financa['lucro'] = $financa['lucro'][0];
-            $financa['despesa'] = $crudModel->read('SELECT SUM(valor) as valor FROM sig_despesa WHERE data BETWEEN "' . date('o-m-01') . '" AND "' . date('o-m-31') . '"');
-            $financa['despesa'] = $financa['despesa'][0];
-            $financa['investimento'] = $crudModel->read('SELECT SUM(valor) as valor FROM sig_investimento WHERE data BETWEEN "' . date('o-m-01') . '" AND "' . date('o-m-31') . '"');
-            $financa['investimento'] = $financa['investimento'][0];
+            $financa['lucro'] = $crudModel->read_specific('SELECT SUM(valor) as valor FROM sig_lucro WHERE data BETWEEN "' . date('o-m-01') . '" AND "' . date('o-m-31') . '"');
+            $financa['despesa'] = $crudModel->read_specific('SELECT SUM(valor) as valor FROM sig_despesa WHERE data BETWEEN "' . date('o-m-01') . '" AND "' . date('o-m-31') . '"');
+            $financa['investimento'] = $crudModel->read_specific('SELECT SUM(valor) as valor FROM sig_investimento WHERE data BETWEEN "' . date('o-m-01') . '" AND "' . date('o-m-31') . '"');
             $_SESSION['financa_atual'] = $financa;
         }
         return $_SESSION['financa_atual'];

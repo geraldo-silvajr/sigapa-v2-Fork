@@ -20,8 +20,10 @@ if (ENVIRONMENT == 'development') {
     //senha
     $config['dbpass'] = '';
 } else {
-	//Raiz
+    //Raiz
     define("BASE_URL", "https://sig.cootax.com.br");
+    //nome do projeto
+    define("NAME_PROJECT", "SIGAPA - Sistema de Informação Gerencial para Associação de Pequeno Agricultores");
     //Nome do banco
     $config['dbname'] = 'BANCO_DE_DADOS';
     //host
