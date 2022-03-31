@@ -234,6 +234,10 @@ form label{
     font-size: 15pt;
 }
 /* panel*/
+.panel textarea{
+    min-width: 100%;
+    max-width: 100%;
+}
 .panel-heading a:active, .panel-heading a:hover,.panel-heading a:focus{text-decoration: none;}
 .panel> .panel-heading *{color: white;}
 .panel>.panel-body>a{display: block;}

@@ -25,6 +25,7 @@
         <script src="<?php echo BASE_URL ?>/assets/js/jquery-ui.min.js"></script>
         <!-- select2 JS -->
         <script defer src="<?php echo BASE_URL ?>/assets/js/select2.min.js"></script>
+        <script src="<?php echo BASE_URL ?>/assets/js/ckeditor/ckeditor.js"></script>
         <script>
             var base_url = "<?php echo BASE_URL ?>";
             function mostrarConteudo() {
@@ -116,6 +117,9 @@
                                     <ul id="menu_cadastro" class="collapse">
                                         <li>
                                             <a href="<?php echo BASE_URL ?>/cadastrar/cooperado"><i class="fa fa-plus-square"></i> Associado</a>
+                                        </li>
+                                        <li>
+                                            <a href="<?php echo BASE_URL ?>/cadastrar/reuniao"><i class="fa fa-plus-square"></i> Reunião</a>
                                         </li>
                                         <li>
                                             <a href="<?php echo BASE_URL ?>/cadastrar/lucro"><i class="fa fa-dollar-sign"></i> Entrada (R$)</a>

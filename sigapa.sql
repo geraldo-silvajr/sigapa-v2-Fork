@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 07-Mar-2022 às 01:40
+-- Tempo de geração: 01-Abr-2022 às 00:17
 -- Versão do servidor: 10.4.21-MariaDB
 -- versão do PHP: 8.0.10
 
@@ -375,6 +375,20 @@ INSERT INTO `producao` (`cod`, `categoria`, `producao`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estrutura da tabela `reuniao`
+--
+
+CREATE TABLE `reuniao` (
+  `cod` int(10) UNSIGNED NOT NULL,
+  `data` date DEFAULT NULL,
+  `titulo` varchar(255) DEFAULT NULL,
+  `texto` text DEFAULT NULL,
+  `anexo` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura da tabela `sig_cooperativa`
 --
 
@@ -494,7 +508,8 @@ CREATE TABLE `sig_usuario` (
 
 INSERT INTO `sig_usuario` (`cod_usuario`, `cod_cooperativa`, `nome_usuario`, `sobrenome_usuario`, `usuario_usuario`, `email_usuario`, `senha_usuario`, `cargo_usuario`, `genero_usuario`, `nivel_acesso_usuario`, `status_usuario`, `imagem_usuario`, `data_cadastro_usuario`) VALUES
 (6, 1, 'Usuário', 'Admin', 'admin', 'bugados01@gmail.com', 'c996d7b593437305e45bf727fc545b4a', 'Administrador', 'M', 4, 1, 'uploads/usuarios/user_masculino.png', '2018-04-05'),
-(7, 1, 'Joab', 'Torres', 'joab.alencar', 'joabtorres1508@gmail.com', '47cafbff7d1c4463bbe7ba972a2b56e3', 'Participante', 'M', 3, 1, 'uploads/usuarios/28560b3bc12814e80a399460a94723f2.jpg', '2019-04-11');
+(7, 1, 'Joab', 'Torres', 'joab.alencar', 'joabtorres1508@gmail.com', '47cafbff7d1c4463bbe7ba972a2b56e3', 'Adminsitrador', 'M', 3, 1, 'uploads/usuarios/28560b3bc12814e80a399460a94723f2.jpg', '2019-04-11'),
+(8, 1, 'Joao', 'S. Matos', 'joao.matos', 'joaomatos@gmail.com', '47cafbff7d1c4463bbe7ba972a2b56e3', 'Sócio', 'M', 1, 1, 'uploads/usuarios/user_masculino.png', '2022-03-23');
 
 --
 -- Acionadores `sig_usuario`
@@ -556,6 +571,12 @@ ALTER TABLE `associado_producao`
 -- Índices para tabela `producao`
 --
 ALTER TABLE `producao`
+  ADD PRIMARY KEY (`cod`);
+
+--
+-- Índices para tabela `reuniao`
+--
+ALTER TABLE `reuniao`
   ADD PRIMARY KEY (`cod`);
 
 --
@@ -643,6 +664,12 @@ ALTER TABLE `producao`
   MODIFY `cod` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=147;
 
 --
+-- AUTO_INCREMENT de tabela `reuniao`
+--
+ALTER TABLE `reuniao`
+  MODIFY `cod` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de tabela `sig_cooperativa`
 --
 ALTER TABLE `sig_cooperativa`
@@ -670,7 +697,7 @@ ALTER TABLE `sig_lucro`
 -- AUTO_INCREMENT de tabela `sig_usuario`
 --
 ALTER TABLE `sig_usuario`
-  MODIFY `cod_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `cod_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

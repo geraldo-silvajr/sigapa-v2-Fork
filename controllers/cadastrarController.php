@@ -317,6 +317,57 @@ class cadastrarController extends controller {
      * @access public
      * @author Joab Torres <joabtorres1508@gmail.com>
      */
+    public function reuniao() {
+        if ($this->checkUser() >= 2) {
+            $viewName = "reuniao/cadastrar";
+            $dados = array();
+            $crudModel = new crud_db();
+            if (isset($_POST['nSalvar']) && !empty($_POST['nSalvar'])) {
+                /* Adicionando */
+                $financa = array(
+                    'cod_cooperativa' => $this->getCodCooperativa(),
+                    'descricao' => addslashes($_POST['nDescricao']),
+                    'valor' => addslashes($_POST['nValor']),
+                    'data' => addslashes($_POST['nData'])
+                );
+                if (isset($_FILES['nFile']) && $_FILES['nFile']['error'] == 0) {
+                    $chamado['anexo'] = $this->upload_file($_FILES['nFile']);
+                    if (!empty($_POST['nFileEnviado'])) {
+                        $crudModel->delete_file($_POST['nFileEnviado']);
+                    }
+                } else {
+                    $chamado['anexo'] = addslashes($_POST['nFileEnviado']);
+                }
+                $dados['financa'] = $financa;
+                if (!empty($_POST['nDescricao']) && !empty($_POST['nValor']) && !empty($_POST['nData'])) {
+                    $financa['data'] = !empty($financa['data']) ? $this->formatDateBD($financa['data']) : null;
+                    $financa['valor'] = !empty($financa['valor']) ? $this->formatDinheiroBD($financa['valor']) : 0;
+                    $cadFinanca = $crudModel->create('INSERT INTO sig_lucro (cod_cooperativa, descricao, valor, data, data_cadastro) VALUES (:cod_cooperativa, :descricao, :valor, :data, NOW())', $financa);
+                    if ($cadFinanca) {
+                        $_SESSION['financa_acao'] = true;
+                        $_SESSION['financa_atual'] = array();
+                        $url = BASE_URL . '/cadastrar/lucro';
+                        header("Location: " . $url);
+                    }
+                } else {
+                    $dados['erro'] = array('class' => 'alert-danger', 'msg' => "Preenchar os campos obrigatórios.");
+                }
+            } else if (isset($_SESSION['financa_acao']) && !empty($_SESSION['financa_acao'])) {
+                $_SESSION['financa_acao'] = false;
+                $dados['erro'] = array('class' => 'alert-success', 'msg' => "Cadastro realizado com sucesso!");
+            }
+            $this->loadTemplate($viewName, $dados);
+        } else {
+            $url = BASE_URL . '/home';
+            header("Location: " . $url);
+        }
+    }
+
+    /**
+     * Está função pertence a uma action do controle MVC, ela é responśavel pelo controlle nas ações de cadastra um lucro da cooperativa e valida os campus preenchidos via formulário.
+     * @access public
+     * @author Joab Torres <joabtorres1508@gmail.com>
+     */
     public function lucro() {
         if ($this->checkUser() >= 2) {
             $viewName = "financeiro/lucro/cadastrar";
