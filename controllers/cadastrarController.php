@@ -62,25 +62,13 @@ class cadastrarController extends controller {
                 }
 
                 //cpf
-                if (!empty($_POST['nCPF']) && isset($_POST['nCPF'])) {
-                    if (!is_array($cooperadoModel->read("SELECT * FROM associado WHERE cpf=:cpf", array('cpf' => $_POST['nCPF'])))) {
-                        $cooperado['cooperado']['cpf'] = addslashes($_POST['nCPF']);
-                    } else {
-                        $dados['cooperado_error']['cpf']['msg'] = 'CPF já cadastrado, não possível registrar mais de um CPF.';
-                        $dados['cooperado_error']['cpf']['class'] = 'has-error';
-                    }
-                } else {
-                    $dados['cooperado_error']['cpf']['msg'] = 'Informe o CPF';
-                    $dados['cooperado_error']['cpf']['class'] = 'has-error';
-                }
-
+                $cooperado['cooperado']['cpf'] = addslashes($_POST['nCPF']);
                 //rg
-                if (!empty($_POST['nRG']) && isset($_POST['nRG'])) {
-                    $cooperado['cooperado']['rg'] = addslashes($_POST['nRG']);
-                } else {
-                    $dados['cooperado_error']['rg']['msg'] = 'Informe o RG';
-                    $dados['cooperado_error']['rg']['class'] = 'has-error';
-                }
+                $cooperado['cooperado']['rg'] = addslashes($_POST['nRG']);
+                //rg
+                $cooperado['cooperado']['car'] = addslashes($_POST['nCAR']);
+                //rg
+                $cooperado['cooperado']['dap'] = addslashes($_POST['nDAP']);
                 //nEstadoCivil
                 if (!empty($_POST['nEstadoCivil']) && isset($_POST['nEstadoCivil'])) {
                     $cooperado['cooperado']['estado_civil'] = addslashes($_POST['nEstadoCivil']);
@@ -99,14 +87,14 @@ class cadastrarController extends controller {
                 $cooperado['cooperado']['genero'] = addslashes($_POST['nGenero']);
                 //daca de nascimento
                 if (!empty($_POST['nDataNascimento']) && isset($_POST['nDataNascimento'])) {
-                    $cooperado['cooperado']['data_nascimento'] = $this->formatDateBD(addslashes($_POST['nDataNascimento']));
+                    $cooperado['cooperado']['data_nascimento'] = $_POST['nDataNascimento'];
                 } else {
                     $dados['cooperado_error']['data_nascimento']['msg'] = 'Informe a Data de Nascimento';
                     $dados['cooperado_error']['data_nascimento']['class'] = 'has-error';
                 }
                 //nDataInscricao
                 if (!empty($_POST['nDataInscricao']) && isset($_POST['nDataInscricao'])) {
-                    $cooperado['cooperado']['data_inscricao'] = $this->formatDateBD(addslashes($_POST['nDataInscricao']));
+                    $cooperado['cooperado']['data_inscricao'] = addslashes($_POST['nDataInscricao']);
                 } else {
                     $dados['cooperado_error']['data_inscricao']['msg'] = 'Informe a Data de Inscrição';
                     $dados['cooperado_error']['data_inscricao']['class'] = 'has-error';
@@ -150,8 +138,8 @@ class cadastrarController extends controller {
                 //carteira
                 $cooperado['carteira'] = array(
                     'associado_cod' => $cooperado['cooperado']['cod'],
-                    'data_inicial' => $this->formatDateBD($_POST['nDataInicial']),
-                    'data_validade' => $this->formatDateBD($_POST['nDataValidade'])
+                    'data_inicial' => $_POST['nDataInicial'],
+                    'data_validade' => $_POST['nDataValidade']
                 );
 
                 $dados['cooperado'] = $cooperado;
@@ -330,7 +318,7 @@ class cadastrarController extends controller {
                     'valor' => addslashes($_POST['nValor']),
                     'data' => addslashes($_POST['nData'])
                 );
-                if (isset($_FILES['nFile']) && $_FILES['nFile']['error'] == 0) {
+                if (isset($_FILES ['nFile']) && $_FILES['nFile']['error'] == 0) {
                     $chamado['anexo'] = $this->upload_file($_FILES['nFile']);
                     if (!empty($_POST['nFileEnviado'])) {
                         $crudModel->delete_file($_POST['nFileEnviado']);

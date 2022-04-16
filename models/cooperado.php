@@ -39,7 +39,7 @@ class cooperado extends model {
      */
     public function create($data) {
         try {
-            $sql = $this->db->prepare('INSERT INTO associado (cod, tipo, status, apelido, nome_completo, cpf, rg, estado_civil, nacionalidade, genero, data_nascimento, data_inscricao, pai, mae, conjugue, filhos, imagem) VALUES  (:cod, :tipo, :status, :apelido, :nome_completo, :cpf, :rg, :estado_civil, :nacionalidade, :genero, :data_nascimento, :data_inscricao, :pai, :mae, :conjugue, :filhos, :imagem)');
+            $sql = $this->db->prepare('INSERT INTO associado (cod, tipo, status, apelido, nome_completo, cpf, rg, car, dap, estado_civil, nacionalidade, genero, data_nascimento, data_inscricao, pai, mae, conjugue, filhos, imagem) VALUES  (:cod, :tipo, :status, :apelido, :nome_completo, :cpf, :rg, :car, :dap, :estado_civil, :nacionalidade, :genero, :data_nascimento, :data_inscricao, :pai, :mae, :conjugue, :filhos, :imagem)');
             $sql->bindValue(":cod", $data['cooperado']['cod']);
             $sql->bindValue(":tipo", $data['cooperado']['tipo']);
             $sql->bindValue(":status", $data['cooperado']['status']);
@@ -47,6 +47,8 @@ class cooperado extends model {
             $sql->bindValue(":nome_completo", $data['cooperado']['nome_completo']);
             $sql->bindValue(":cpf", $data['cooperado']['cpf']);
             $sql->bindValue(":rg", $data['cooperado']['rg']);
+            $sql->bindValue(":car", $data['cooperado']['car']);
+            $sql->bindValue(":dap", $data['cooperado']['dap']);
             $sql->bindValue(":estado_civil", $data['cooperado']['estado_civil']);
             $sql->bindValue(":nacionalidade", $data['cooperado']['nacionalidade']);
             $sql->bindValue(":genero", $data['cooperado']['genero']);
@@ -118,13 +120,15 @@ class cooperado extends model {
      * @author Joab Torres <joabtorres1508@gmail.com>
      */
     public function update($data) {
-        $sql = $this->db->prepare('UPDATE associado SET tipo=:tipo, status=:status, apelido=:apelido, nome_completo=:nome_completo, cpf=:cpf, rg=:rg, estado_civil=:estado_civil, nacionalidade=:nacionalidade, genero=:genero, data_nascimento=:data_nascimento, data_inscricao= :data_inscricao, pai=:pai, mae=:mae, conjugue=:conjugue, filhos=:filhos, imagem=:imagem WHERE cod=:cod');
+        $sql = $this->db->prepare('UPDATE associado SET tipo=:tipo, status=:status, apelido=:apelido, nome_completo=:nome_completo, cpf=:cpf, rg=:rg, car=:car, dap=:dap, estado_civil=:estado_civil, nacionalidade=:nacionalidade, genero=:genero, data_nascimento=:data_nascimento, data_inscricao= :data_inscricao, pai=:pai, mae=:mae, conjugue=:conjugue, filhos=:filhos, imagem=:imagem WHERE cod=:cod');
         $sql->bindValue(":tipo", $data['cooperado']['tipo']);
         $sql->bindValue(":status", $data['cooperado']['status']);
         $sql->bindValue(":apelido", $data['cooperado']['apelido']);
         $sql->bindValue(":nome_completo", $data['cooperado']['nome_completo']);
         $sql->bindValue(":cpf", $data['cooperado']['cpf']);
         $sql->bindValue(":rg", $data['cooperado']['rg']);
+        $sql->bindValue(":car", $data['cooperado']['car']);
+        $sql->bindValue(":dap", $data['cooperado']['dap']);
         $sql->bindValue(":estado_civil", $data['cooperado']['estado_civil']);
         $sql->bindValue(":nacionalidade", $data['cooperado']['nacionalidade']);
         $sql->bindValue(":genero", $data['cooperado']['genero']);

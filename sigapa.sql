@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 01-Abr-2022 às 00:17
+-- Tempo de geração: 16-Abr-2022 às 16:43
 -- Versão do servidor: 10.4.21-MariaDB
 -- versão do PHP: 8.0.10
 
@@ -35,6 +35,8 @@ CREATE TABLE `associado` (
   `nome_completo` varchar(255) DEFAULT NULL,
   `cpf` varchar(15) DEFAULT NULL,
   `rg` varchar(40) DEFAULT NULL,
+  `car` varchar(50) NOT NULL,
+  `dap` varchar(50) NOT NULL,
   `estado_civil` varchar(20) DEFAULT NULL,
   `nacionalidade` varchar(20) DEFAULT NULL,
   `genero` varchar(10) DEFAULT NULL,
@@ -51,10 +53,12 @@ CREATE TABLE `associado` (
 -- Extraindo dados da tabela `associado`
 --
 
-INSERT INTO `associado` (`cod`, `tipo`, `status`, `apelido`, `nome_completo`, `cpf`, `rg`, `estado_civil`, `nacionalidade`, `genero`, `data_nascimento`, `data_inscricao`, `pai`, `mae`, `conjugue`, `filhos`, `imagem`) VALUES
-(1, 'Permissionário', 1, 'João', 'João Garcia Gomes', '111.111.111-11', '684444 PC/PA', 'Solteiro', 'Brasileiro', 'Masculino', '1995-11-11', '2010-03-05', 'JOSE GOMES', 'LUCIA RODRIGUES', 'LETICIA COSTA', 'LUCAS COSTA GOMES', 'uploads/cooperados/c7e0297a386f80d13a2dbd74474d2c0f.jpg'),
-(2, 'Permissionário', 0, 'sadsad', 'asdasd', '222.222.222-22', '222222222', 'asdsadas', 'BRASILEIRO', 'Masculino', '1111-11-11', '2022-03-04', 'asdasdsa', 'asdsadsa', 'sadsadsaasd', 'dasdsadas', 'uploads/cooperados/753954d013bebdf6d9fd6063e8605a4e.jpg'),
-(3, 'Participativo', 1, '11', '111111111111111111', '333.333.333-33', '111111111', '11111', 'BRASILEIRO', 'Masculino', '0000-00-00', '0000-00-00', '', '', '', '', '');
+INSERT INTO `associado` (`cod`, `tipo`, `status`, `apelido`, `nome_completo`, `cpf`, `rg`, `car`, `dap`, `estado_civil`, `nacionalidade`, `genero`, `data_nascimento`, `data_inscricao`, `pai`, `mae`, `conjugue`, `filhos`, `imagem`) VALUES
+(1, 'Permissionário', 1, 'João', 'João Garcia Gomes', '111.111.111-11', '684444 PC/PA', '0', '0', 'Solteiro', 'Brasileiro', 'Masculino', '1995-11-11', '2010-03-05', 'JOSE GOMES', 'LUCIA RODRIGUES', 'LETICIA COSTA', 'LUCAS COSTA GOMES', 'uploads/cooperados/db0956e35c4ff7c5768498d5af0a7a76.jpg'),
+(2, 'Permissionário', 0, 'sadsad', 'asdasd', '222.222.222-22', '222222222', '0', '0', 'asdsadas', 'BRASILEIRO', 'Masculino', '1111-11-11', '2022-03-04', 'asdasdsa', 'asdsadsa', 'sadsadsaasd', 'dasdsadas', 'uploads/cooperados/753954d013bebdf6d9fd6063e8605a4e.jpg'),
+(3, 'Participativo', 1, '11', '111111111111111111', '333.333.333-33', '111111111', '0', '0', '11111', 'BRASILEIRO', 'Masculino', '0000-00-00', '0000-00-00', '', '', '', '', ''),
+(4, 'Permissionário', 1, 'JOAB', 'sadsad', '222.222.222-22', '222222', '22222222222', '222222222', 'casado', 'BRASILEIRO', 'Masculino', '0000-00-00', '0000-00-00', 'adsadas', 'dsadas', 'dsadasdas', 'das', 'uploads/cooperados/2a27fa6978ced746ccee5327e9147b90.jpg'),
+(5, 'Permissionário', 1, '12321', 'asdsad', '222.222.222-22', '11111', '111111111111111111', '222222222', '333333', 'BRASILEIRO', 'Masculino', '0000-00-00', '0000-00-00', '3asdsadas', '12', '211', '212', 'uploads/cooperados/5e0fd0b9bf5d6f50beb5b17523f15650.jpg');
 
 -- --------------------------------------------------------
 
@@ -76,7 +80,9 @@ CREATE TABLE `associado_carteira` (
 INSERT INTO `associado_carteira` (`cod`, `associado_cod`, `data_inicial`, `data_validade`) VALUES
 (2, 1, '2022-03-03', '2023-03-01'),
 (3, 2, '2022-03-04', '2023-03-01'),
-(4, 3, '0000-00-00', '0000-00-00');
+(4, 3, '0000-00-00', '0000-00-00'),
+(5, 4, '0000-00-00', '0000-00-00'),
+(6, 5, '0000-00-00', '0000-00-00');
 
 -- --------------------------------------------------------
 
@@ -99,7 +105,9 @@ CREATE TABLE `associado_contato` (
 INSERT INTO `associado_contato` (`cod_contato`, `associado_cod`, `celular_1`, `celular_2`, `email`) VALUES
 (3, 1, '(93) 02414-4444', '(93) 22222-2222', ''),
 (4, 2, '', '', ''),
-(5, 3, '', '', '');
+(5, 3, '', '', ''),
+(6, 4, '(93) 99204-1711', '', 'joabtorres@gmail.com'),
+(7, 5, '(22) 22222-2222', '', '');
 
 -- --------------------------------------------------------
 
@@ -128,7 +136,9 @@ CREATE TABLE `associado_endereco` (
 INSERT INTO `associado_endereco` (`cod_endereco`, `logradouro`, `numero`, `bairro`, `complemento`, `cidade`, `estado`, `cep`, `latitude`, `longitude`, `associado_cod`) VALUES
 (3, 'Rodovia BR 316 KM 54', '111', 'Zona Rural', 'Ramal do Itaqui, Km 17, próximo a Vila Trindade (Ramal São João)', 'Castanhal', 'PA', '68180-390', '-1.2935408', '-47.9245897', 1),
 (4, '', '', '', '', 'Itaituba', 'PA', '', 'PA', 'PA', 2),
-(5, '', '', '', '', 'Castanhal', 'PA', '', '-1.2992685319561943', '-47.950124329821776', 3);
+(5, '', '', '', '', 'Castanhal', 'PA', '', '-1.2992685319561943', '-47.950124329821776', 3),
+(6, 'rapz', '5524', 'nova olinda', 'proximo ao mix', 'Castanhal', 'PA', '68180 390', '-1.2950434529057329', '-47.96123749796143', 4),
+(7, 'asdasdas', 'asdasd', 'asdasdas', 'dasd', 'Castanhalsadsa', 'PA', 'asdsad', '-1.3020797618172304', '-47.96261078897705', 5);
 
 -- --------------------------------------------------------
 
@@ -619,25 +629,25 @@ ALTER TABLE `sig_usuario`
 -- AUTO_INCREMENT de tabela `associado`
 --
 ALTER TABLE `associado`
-  MODIFY `cod` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `cod` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de tabela `associado_carteira`
 --
 ALTER TABLE `associado_carteira`
-  MODIFY `cod` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `cod` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de tabela `associado_contato`
 --
 ALTER TABLE `associado_contato`
-  MODIFY `cod_contato` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `cod_contato` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de tabela `associado_endereco`
 --
 ALTER TABLE `associado_endereco`
-  MODIFY `cod_endereco` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `cod_endereco` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de tabela `associado_historico`

@@ -31,47 +31,45 @@
                     </header>
                     <article class="panel-body">
                         <div class="row">
-                            <div class="col-md-4 form-group <?php echo (isset($cooperado_error['apelido']['class'])) ? $cooperado_error['apelido']['class'] : ''; ?>">
+                            <div class="col-md-3 form-group <?php echo (isset($cooperado_error['apelido']['class'])) ? $cooperado_error['apelido']['class'] : ''; ?>">
                                 <label for="iApelido" class="control-label">Apelido:* <?php echo (isset($cooperado_error['apelido']['msg'])) ? '<small><span class="glyphicon glyphicon-remove"></span> ' . $cooperado_error['apelido']['msg'] . ' </small>' : ''; ?></label>
                                 <input type="text" id="iApelido" name="nApelido" placeholder="Exemplo: João" class="form-control" value="<?php echo (!empty($cooperado['cooperado']['apelido'])) ? $cooperado['cooperado']['apelido'] : ''; ?>"/>
                             </div>
-                            <div class="col-md-4 form-group">
+                            <div class="col-md-3 form-group <?php echo (isset($cooperado_error['data_inscricao']['class'])) ? $cooperado_error['data_inscricao']['class'] : ''; ?>">
+                                <label for="iDataInscricao" class="control-label">Data de Inscrição:* <?php echo (isset($cooperado_error['data_inscricao']['msg'])) ? '<small><span class="glyphicon glyphicon-remove"></span> ' . $cooperado_error['data_inscricao']['msg'] . ' </small>' : ''; ?></label>
+                                <input type="text" id="iDataInscricao" name="nDataInscricao" placeholder="Exemplo: 15/08/2018" class="form-control input-data date_serach" value="<?php echo (!empty($cooperado['cooperado']['data_inscricao'])) ? $this->formatDateView($cooperado['cooperado']['data_inscricao']) : date('d/m/o'); ?>"/>
+                            </div>
+                            <div class="col-md-3 form-group">
                                 <label for="iTipo" class="control-label">Categoria:* </label><br/>
-                                <?php
-                                if (isset($cooperado['cooperado']['tipo'])) {
-                                    $status = array(array('tipo' => 'Permissionário'), array('tipo' => 'Participativo'));
-                                    foreach ($status as $statu) {
-                                        if ($statu['tipo'] == $cooperado['cooperado']['tipo']) {
-                                            echo '<label><input type="radio" id="iTipo" name="nTipo" value="' . $statu['tipo'] . '" checked="true"/> ' . $statu['tipo'] . '</label> ';
+                                <select id="iTipo" name="nTipo" class="form-control">
+                                    <?php
+                                    $array = array('Permissionário', 'Participativo');
+                                    for ($i = 0; $i < count($array); $i++) {
+                                        if (isset($cooperado['cooperado']['tipo']) && $array[$i] == $cooperado['cooperado']['tipo']) {
+                                            echo '<option value="' . $array[$i] . '" checked="true">' . $array[$i] . '</option>';
                                         } else {
-                                            echo '<label><input type="radio" id="iTipo" name="nTipo" value="' . $statu['tipo'] . '"/> ' . $statu['tipo'] . '</label> ';
+                                            echo '<option value="' . $array[$i] . '">' . $array[$i] . '</option>';
                                         }
                                     }
-                                } else {
-                                    echo ' <label><input type="radio" id="iTipo" name="nTipo" value="Permissionário" checked="true"/> Permissionário</label>
-                                <label><input type="radio" id="iTipo" name="nTipo" value="Participativo" /> Participativo</label>';
-                                }
-                                ?>
+                                    ?>
+                                </select>
                             </div>
-                            <div class="col-md-4 form-group">
+                            <div class="col-md-3 form-group">
                                 <label for="iStatus" class="control-label">Status:* </label><br/>
-                                <?php
-                                if (isset($cooperado['cooperado']['status'])) {
-                                    $status = array(array('valor' => 1, 'tipo' => 'Ativo'), array('valor' => 0, 'tipo' => 'Inativo'));
-                                    foreach ($status as $statu) {
-                                        if ($statu['valor'] == $cooperado['cooperado']['status']) {
-                                            echo '<label><input type="radio" id="iStatus" name="nStatus" value="' . $statu['valor'] . '" checked="true"/> ' . $statu['tipo'] . ' </label> ';
+                                <select id="iStatus" name="nStatus" class="form-control">
+                                    <?php
+                                    $array = array('Inativo', 'Ativo');
+                                    for ($i = count($array) - 1; $i >= 0; $i--) {
+                                        if (isset($cooperado['cooperado']['status']) && $array[$i] == $cooperado['cooperado']['status']) {
+                                            echo '<option value="' . $i . '" checked="true">' . $array[$i] . '</option>';
                                         } else {
-                                            echo '<label><input type="radio" id="iStatus" name="nStatus" value="' . $statu['valor'] . '"/> ' . $statu['tipo'] . '</label> ';
+                                            echo '<option value="' . $i . '">' . $array[$i] . '</option>';
                                         }
                                     }
-                                } else {
-                                    echo ' <label><input type="radio" id="iStatus" name="nStatus" value="1" checked="true"/> Ativo</label>
-                                <label><input type="radio" id="iStatus" name="nStatus" value="0" /> Inativo</label>';
-                                }
-                                ?>
-
+                                    ?>
+                                </select>
                             </div>
+
                         </div>
                         <div class="row">
                             <div class="col-md-12 form-group <?php echo (isset($cooperado_error['nome_completo']['class'])) ? $cooperado_error['nome_completo']['class'] : ''; ?>">
@@ -80,13 +78,21 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-3 form-group <?php echo (isset($cooperado_error['cpf']['class'])) ? $cooperado_error['cpf']['class'] : ''; ?>">
-                                <label for="iCPF" class="control-label">CPF:* <?php echo (isset($cooperado_error['cpf']['msg'])) ? '<small><span class="glyphicon glyphicon-remove"></span> ' . $cooperado_error['cpf']['msg'] . ' </small>' : ''; ?></label>
+                            <div class="col-md-3 form-group">
+                                <label for="iCPF" class="control-label">Nº do <abbr title="Cadastro de Pessoa Física">CPF</abbr>::</label>
                                 <input type="text" id="iCPF" name="nCPF" placeholder="Exemplo: 065.378.444-50" class="form-control input-cpf" value="<?php echo (!empty($cooperado['cooperado']['cpf'])) ? $cooperado['cooperado']['cpf'] : ''; ?>"/>
                             </div>
-                            <div class="col-md-3 form-group <?php echo (isset($cooperado_error['rg']['class'])) ? $cooperado_error['rg']['class'] : ''; ?>">
-                                <label for="iRG" class="control-label">RG:* <?php echo (isset($cooperado_error['rg']['msg'])) ? '<small><span class="glyphicon glyphicon-remove"></span> ' . $cooperado_error['rg']['msg'] . ' </small>' : ''; ?></label>
+                            <div class="col-md-3 form-group">
+                                <label for="iRG" class="control-label">Nº do <abbr title="Registro Geral">RG</abbr>::</label>
                                 <input type="text" id="iRG" name="nRG" placeholder="Exemplo: 6846565 PC/PA" class="form-control" value="<?php echo (!empty($cooperado['cooperado']['rg'])) ? $cooperado['cooperado']['rg'] : ''; ?>"/>
+                            </div>
+                            <div class="col-md-3 form-group ">
+                                <label for="icar" class="control-label">Nº do <abbr title="Cadastro Ambiental Rural">CAR</abbr>: </label>
+                                <input type="text" id="icar" name="nCAR" placeholder="Exemplo: 68464444" class="form-control" value="<?php echo (!empty($cooperado['cooperado']['car'])) ? $cooperado['cooperado']['car'] : ''; ?>"/>
+                            </div>
+                            <div class="col-md-3 form-group">
+                                <label for="idap" class="control-label">Nº do <abbr title="Declaração de Aptidão ao Pronaf">DAP</abbr>:</label>
+                                <input type="text" id="idap" name="nDAP" placeholder="Exemplo: 44114114" class="form-control" value="<?php echo (!empty($cooperado['cooperado']['dap'])) ? $cooperado['cooperado']['dap'] : ''; ?>"/>
                             </div>
                             <div class="col-md-3 form-group <?php echo (isset($cooperado_error['estado_civil']['class'])) ? $cooperado_error['estado_civil']['class'] : ''; ?>">
                                 <label for="iEstadoCivil" class="control-label">Estado Cívil:* <?php echo (isset($cooperado_error['estado_civil']['msg'])) ? '<small><span class="glyphicon glyphicon-remove"></span> ' . $cooperado_error['estado_civil']['msg'] . ' </small>' : ''; ?></label>
@@ -96,9 +102,7 @@
                                 <label for="iNacionalidade" class="control-label">Nacionalidade:* <?php echo (isset($cooperado_error['nacionalidade']['msg'])) ? '<small><span class="glyphicon glyphicon-remove"></span> ' . $cooperado_error['nacionalidade']['msg'] . ' </small>' : ''; ?></label>
                                 <input type="text" id="iNacionalidade" name="nNacionalidade" placeholder="Exemplo: Brasileiro" class="form-control" value="<?php echo (!empty($cooperado['cooperado']['nacionalidade'])) ? $cooperado['cooperado']['nacionalidade'] : 'BRASILEIRO'; ?>"/>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4 form-group <?php echo (isset($cooperado_error['genero']['class'])) ? $cooperado_error['genero']['class'] : ''; ?>">
+                            <div class="col-md-3 form-group <?php echo (isset($cooperado_error['genero']['class'])) ? $cooperado_error['genero']['class'] : ''; ?>">
                                 <label for="iGenero" class="control-label">Genero:* <?php echo (isset($cooperado_error['genero']['msg'])) ? '<small><span class="glyphicon glyphicon-remove"></span> ' . $cooperado_error['genero']['msg'] . ' </small>' : ''; ?></label><br/>
                                 <select id="iGenero" name="nGenero" class="form-control">
 
@@ -118,15 +122,10 @@
                                     ?>
                                 </select>
                             </div>
-                            <div class="col-md-4 form-group <?php echo (isset($cooperado_error['data_nascimento']['class'])) ? $cooperado_error['data_nascimento']['class'] : ''; ?>">
+                            <div class="col-md-3 form-group <?php echo (isset($cooperado_error['data_nascimento']['class'])) ? $cooperado_error['data_nascimento']['class'] : ''; ?>">
                                 <label for="iDataNascimento" class="control-label">Data de Nascimento:* <?php echo (isset($cooperado_error['data_nascimento']['msg'])) ? '<small><span class="glyphicon glyphicon-remove"></span> ' . $cooperado_error['data_nascimento']['msg'] . ' </small>' : ''; ?></label>
                                 <input type="text" id="iDataNascimento" name="nDataNascimento" placeholder="Exemplo: 10/02/1985" class="form-control input-data date_serach" value="<?php echo (!empty($cooperado['cooperado']['data_nascimento'])) ? $this->formatDateView($cooperado['cooperado']['data_nascimento']) : ''; ?>"/>
-                            </div>                            
-                            <div class="col-md-4 form-group <?php echo (isset($cooperado_error['data_inscricao']['class'])) ? $cooperado_error['data_inscricao']['class'] : ''; ?>">
-                                <label for="iDataInscricao" class="control-label">Data de Inscrição:* <?php echo (isset($cooperado_error['data_inscricao']['msg'])) ? '<small><span class="glyphicon glyphicon-remove"></span> ' . $cooperado_error['data_inscricao']['msg'] . ' </small>' : ''; ?></label>
-                                <input type="text" id="iDataInscricao" name="nDataInscricao" placeholder="Exemplo: 15/08/2018" class="form-control input-data date_serach" value="<?php echo (!empty($cooperado['cooperado']['data_inscricao'])) ? $this->formatDateView($cooperado['cooperado']['data_inscricao']) : date('d/m/o'); ?>"/>
-                            </div>
-
+                            </div>  
                         </div>
                     </article>
                 </section> <!-- fim panel Cooperado-->

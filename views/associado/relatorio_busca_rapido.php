@@ -24,7 +24,8 @@
                     <a href="<?php echo BASE_URL . '/cooperado/index/' . $cooperado['cod'] ?>">
                         <img src="<?php echo!empty($cooperado['imagem']) ? BASE_URL . '/' . $cooperado['imagem'] : BASE_URL . '/assets/imagens/foto_ilustrato3x4.png' ?>" alt="SGL - Usuáio" class="img-responsive img-rounded"/>
                     </a>
-                    <p class="text-center text-uppercase font-bold"><?php echo!empty($cooperado['nome_completo']) ? $cooperado['nome_completo'] : '' ?> <?php echo!empty($cooperado['nz']) ? '- ' . $cooperado['nz'] : '' ?></p>
+                    <p class="text-center text-uppercase font-bold"><?php echo!empty($cooperado['nome_completo']) ? $cooperado['nome_completo'] : '' ?></p>
+                    <p class="text-center text-capitalize">Matricula: <?php echo!empty($cooperado['cod']) ? str_pad($cooperado['cod'], 3, '0', STR_PAD_LEFT) : '' ?></p>
                     <p class="text-center text-capitalize">Categoria: <?php echo!empty($cooperado['tipo']) ? $cooperado['tipo'] : '' ?></p>
                     <p class="text-center text-capitalize">Inscrição: <?php echo!empty($cooperado['data_inscricao']) ? $this->formatDateView($cooperado['data_inscricao']) : '' ?></p>
                     <div class="caption text-center">
